@@ -7,6 +7,30 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
     <body>
+        <form id="inquiryForm" size="5">
+            <div>
+                ご用件
+                <select name="classification" id="classification">
+                    <option value="ATMについて">ATMについて</option>
+                    <option value="キャッシュカード・トークンについて">キャッシュカード・トークンについて</option>
+                    <option value="ログインパスワード・暗証番号・不明・変更について">ログインパスワード・暗証番号・不明・変更について</option>
+                    <option value="Visaデビットについて">Visaデビットについて</option>
+                    <option value="ローン・住宅ローンについて">ローン・住宅ローンについて</option>
+                    <option value="口座開設・口座利用開始について">口座開設・口座利用開始について</option>
+                    <option value="FX・投信・外貨預金について">FX・投信・外貨預金について</option>
+                    <option value="登録情報変更　住所変更等について">登録情報変更　住所変更等について</option>
+                    <option value="明細・振込・振替等について">明細・振込・振替等について</option>
+                    <option value="その他お問い合わせ">その他お問い合わせ</option>
+                </select>
+            </div>
+            <div>
+                お問い合わせ内容
+                <textarea name="inquiry" id="inquiry" rows="50" cols="80"></textarea><br>
+            </div>
+            <input type="button" onclick="send()" value="送信">
+        </form>
+        </br>
+        <div>過去のお問い合わせ内容</div>
         <div id="pastInquiry"></div>
     </body>
 </html>
@@ -17,7 +41,6 @@
         var xmlHttpRequest = new XMLHttpRequest();
         xmlHttpRequest.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
-                console.log('最終');
                 var res = JSON.parse(this.responseText);
                 if(res.length != 0){
                     for (var i = 0; i < res.length; i++) {
@@ -32,42 +55,40 @@
 
     }
 
-    // タグ内にjavascriptコードを直接記述します。
-    function sendinfo() {
-        /*var assoc = {};
+    function send() {
+        // ご用件を取得
+        const classificationValue = document.getElementById("classification").value;
 
-        //セレクトボックスの値を変数に保存
-        assoc.ID = '0016F00003WxitRQAR';
-        console.log(assoc.ID);
+        // お問い合わせ内容を取得
+        const inquiryValue = document.getElementById("inquiry").value;
 
-        data = JSON.stringify( assoc );
+        var inputData = {};
 
-        console.log(data);
+        inputData.AccountNumber = 'A0000001';
+        inputData.classification = classificationValue;
+        inputData.inquiry = inquiryValue;
+
+        // Rest ApexへパラメータをJSON形式に変換
+        data = JSON.stringify( inputData );
 
         var xmlHttpRequest = new XMLHttpRequest();
         xmlHttpRequest.onreadystatechange = function()
         {
-            var READYSTATE_COMPLETED = 4;
-            var HTTP_STATUS_OK = 200;
-
-            if( this.readyState == READYSTATE_COMPLETED
-             && this.status == HTTP_STATUS_OK )
-            {
-                // レスポンスの表示
-                alert( this.responseText );
+            if(this.readyState == 4 && this.status == 200){
+                var res = JSON.parse(this.responseText);
+                if(res.length != 0){
+                    for (var i = 0; i < res.length; i++) {
+                        document.getElementById('pastInquiry').innerHTML += res[i].Inquiry__c + '<br>';
+                    }
+                }
             }
         }
-
-        xmlHttpRequest.open( 'POST', 'https://d6f000000eriauaw-dev-ed.my.salesforce.com/services/apexrest/Account/');
-
+        xmlHttpRequest.open( 'POST', 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c/');
         // サーバに対して解析方法を指定する
         xmlHttpRequest.setRequestHeader( 'Content-Type', 'application/json');
-        xmlHttpRequest.setRequestHeader( 'Authorization', 'Bearer 00D6F000000ERiA!AREAQD2LBWtZEVfxK_s6C6HH2wk9ugvTtJnk9.aAsLLiUcqGQYsGH0ViB8Wlu8coNT2WaHIv180bVMRRMwYOz00jU9HtWc7d');
-        //xmlHttpRequest.setRequestHeader( 'Origin', 'https://example.com');
-
+        xmlHttpRequest.setRequestHeader( 'Authorization', 'Bearer 00D5j00000BXmyf!ARUAQIl9xYTMOxAEuy39t2eRwYR59kxGZTWZwbq8QxFNb.DJ8ljDk2UTfSWkBjH8FJe5LCBu4JHoWBAe6BE29zxfzPV9DPhn');
         // データをリクエスト ボディに含めて送信する
-
-        xmlHttpRequest.send( data );*/
+        xmlHttpRequest.send( data );
 
     }
 </script>
