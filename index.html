@@ -78,9 +78,9 @@
                 var res = JSON.parse(this.responseText);
                 if(res.length != 0){
                     for (var i = 0; i < res.length; i++) {
-                        document.getElementById('pastInquiry').innerHTML = null;
-                        document.getElementById("classification").innerHTML = null;
-                        document.getElementById("inquiry").innerHTML = null;
+                        var formElement = document.getElementById('inquiryForm');
+                        formElement.reset();
+                        document.getElementById('pastInquiry').innerHTML = "";
                         document.getElementById('pastInquiry').innerHTML += res[i].Inquiry__c + '<br>';
                     }
                 }
