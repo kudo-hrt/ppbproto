@@ -278,6 +278,13 @@
         </style>
     </head>
     <body>
+        <template id="template">
+           <tr>
+               <td class="CreatedDate"></td>
+               <td class="Classification__c"></td>
+               <td class="Inquiry__c"></td>
+           </tr>
+        </template>
         <div class="box_con02">
             <form id="inquiryForm">
                 <p>お問い合わせ</p>
@@ -306,7 +313,9 @@
                     <span><input type="button" onclick="send()" value="送信" /></span>
                 </p>
                 <p>過去のお問い合わせ内容</p>
-                <div id="pastInquiry"></div>
+                <table id="pastInquiry" class="formTable">
+                    <tr><th>登録日</th><th>ご用件</th><th>お問い合わせ内容</th></tr>
+                </table>
             </form>
         </div>
     </body>
@@ -319,16 +328,23 @@
         xmlHttpRequest.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
                 var res = JSON.parse(this.responseText);
+
                 if(res.length != 0){
-                    document.getElementById('pastInquiry').innerHTML += '<table class="formTable">';
-                    for (var i = 0; i < res.length; i++) {
-                        document.getElementById('pastInquiry').innerHTML += '<tr>';
-                        document.getElementById('pastInquiry').innerHTML += '<td>' + res[i].CreatedDate + '</td>';
-                        document.getElementById('pastInquiry').innerHTML += '<td>' + res[i].Classification__c + '</td>';
-                        document.getElementById('pastInquiry').innerHTML += '<td>' + res[i].Inquiry__c + '</td>';
-                        document.getElementById('pastInquiry').innerHTML += '</tr>';
+                    // template要素を取得
+                    var template = document.getElementById('template');
+
+                    for(var i =0; i < res.length; i++){
+                        // template要素の内容を複製
+                        var clone = template.content.cloneNode(true);
+
+                        // 複製したtemplate要素にデータを挿入
+                        clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
+                        clone.querySelector('.Classification__c').textContent = res[i].Classification__c;
+                        clone.querySelector('.Inquiry__c').textContent = res[i].Inquiry__c;
+
+                        // div#containerの中に追加
+                        document.getElementById('pastInquiry').appendChild(clone);
                     }
-                    document.getElementById('pastInquiry').innerHTML += '</table>';
                 }
             }
         }
