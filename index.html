@@ -17,22 +17,19 @@
         var xmlHttpRequest = new XMLHttpRequest();
         xmlHttpRequest.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
-                console.log('変わった');
-                console.log(this.responseText);
+                console.log('最終');
+                var res = JSON.parse(this.responseText);
+                if(res.length != 0){
+                    for (var i = 0; i < res.length; i++) {
+                        document.getElementById('pastInquiry').innerHTML += res[i].Inquiry__c + '<br>';
+                    }
+                }
             }
         }
         xmlHttpRequest.open( 'GET', 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c/A0000001');
         xmlHttpRequest.setRequestHeader( 'Authorization', 'Bearer 00D5j00000BXmyf!ARUAQIl9xYTMOxAEuy39t2eRwYR59kxGZTWZwbq8QxFNb.DJ8ljDk2UTfSWkBjH8FJe5LCBu4JHoWBAe6BE29zxfzPV9DPhn');
         xmlHttpRequest.send();
 
-        // 画面表示
-        /*
-        var res = JSON.parse(this.responseText);
-        if(res.length != 0){
-            for (var i = 0; i < res.length; i++) {
-                document.getElementById('pastInquiry').innerHTML += res[i].Inquiry__c + '<br>';
-            }
-        }*/
     }
 
     // タグ内にjavascriptコードを直接記述します。
