@@ -320,13 +320,10 @@
             if(this.readyState == 4 && this.status == 200){
                 var res = JSON.parse(this.responseText);
                 if(res.length != 0){
-                    /*for (var i = 0; i < res.length; i++) {
-                        document.getElementById('pastInquiry').innerHTML += res[i].Inquiry__c + '<br>';
-                    }*/
+                    var formElement = document.getElementById('inquiryForm');
+                    formElement.reset();
                     document.getElementById('pastInquiry').innerHTML += '<table class="formTable">';
                     for (var i = 0; i < res.length; i++) {
-                        var formElement = document.getElementById('inquiryForm');
-                        formElement.reset();
                         document.getElementById('pastInquiry').innerHTML += '<tr>';
                         document.getElementById('pastInquiry').innerHTML += '<td>' + res[i].CreatedDate + '</td>';
                         document.getElementById('pastInquiry').innerHTML += '<td>' + res[i].Classification__c + '</td>';
@@ -364,11 +361,11 @@
             if(this.readyState == 4 && this.status == 200){
                 var res = JSON.parse(this.responseText);
                 if(res.length != 0){
+                    var formElement = document.getElementById('inquiryForm');
+                    formElement.reset();
                     document.getElementById('pastInquiry').innerHTML = "";
                     document.getElementById('pastInquiry').innerHTML += '<table class="formTable">';
                     for (var i = 0; i < res.length; i++) {
-                        var formElement = document.getElementById('inquiryForm');
-                        formElement.reset();
                         document.getElementById('pastInquiry').innerHTML += '<tr>';
                         document.getElementById('pastInquiry').innerHTML += '<td>' + res[i].CreatedDate + '</td>';
                         document.getElementById('pastInquiry').innerHTML += '<td>' + res[i].Classification__c + '</td>';
