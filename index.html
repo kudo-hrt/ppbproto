@@ -375,9 +375,10 @@
             if(this.readyState == 4 && this.status == 200){
                 var res = JSON.parse(this.responseText);
                 if(res.length != 0){
+                    var formElement = document.getElementById('inquiryForm');
+                    formElement.reset();
                     // template要素を取得
                     var template = document.getElementById('template');
-                    formElement.reset();
                     
                     for(var i =0; i < res.length; i++){
                         // template要素の内容を複製
