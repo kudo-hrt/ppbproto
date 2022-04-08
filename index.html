@@ -379,6 +379,7 @@
                     formElement.reset();
                     
                     var oldPastInquiry = document.getElementById('pastInquiry');
+                    console.log(oldPastInquiry.length);
                     for(var i = 3; i < oldPastInquiry.length; i++){
                         var element = document.getElementById('pastInquiry').childNodes[i];
                         document.getElementById('pastInquiry').removeChild(element);
