@@ -381,8 +381,9 @@
                     var template = document.getElementById('template');
                     
                     for(var i = 0; i < res.length-1; i++){
-                        var element = document.getElementById('pastInquiry').childNodes[1];
-                        document.getElementById('pastInquiry').removeChild(element);
+                        var element = document.getElementById('pastInquiry').childNodes[i];
+                        //document.getElementById('pastInquiry').removeChild(element);
+                        console.log(element)
                     }
                     
                     for(var i = 0; i < res.length; i++){
