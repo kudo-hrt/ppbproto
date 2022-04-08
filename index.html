@@ -380,16 +380,12 @@
                     
                     var oldPastInquiry = document.getElementById('pastInquiry');
                     var removeOldPastInquiry = oldPastInquiry.querySelectorAll('tr');
-                    console.log(removeOldPastInquiry.length);
-                    console.log(removeOldPastInquiry);
                     
                     for(var i = 1; i < removeOldPastInquiry.length; i++){
                         removeOldPastInquiry[i].parentNode.removeChild(removeOldPastInquiry[i])
-                        //var element = document.getElementById('pastInquiry').childNodes[i];
-                        //document.getElementById('pastInquiry').removeChild(element);
                     }
                     // template要素を取得
-                    /*var template = document.getElementById('template');
+                    var template = document.getElementById('template');
                     for(var i = 0; i < res.length; i++){
                         // template要素の内容を複製
                         var clone = template.content.cloneNode(true);
@@ -401,7 +397,7 @@
 
                         // div#containerの中に追加
                         document.getElementById('pastInquiry').appendChild(clone);
-                    }*/
+                    }
                 }
             }
         }
