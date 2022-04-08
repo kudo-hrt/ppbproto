@@ -375,18 +375,22 @@
             if(this.readyState == 4 && this.status == 200){
                 var res = JSON.parse(this.responseText);
                 if(res.length != 0){
-                    var formElement = document.getElementById('inquiryForm');
+                    // template要素を取得
+                    var template = document.getElementById('template');
                     formElement.reset();
-                    document.getElementById('pastInquiry').innerHTML = "";
-                    document.getElementById('pastInquiry').innerHTML += '<table class="formTable">';
-                    for (var i = 0; i < res.length; i++) {
-                        document.getElementById('pastInquiry').innerHTML += '<tr>';
-                        document.getElementById('pastInquiry').innerHTML += '<td>' + res[i].CreatedDate + '</td>';
-                        document.getElementById('pastInquiry').innerHTML += '<td>' + res[i].Classification__c + '</td>';
-                        document.getElementById('pastInquiry').innerHTML += '<td>' + res[i].Inquiry__c + '</td>';
-                        document.getElementById('pastInquiry').innerHTML += '</tr>';
+                    
+                    for(var i =0; i < res.length; i++){
+                        // template要素の内容を複製
+                        var clone = template.content.cloneNode(true);
+
+                        // 複製したtemplate要素にデータを挿入
+                        clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
+                        clone.querySelector('.Classification__c').textContent = res[i].Classification__c;
+                        clone.querySelector('.Inquiry__c').textContent = res[i].Inquiry__c;
+
+                        // div#containerの中に追加
+                        document.getElementById('pastInquiry').appendChild(clone);
                     }
-                    document.getElementById('pastInquiry').innerHTML += '</table>';
                 }
             }
         }
