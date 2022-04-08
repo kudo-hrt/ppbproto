@@ -381,10 +381,10 @@
                     var template = document.getElementById('template');
                     var deleteNum = 4;
                     for(var i = 0; i < 10; i++){
-                        var element = document.getElementById('pastInquiry').childNodes[i];
-                        //document.getElementById('pastInquiry').removeChild(element);
-                        //deleteNum++;
-                        console.log(element);
+                        var element = document.getElementById('pastInquiry').childNodes[deleteNum];
+                        document.getElementById('pastInquiry').removeChild(element);
+                        deleteNum = deleteNum + 2;
+                        //console.log(element);
                     }
                     
                     for(var i = 0; i < res.length; i++){
