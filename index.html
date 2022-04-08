@@ -338,7 +338,7 @@
                         var clone = template.content.cloneNode(true);
 
                         // 複製したtemplate要素にデータを挿入
-                        clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate.format('YYYY年MM月DD日 HH時mm分');
+                        clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
                         clone.querySelector('.Classification__c').textContent = res[i].Classification__c;
                         clone.querySelector('.Inquiry__c').textContent = res[i].Inquiry__c;
 
