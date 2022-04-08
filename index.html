@@ -323,34 +323,59 @@
 <script type="text/javascript">
     // 初期表示処理
     window.onload = function(){
-        // GETメソッド呼び出し
-        var xmlHttpRequest = new XMLHttpRequest();
-        xmlHttpRequest.onreadystatechange = function(){
+        // body要素
+        var tokenData = {};
+
+        tokenData.client_id = '3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG';
+        tokenData.client_secret = 'F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142';
+        tokenData.username = 'payproto@proto.com.dev';
+        tokenData.password = 'sfdcj1234UkukLP2PWwJyMeiZppCJVeVe';
+        tokenData.grant_type = 'password';
+
+        // Rest ApexへパラメータをJSON形式に変換
+        data = JSON.stringify( tokenData );
+        
+        // アクセストークンの発行
+        var accessXmlHttpRequest = new XMLHttpRequest();
+        accessXmlHttpRequest.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
-                var res = JSON.parse(this.responseText);
+                console.log('ここ');
+                console.log(this.responseText);
+                // GETメソッド呼び出し
+                var xmlHttpRequest = new XMLHttpRequest();
+                xmlHttpRequest.onreadystatechange = function(){
+                    if(this.readyState == 4 && this.status == 200){
+                        var res = JSON.parse(this.responseText);
 
-                if(res.length != 0){
-                    // template要素を取得
-                    var template = document.getElementById('template');
+                        if(res.length != 0){
+                            // template要素を取得
+                            var template = document.getElementById('template');
 
-                    for(var i =0; i < res.length; i++){
-                        // template要素の内容を複製
-                        var clone = template.content.cloneNode(true);
+                            for(var i =0; i < res.length; i++){
+                                // template要素の内容を複製
+                                var clone = template.content.cloneNode(true);
 
-                        // 複製したtemplate要素にデータを挿入
-                        clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
-                        clone.querySelector('.Classification__c').textContent = res[i].Classification__c;
-                        clone.querySelector('.Inquiry__c').textContent = res[i].Inquiry__c;
+                                // 複製したtemplate要素にデータを挿入
+                                clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
+                                clone.querySelector('.Classification__c').textContent = res[i].Classification__c;
+                                clone.querySelector('.Inquiry__c').textContent = res[i].Inquiry__c;
 
-                        // div#containerの中に追加
-                        document.getElementById('pastInquiry').appendChild(clone);
+                                // div#containerの中に追加
+                                document.getElementById('pastInquiry').appendChild(clone);
+                            }
+                        }
                     }
                 }
+                xmlHttpRequest.open( 'GET', 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c/A0000001');
+                xmlHttpRequest.setRequestHeader( 'Authorization', 'Bearer 00D5j00000BXmyf!ARUAQKoB0oBkQgxjlEPpmhMl8AnyEih6_2m4ZX6sKJ0Cen74P7HPTs7CY1xc88UPEQD96c9F9QyL1U1gkS8Oxgwl1dYwvJ05');
+                xmlHttpRequest.send();
             }
         }
-        xmlHttpRequest.open( 'GET', 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c/A0000001');
-        xmlHttpRequest.setRequestHeader( 'Authorization', 'Bearer 00D5j00000BXmyf!ARUAQKoB0oBkQgxjlEPpmhMl8AnyEih6_2m4ZX6sKJ0Cen74P7HPTs7CY1xc88UPEQD96c9F9QyL1U1gkS8Oxgwl1dYwvJ05');
-        xmlHttpRequest.send();
+        accessXmlHttpRequest.open( 'POST', 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/token');
+        // サーバに対して解析方法を指定する
+        accessXmlHttpRequest.setRequestHeader( 'Content-Type', 'application/json');
+        // データをリクエスト ボディに含めて送信する
+        accessXmlHttpRequest.send( data );
     }
 
     function send() {
