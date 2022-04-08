@@ -377,16 +377,14 @@
                 if(res.length != 0){
                     var formElement = document.getElementById('inquiryForm');
                     formElement.reset();
+                    
+                    var oldPastInquiry = document.getElementById('pastInquiry');
+                    for(var i = 3; i < oldPastInquiry.length; i++){
+                        var element = document.getElementById('pastInquiry').childNodes[i];
+                        document.getElementById('pastInquiry').removeChild(element);
+                    }
                     // template要素を取得
                     var template = document.getElementById('template');
-                    var deleteNum = 4;
-                    for(var i = 0; i < 10; i++){
-                        var element = document.getElementById('pastInquiry').childNodes[deleteNum];
-                        document.getElementById('pastInquiry').removeChild(element);
-                        deleteNum = deleteNum + 2;
-                        //console.log(element);
-                    }
-                    
                     for(var i = 0; i < res.length; i++){
                         // template要素の内容を複製
                         var clone = template.content.cloneNode(true);
