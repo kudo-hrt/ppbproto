@@ -346,8 +346,8 @@
         xmlHttpRequest.setRequestHeader( 'Content-Type', 'application/json');
         xmlHttpRequest.send( data );
         */
-        
-        // アクセストークン取得（インプリシットフロー）
+        /*
+        // アクセストークン取得（インプリシットフロー）GET
         var xmlHttpRequest = new XMLHttpRequest();
         xmlHttpRequest.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
@@ -355,6 +355,24 @@
             }
         }
         xmlHttpRequest.open( 'GET', 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/authorize?response_type=token&client_id=3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG');
+        xmlHttpRequest.send();
+        */
+        // アクセストークン取得（インプリシットフロー）POST
+        var paramData = {};
+
+        paramData.client_id = '3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG';
+        paramData.response_type = 'token';
+
+        // Rest ApexへパラメータをJSON形式に変換
+        data = JSON.stringify( paramData );
+        
+        var xmlHttpRequest = new XMLHttpRequest();
+        xmlHttpRequest.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                alert('成功');
+            }
+        }
+        xmlHttpRequest.open( 'POST', 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/authorize');
         xmlHttpRequest.send();
         
         // GETメソッド呼び出し
