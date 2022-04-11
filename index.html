@@ -323,6 +323,7 @@
 <script type="text/javascript">
     // 初期表示処理
     window.onload = function(){
+        /*
         // アクセストークン取得（パスワードフロー）
         var paramData = {};
 
@@ -344,7 +345,8 @@
         xmlHttpRequest.open( 'POST', 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/token');
         xmlHttpRequest.setRequestHeader( 'Content-Type', 'application/json');
         xmlHttpRequest.send( data );
-        /*
+        */
+        
         // アクセストークン取得（インプリシットフロー）
         var xmlHttpRequest = new XMLHttpRequest();
         xmlHttpRequest.onreadystatechange = function(){
@@ -354,7 +356,6 @@
         }
         xmlHttpRequest.open( 'GET', 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/authorize?response_type=token&client_id=3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG');
         xmlHttpRequest.send();
-        */
         
         // GETメソッド呼び出し
         /*
