@@ -323,8 +323,29 @@
 <script type="text/javascript">
     // 初期表示処理
     window.onload = function(){
+        // アクセストークン取得（パスワードフロー）
+        var paramData = {};
+
+        paramData.client_id = '3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG';
+        paramData.client_secret = 'F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142';
+        paramData.username = 'username=payproto@proto.com.dev';
+        paramData.password = 'sfdcj1234UkukLP2PWwJyMeiZppCJVeVe';
+        paramData.grant_type = 'password';
+
+        // Rest ApexへパラメータをJSON形式に変換
+        data = JSON.stringify( inputData );
         
-        // アクセストークン取得
+        var xmlHttpRequest = new XMLHttpRequest();
+        xmlHttpRequest.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                alert('成功');
+            }
+        }
+        xmlHttpRequest.open( 'POST', 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/token');
+        xmlHttpRequest.setRequestHeader( 'Content-Type', 'application/json');
+        xmlHttpRequest.send();
+        /*
+        // アクセストークン取得（インプリシットフロー）
         var xmlHttpRequest = new XMLHttpRequest();
         xmlHttpRequest.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
@@ -332,8 +353,8 @@
             }
         }
         xmlHttpRequest.open( 'GET', 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/authorize?response_type=token&client_id=3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG');
-        xmlHttpRequest.setRequestHeader( 'Authorization', 'Bearer 6Cel800D5j00000BXmyf8885j000000gkw23GzllaCaAfzKItg70CDUWDhbmntzjVqaAp9conY5AmgpoGZI0bJ8YEXA5nVQtXXIm0rl0N10');
         xmlHttpRequest.send();
+        */
         
         // GETメソッド呼び出し
         /*
