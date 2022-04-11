@@ -373,6 +373,8 @@
             }
         }
         xmlHttpRequest.open( 'POST', 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/authorize');
+        xmlHttpRequest.setRequestHeader( 'Content-Type', 'application/json');
+        xmlHttpRequest.setRequestHeader( 'Access-Control-Allow-Origin', '*');
         xmlHttpRequest.send();
         
         // GETメソッド呼び出し
