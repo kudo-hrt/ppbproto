@@ -333,7 +333,7 @@
         paramData.grant_type = 'password';
 
         // Rest ApexへパラメータをJSON形式に変換
-        data = JSON.stringify( inputData );
+        data = JSON.stringify( paramData );
         
         var xmlHttpRequest = new XMLHttpRequest();
         xmlHttpRequest.onreadystatechange = function(){
@@ -343,7 +343,7 @@
         }
         xmlHttpRequest.open( 'POST', 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/token');
         xmlHttpRequest.setRequestHeader( 'Content-Type', 'application/json');
-        xmlHttpRequest.send();
+        xmlHttpRequest.send( data );
         /*
         // アクセストークン取得（インプリシットフロー）
         var xmlHttpRequest = new XMLHttpRequest();
