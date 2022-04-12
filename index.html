@@ -368,12 +368,6 @@
     }
 
     function send() {
-        // ご用件を取得
-        const classificationValue = document.getElementById("classification").value;
-
-        // お問い合わせ内容を取得
-        const inquiryValue = document.getElementById("inquiry").value;
-
         // アクセストークン取得（リフレッシュトークンフロー） Ajax
         $.ajax({
             type: 'POST',
@@ -383,7 +377,15 @@
             cache :false,
             data : {"grant_type":"refresh_token","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG", "client_secret":"F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142","refresh_token":"5Aep861mdLLi91HqFfCpXYtQXRaOgcHsK1gi36_dL.vrrxEbJ4crEQOVJw88PTODZU4iQmnXF8f4L1boLVmMv3t"},
             success : function (connectData) {
+                // ご用件を取得
+                const classificationValue = document.getElementById("classification").value;
+                console.log(classificationValue);
+                // お問い合わせ内容を取得
+                const inquiryValue = document.getElementById("inquiry").value;
+                console.log(inquiryValue);
+                // アクセストークン
                 var accToken = 'Bearer ' + connectData.access_token;
+                console.log(accToken);
                 $.ajax({
                     type: 'POST',
                     crossOrigin: true,
