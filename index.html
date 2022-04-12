@@ -348,20 +348,15 @@
 
         // アクセストークン取得（パスワードフロー）
         var params = {};
-        var form_params = {};
 
-        form_params.client_id = '3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG';
-        form_params.client_secret = 'F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142';
-        form_params.username = 'username=payproto@proto.com.dev';
-        form_params.password = 'sfdcj1234UkukLP2PWwJyMeiZppCJVeVe';
-        form_params.grant_type = 'password';
+        params.client_id = '3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG';
+        params.client_secret = 'F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142';
+        params.username = 'username=payproto@proto.com.dev';
+        params.password = 'sfdcj1234UkukLP2PWwJyMeiZppCJVeVe';
+        params.grant_type = 'password';
         
-        params.form_params = form_params;
-
         // Rest ApexへパラメータをJSON形式に変換
         data = JSON.stringify( params );
-        
-        console.log(data);
         
         var xmlHttpRequest = new XMLHttpRequest();
         xmlHttpRequest.onreadystatechange = function(){
