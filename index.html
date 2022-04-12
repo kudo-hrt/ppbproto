@@ -381,7 +381,10 @@
             cache :false,
             data : {"grant_type":"password","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG", "client_secret":"F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142","username":"payproto@proto.com.dev","password":"sfdcj1234UkukLP2PWwJyMeiZppCJVeVe"},
             success : function (data) {
-                alert('成功');
+                console.log('成功');
+                console.log(data.access_token);
+                console.log(data);
+                
             },
             error : function (data, errorThrown,status) {
 
