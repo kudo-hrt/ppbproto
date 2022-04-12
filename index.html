@@ -389,11 +389,11 @@
                 $.ajax({
                     type: 'POST',
                     crossOrigin: true,
-                    url: 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c',
+                    url: 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c/',
                     dataType: 'json',
                     cache :false,
                     headers: {"Authorization" : accToken},
-                    data : {"AccountNumber":"A0000001","Classification":classificationValue, "Inquiry":inquiryValue},
+                    data : {"AccountNumber":"A0000001","Classification":classificationValue,"Inquiry":inquiryValue},
                     success : function (data) {
                         var res = JSON.parse(data);
                         if(res.length != 0){
