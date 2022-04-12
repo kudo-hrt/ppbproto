@@ -333,7 +333,6 @@
             data : {"grant_type":"refresh_token","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG", "client_secret":"F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142","refresh_token":"5Aep861mdLLi91HqFfCpXYtQXRaOgcHsK1gi36_dL.vrrxEbJ4crEQOVJw88PTODZU4iQmnXF8f4L1boLVmMv3t"},
             success : function (connectData) {
                 var accToken = 'Bearer ' + connectData.access_token;
-                console.log(accToken);
                 $.ajax({
                     type: 'GET',
                     crossOrigin: true,
@@ -345,7 +344,7 @@
                         if(res.length != 0){
                             // template要素を取得
                             var template = document.getElementById('template');
-                            for(var i =0; i < res.length; i++){
+                            for(var i = 0; i < res.length; i++){
                                 // template要素の内容を複製
                                 var clone = template.content.cloneNode(true);
                                 // 複製したtemplate要素にデータを挿入
@@ -375,6 +374,66 @@
         // お問い合わせ内容を取得
         const inquiryValue = document.getElementById("inquiry").value;
 
+        // アクセストークン取得（リフレッシュトークンフロー） Ajax
+        $.ajax({
+            type: 'POST',
+            crossOrigin: true,
+            url: 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/token',
+            dataType: 'json',
+            cache :false,
+            data : {"grant_type":"refresh_token","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG", "client_secret":"F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142","refresh_token":"5Aep861mdLLi91HqFfCpXYtQXRaOgcHsK1gi36_dL.vrrxEbJ4crEQOVJw88PTODZU4iQmnXF8f4L1boLVmMv3t"},
+            success : function (connectData) {
+                var accToken = 'Bearer ' + connectData.access_token;
+                $.ajax({
+                    type: 'POST',
+                    crossOrigin: true,
+                    url: 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c',
+                    dataType: 'json',
+                    cache :false,
+                    headers: {"Authorization" : accToken},
+                    data : {"AccountNumber":"A0000001","Classification":classificationValue, "Inquiry":inquiryValue},
+                    success : function (data) {
+                        var res = JSON.parse(data);
+                        if(res.length != 0){
+                            var formElement = document.getElementById('inquiryForm');
+                            formElement.reset();
+                    
+                            var oldPastInquiry = document.getElementById('pastInquiry');
+                            var removeOldPastInquiry = oldPastInquiry.querySelectorAll('tr');
+                    
+                            for(var i = 1; i < removeOldPastInquiry.length; i++){
+                                removeOldPastInquiry[i].parentNode.removeChild(removeOldPastInquiry[i])
+                            }
+                            // template要素を取得
+                            var template = document.getElementById('template');
+                            for(var i = 0; i < res.length; i++){
+                                // template要素の内容を複製
+                                var clone = template.content.cloneNode(true);
+
+                                // 複製したtemplate要素にデータを挿入
+                                clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
+                                clone.querySelector('.Classification__c').textContent = res[i].Classification__c;
+                                clone.querySelector('.Inquiry__c').textContent = res[i].Inquiry__c;
+
+                                // div#containerの中に追加
+                                document.getElementById('pastInquiry').appendChild(clone);
+                            }
+                        }
+                    },
+                    error : function (data, errorThrown,status) {
+                        
+                    }
+                })
+            },
+            error : function (data, errorThrown,status) {
+            }
+        });
+        
+        
+        
+        
+        
+        /*
         var inputData = {};
 
         inputData.AccountNumber = 'A0000001';
@@ -422,6 +481,6 @@
         xmlHttpRequest.setRequestHeader( 'Authorization', 'Bearer 00D5j00000BXmyf!ARUAQA6ePiQGo8A.Ue1bz67b_NbA245Uzh3KolOskgXlPnb9jyAKgsh1MiLKaJZdTZ4bJZPCasgkIk3BjkHMBTQORi0tKgmW');
         // データをリクエスト ボディに含めて送信する
         xmlHttpRequest.send( data );
-
+*/
     }
 </script>
