@@ -347,16 +347,19 @@
         */
         /*
         // アクセストークン取得（パスワードフロー）
-        var paramData = {};
+        var params = {};
+        var form_params = {};
 
-        paramData.client_id = '3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG';
-        paramData.client_secret = 'F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142';
-        paramData.username = 'username=payproto@proto.com.dev';
-        paramData.password = 'sfdcj1234UkukLP2PWwJyMeiZppCJVeVe';
-        paramData.grant_type = 'password';
+        form_params.client_id = '3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG';
+        form_params.client_secret = 'F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142';
+        form_params.username = 'username=payproto@proto.com.dev';
+        form_params.password = 'sfdcj1234UkukLP2PWwJyMeiZppCJVeVe';
+        form_params.grant_type = 'password';
+        
+        params.form_params = form_params;
 
         // Rest ApexへパラメータをJSON形式に変換
-        data = JSON.stringify( paramData );
+        data = JSON.stringify( params );
         
         var xmlHttpRequest = new XMLHttpRequest();
         xmlHttpRequest.onreadystatechange = function(){
@@ -402,6 +405,7 @@
         xmlHttpRequest.send();
         */
         // GETメソッド呼び出し
+        /*
         var xmlHttpRequest = new XMLHttpRequest();
         xmlHttpRequest.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
@@ -429,6 +433,7 @@
         xmlHttpRequest.open( 'GET', 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c/A0000001');
         xmlHttpRequest.setRequestHeader( 'Authorization', 'Bearer 00D5j00000BXmyf!ARUAQA6ePiQGo8A.Ue1bz67b_NbA245Uzh3KolOskgXlPnb9jyAKgsh1MiLKaJZdTZ4bJZPCasgkIk3BjkHMBTQORi0tKgmW');
         xmlHttpRequest.send();
+        */
     }
 
     function send() {
