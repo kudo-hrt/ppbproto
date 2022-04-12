@@ -323,6 +323,7 @@
 <script type="text/javascript">
     // 初期表示処理
     window.onload = function(){
+        /*
         // リフレッシュトークンフロー
         var paramData = {};
 
@@ -346,6 +347,7 @@
         xmlHttpRequest.setRequestHeader( 'Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
         xmlHttpRequest.setRequestHeader('Access-Control-Allow-Headers','Content-Type,Content-Range,Content-Disposition,Content-Description');
         xmlHttpRequest.send( data );
+        */
         /*
         // アクセストークン取得（パスワードフロー）
         var params = {};
@@ -370,6 +372,22 @@
         xmlHttpRequest.setRequestHeader( 'Authorization', 'Basic M01WRzlwUnp2TWtqTWI2bnNMc21UeF9GcUIwclE5QUhFTVl0ODVUcndGcDZiM3llUC50YTE4VlFwbWhhX0RzMzFmc3NGZFlpYjREZExQY0xLcXRRRzpGODY0QkREOEFERkI4QjE3RUEyN0YwNjIzQ0Y5MDM5QTUwM0E3NkY5MzEyMDMyNjU0REJGRkRCMjVFODdCMTQy');
         xmlHttpRequest.send( data );
         */
+        // アクセストークン取得（パスワードフロー） Ajax
+        $.ajax({
+            type: 'POST',
+            crossOrigin: true,
+            url: 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/token',
+            dataType: 'json',
+            cache :false,
+            data : {"grant_type":"password","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG", "client_secret":"F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142","username":"payproto@proto.com.dev","password":"sfdcj1234UkukLP2PWwJyMeiZppCJVeVe"},
+            success : function (data) {
+                alert('成功');
+            },
+            error : function (data, errorThrown,status) {
+
+            }
+        });
+
         /*
         // アクセストークン取得（インプリシットフロー）GET
         var xmlHttpRequest = new XMLHttpRequest();
