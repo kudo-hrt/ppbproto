@@ -379,13 +379,10 @@
             success : function (connectData) {
                 // ご用件を取得
                 const classificationValue = document.getElementById("classification").value;
-                console.log(classificationValue);
                 // お問い合わせ内容を取得
                 const inquiryValue = document.getElementById("inquiry").value;
-                console.log(inquiryValue);
                 // アクセストークン
                 var accToken = 'Bearer ' + connectData.access_token;
-                console.log(accToken);
                 $.ajax({
                     type: 'POST',
                     crossOrigin: true,
@@ -394,7 +391,7 @@
                     cache :false,
                     contentType: 'application/json',
                     headers: {"Authorization" : accToken},
-                    data : {"AccountNumber":"A0000001","Classification":classificationValue,"Inquiry":inquiryValue},
+                    data : {"AccountNumber":"A0000001","Classification":"classificationValue","Inquiry":"inquiryValue"},
                     success : function (data) {
                         var res = JSON.parse(data);
                         if(res.length != 0){
