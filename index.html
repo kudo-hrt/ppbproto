@@ -345,7 +345,6 @@
         xmlHttpRequest.setRequestHeader( 'Content-Type', 'application/json');
         xmlHttpRequest.send( data );
         */
-        /*
         // アクセストークン取得（パスワードフロー）
         var params = {};
 
@@ -368,7 +367,6 @@
         xmlHttpRequest.setRequestHeader( 'Content-Type', 'application/json');
         xmlHttpRequest.setRequestHeader( 'Authorization', 'Basic M01WRzlwUnp2TWtqTWI2bnNMc21UeF9GcUIwclE5QUhFTVl0ODVUcndGcDZiM3llUC50YTE4VlFwbWhhX0RzMzFmc3NGZFlpYjREZExQY0xLcXRRRzpGODY0QkREOEFERkI4QjE3RUEyN0YwNjIzQ0Y5MDM5QTUwM0E3NkY5MzEyMDMyNjU0REJGRkRCMjVFODdCMTQy');
         xmlHttpRequest.send( data );
-        */
         /*
         // アクセストークン取得（インプリシットフロー）GET
         var xmlHttpRequest = new XMLHttpRequest();
@@ -403,6 +401,7 @@
         xmlHttpRequest.send();
         */
         // GETメソッド呼び出し
+        /*
         var xmlHttpRequest = new XMLHttpRequest();
         xmlHttpRequest.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
@@ -428,9 +427,9 @@
             }
         }
         xmlHttpRequest.open( 'GET', 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c/A0000001');
-        //xmlHttpRequest.setRequestHeader( 'Authorization', 'Bearer 00D5j00000BXmyf!ARUAQA6ePiQGo8A.Ue1bz67b_NbA245Uzh3KolOskgXlPnb9jyAKgsh1MiLKaJZdTZ4bJZPCasgkIk3BjkHMBTQORi0tKgmW');
-        xmlHttpRequest.setRequestHeader( 'Authorization', 'Basic M01WRzlwUnp2TWtqTWI2bnNMc21UeF9GcUIwclE5QUhFTVl0ODVUcndGcDZiM3llUC50YTE4VlFwbWhhX0RzMzFmc3NGZFlpYjREZExQY0xLcXRRRzpGODY0QkREOEFERkI4QjE3RUEyN0YwNjIzQ0Y5MDM5QTUwM0E3NkY5MzEyMDMyNjU0REJGRkRCMjVFODdCMTQy');
+        xmlHttpRequest.setRequestHeader( 'Authorization', 'Bearer 00D5j00000BXmyf!ARUAQA6ePiQGo8A.Ue1bz67b_NbA245Uzh3KolOskgXlPnb9jyAKgsh1MiLKaJZdTZ4bJZPCasgkIk3BjkHMBTQORi0tKgmW');
         xmlHttpRequest.send();
+        */
     }
 
     function send() {
