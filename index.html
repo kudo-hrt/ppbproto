@@ -392,6 +392,7 @@
                     url: 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c/',
                     dataType: 'json',
                     cache :false,
+                    contentType: 'application/json',
                     headers: {"Authorization" : accToken},
                     data : {"AccountNumber":"A0000001","Classification":classificationValue,"Inquiry":inquiryValue},
                     success : function (data) {
