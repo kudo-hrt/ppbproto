@@ -437,59 +437,5 @@
             error : function (data, errorThrown,status) {
             }
         });
-        
-        
-        
-        
-        
-        /*
-        var inputData = {};
-
-        inputData.AccountNumber = 'A0000001';
-        inputData.Classification = classificationValue;
-        inputData.Inquiry = inquiryValue;
-
-        // Rest ApexへパラメータをJSON形式に変換
-        data = JSON.stringify( inputData );
-
-        var xmlHttpRequest = new XMLHttpRequest();
-        xmlHttpRequest.onreadystatechange = function()
-        {
-            if(this.readyState == 4 && this.status == 200){
-                var res = JSON.parse(this.responseText);
-                if(res.length != 0){
-                    var formElement = document.getElementById('inquiryForm');
-                    formElement.reset();
-                    
-                    var oldPastInquiry = document.getElementById('pastInquiry');
-                    var removeOldPastInquiry = oldPastInquiry.querySelectorAll('tr');
-                    
-                    for(var i = 1; i < removeOldPastInquiry.length; i++){
-                        removeOldPastInquiry[i].parentNode.removeChild(removeOldPastInquiry[i])
-                    }
-                    // template要素を取得
-                    var template = document.getElementById('template');
-                    for(var i = 0; i < res.length; i++){
-                        // template要素の内容を複製
-                        var clone = template.content.cloneNode(true);
-
-                        // 複製したtemplate要素にデータを挿入
-                        clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
-                        clone.querySelector('.Classification__c').textContent = res[i].Classification__c;
-                        clone.querySelector('.Inquiry__c').textContent = res[i].Inquiry__c;
-
-                        // div#containerの中に追加
-                        document.getElementById('pastInquiry').appendChild(clone);
-                    }
-                }
-            }
-        }
-        xmlHttpRequest.open( 'POST', 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c/');
-        // サーバに対して解析方法を指定する
-        xmlHttpRequest.setRequestHeader( 'Content-Type', 'application/json');
-        xmlHttpRequest.setRequestHeader( 'Authorization', 'Bearer 00D5j00000BXmyf!ARUAQA6ePiQGo8A.Ue1bz67b_NbA245Uzh3KolOskgXlPnb9jyAKgsh1MiLKaJZdTZ4bJZPCasgkIk3BjkHMBTQORi0tKgmW');
-        // データをリクエスト ボディに含めて送信する
-        xmlHttpRequest.send( data );
-*/
     }
 </script>
