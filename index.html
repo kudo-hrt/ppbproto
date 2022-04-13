@@ -383,6 +383,7 @@
                 const inquiryValue = document.getElementById("inquiry").value;
                 // アクセストークン
                 var accToken = 'Bearer ' + connectData.access_token;
+                console.log(connectData.access_token);
                 $.ajax({
                     type: 'POST',
                     crossOrigin: true,
