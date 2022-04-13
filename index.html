@@ -402,8 +402,7 @@
                     headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
                     dataType: 'json',
                     data : data,
-                    success : function (data) {
-                        var res = JSON.parse(data);
+                    success : function (res) {
                         if(res.length != 0){
                             var formElement = document.getElementById('inquiryForm');
                             formElement.reset();
