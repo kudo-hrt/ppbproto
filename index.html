@@ -332,7 +332,6 @@
             cache :false,
             data : {"grant_type":"refresh_token","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG", "client_secret":"F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142","refresh_token":"5Aep861mdLLi91HqFfCpXYtQXRaOgcHsK1gi36_cVHboubUhDFRrSCX9zyL1KBPgaR5qiKjUA54Q0RZhiN_teRI"},
             success : function (connectData) {
-                console.log(connectData.access_token);
                 var accToken = 'Bearer ' + connectData.access_token;
                 $.ajax({
                     type: 'GET',
@@ -342,9 +341,11 @@
                     cache :false,
                     headers: {"Authorization" : accToken},
                     success : function (res) {
+                        // データを取得できた場合
                         if(res.length != 0){
                             // template要素を取得
                             var template = document.getElementById('template');
+                            // データの数分繰り返し
                             for(var i = 0; i < res.length; i++){
                                 // template要素の内容を複製
                                 var clone = template.content.cloneNode(true);
@@ -392,7 +393,7 @@
                     cache :false,
                     headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
                     dataType: 'json',
-                    data : {"AccountNumber" : "A0000001","Classification" : classificationValue, "Inquiry" : inquiryValue},
+                    data : {"AccountNumber" : "1111111","Classification" : "222222222", "Inquiry" : "3333333"},
                     success : function (data) {
                         var res = JSON.parse(data);
                         if(res.length != 0){
