@@ -402,22 +402,7 @@
                 
                 console.log(inputFile2);
                 console.log(reader.readAsDataURL( inputFile2 ));*/
-                var element1 = document.getElementById( "hoge" ) ;
-                var element2 = document.getElementById( "fuga" ) ;
-                var resultElement = document.getElementById( "result" ) ;
-
-                element1.onchange = function () {
-	            var fileReader = new FileReader() ;
-
-	            fileReader.onload = function () {
-		        console.log( this.result ) ;
-		        resultElement.appendChild( new Text( this.result ) ) ;
-		        element2.src = this.result ;
-	            }
-
-	           var file = element1.files[0] ;
-	           fileReader.readAsDataURL( file ) ;
-		}
+                
                 
                 var inputData = {};
                 inputData.AccountNumber = 'A0000001';
@@ -471,4 +456,21 @@
             }
         });
     }
+	
+	var element1 = document.getElementById( "hoge" ) ;
+                var element2 = document.getElementById( "fuga" ) ;
+                var resultElement = document.getElementById( "result" ) ;
+
+                element1.onchange = function () {
+	            var fileReader = new FileReader() ;
+
+	            fileReader.onload = function () {
+		        console.log( this.result ) ;
+		        resultElement.appendChild( new Text( this.result ) ) ;
+		        element2.src = this.result ;
+	            }
+
+	           var file = element1.files[0] ;
+	           fileReader.readAsDataURL( file ) ;
+		}
 </script>
