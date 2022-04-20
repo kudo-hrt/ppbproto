@@ -310,7 +310,7 @@
                     </tr>
                     <tr>
                         <th>ファイルアップロード</th>
-                        <td><input type="file" multiple id="hoge">
+                        <td><input type="file" id="inputFile">
                         <div id="result"></div></td>
                     </tr>
                 </table>
@@ -374,7 +374,7 @@
         });
     }
 
-    var element1 = document.getElementById( "hoge" ) ;
+    var element1 = document.getElementById( "inputFile" ) ;
     var inputFile;
 
     element1.onchange = function () {
@@ -408,26 +408,11 @@
                 // お問い合わせ内容を取得
                 const inquiryValue = document.getElementById("inquiry").value;
                 
-                //const inputFile = reader.readAsDataURL(document.getElementById("inputFile"));
-                /*const inputFile = document.querySelector('input[type=file]').files[0];
-		
-                var element = document.getElementById("inputFile");
-                var inputFile2 = element.files[0];
-                console.log(inputFile);
-                console.log(reader.readAsDataURL( inputFile ));
-                
-                console.log(inputFile2);
-                console.log(reader.readAsDataURL( inputFile2 ));*/
-		    	console.log('送るとき' + inputFile);
-	        var element1 = document.getElementById( "hoge" ) ;
-                var file = element1.files[0] ;
-	        
-		
                 var inputData = {};
                 inputData.AccountNumber = 'A0000001';
                 inputData.Classification = classificationValue;
                 inputData.Inquiry = inquiryValue;
-		inputData.File = reader.readAsDataURL( file ) ;
+		inputData.File = inputFile ;
 
                 // Rest ApexへパラメータをJSON形式に変換
                 var data = JSON.stringify( inputData );
