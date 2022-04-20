@@ -310,8 +310,7 @@
                     </tr>
                     <tr>
                         <th>ファイルアップロード</th>
-                        <td><input type="file" name="file_1">
-                            <button type="button" onclick="file_upload()">アップロード</button></td>
+                        <td><input type="file" id="inputFile" name="inputFile"></td>
                     </tr>
                 </table>
                 <p class="btn">
@@ -326,5 +325,126 @@
     </body>
 </html>
 <script type="text/javascript">
-var _0x3935=["\x6F\x6E\x6C\x6F\x61\x64","\x50\x4F\x53\x54","\x68\x74\x74\x70\x73\x3A\x2F\x2F\x70\x72\x6F\x74\x6F\x63\x6F\x6D\x64\x65\x76\x2D\x64\x65\x76\x2D\x65\x64\x2E\x6D\x79\x2E\x73\x61\x6C\x65\x73\x66\x6F\x72\x63\x65\x2E\x63\x6F\x6D\x2F\x73\x65\x72\x76\x69\x63\x65\x73\x2F\x6F\x61\x75\x74\x68\x32\x2F\x74\x6F\x6B\x65\x6E","\x6A\x73\x6F\x6E","\x72\x65\x66\x72\x65\x73\x68\x5F\x74\x6F\x6B\x65\x6E","\x33\x4D\x56\x47\x39\x70\x52\x7A\x76\x4D\x6B\x6A\x4D\x62\x36\x6E\x73\x4C\x73\x6D\x54\x78\x5F\x46\x71\x42\x30\x72\x51\x39\x41\x48\x45\x4D\x59\x74\x38\x35\x54\x72\x77\x46\x70\x36\x62\x33\x79\x65\x50\x2E\x74\x61\x31\x38\x56\x51\x70\x6D\x68\x61\x5F\x44\x73\x33\x31\x66\x73\x73\x46\x64\x59\x69\x62\x34\x44\x64\x4C\x50\x63\x4C\x4B\x71\x74\x51\x47","\x46\x38\x36\x34\x42\x44\x44\x38\x41\x44\x46\x42\x38\x42\x31\x37\x45\x41\x32\x37\x46\x30\x36\x32\x33\x43\x46\x39\x30\x33\x39\x41\x35\x30\x33\x41\x37\x36\x46\x39\x33\x31\x32\x30\x33\x32\x36\x35\x34\x44\x42\x46\x46\x44\x42\x32\x35\x45\x38\x37\x42\x31\x34\x32","\x35\x41\x65\x70\x38\x36\x31\x6D\x64\x4C\x4C\x69\x39\x31\x48\x71\x46\x66\x43\x70\x58\x59\x74\x51\x58\x52\x61\x4F\x67\x63\x48\x73\x4B\x31\x67\x69\x33\x36\x5F\x63\x56\x48\x62\x6F\x75\x62\x55\x68\x44\x46\x52\x72\x53\x43\x58\x39\x7A\x79\x4C\x31\x4B\x42\x50\x67\x61\x52\x35\x71\x69\x4B\x6A\x55\x41\x35\x34\x51\x30\x52\x5A\x68\x69\x4E\x5F\x74\x65\x52\x49","\x42\x65\x61\x72\x65\x72\x20","\x61\x63\x63\x65\x73\x73\x5F\x74\x6F\x6B\x65\x6E","\x47\x45\x54","\x68\x74\x74\x70\x73\x3A\x2F\x2F\x70\x72\x6F\x74\x6F\x63\x6F\x6D\x64\x65\x76\x2D\x64\x65\x76\x2D\x65\x64\x2E\x6D\x79\x2E\x73\x61\x6C\x65\x73\x66\x6F\x72\x63\x65\x2E\x63\x6F\x6D\x2F\x73\x65\x72\x76\x69\x63\x65\x73\x2F\x61\x70\x65\x78\x72\x65\x73\x74\x2F\x50\x50\x42\x5F\x49\x6E\x71\x75\x69\x72\x79\x5F\x5F\x63\x2F\x41\x30\x30\x30\x30\x30\x30\x31","\x6C\x65\x6E\x67\x74\x68","\x74\x65\x6D\x70\x6C\x61\x74\x65","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64","\x63\x6C\x6F\x6E\x65\x4E\x6F\x64\x65","\x63\x6F\x6E\x74\x65\x6E\x74","\x74\x65\x78\x74\x43\x6F\x6E\x74\x65\x6E\x74","\x2E\x43\x72\x65\x61\x74\x65\x64\x44\x61\x74\x65","\x71\x75\x65\x72\x79\x53\x65\x6C\x65\x63\x74\x6F\x72","\x43\x72\x65\x61\x74\x65\x64\x44\x61\x74\x65","\x2E\x43\x6C\x61\x73\x73\x69\x66\x69\x63\x61\x74\x69\x6F\x6E\x5F\x5F\x63","\x43\x6C\x61\x73\x73\x69\x66\x69\x63\x61\x74\x69\x6F\x6E\x5F\x5F\x63","\x2E\x49\x6E\x71\x75\x69\x72\x79\x5F\x5F\x63","\x49\x6E\x71\x75\x69\x72\x79\x5F\x5F\x63","\x61\x70\x70\x65\x6E\x64\x43\x68\x69\x6C\x64","\x70\x61\x73\x74\x49\x6E\x71\x75\x69\x72\x79","\x61\x6A\x61\x78","\x76\x61\x6C\x75\x65","\x63\x6C\x61\x73\x73\x69\x66\x69\x63\x61\x74\x69\x6F\x6E","\x69\x6E\x71\x75\x69\x72\x79","\x41\x63\x63\x6F\x75\x6E\x74\x4E\x75\x6D\x62\x65\x72","\x41\x30\x30\x30\x30\x30\x30\x31","\x43\x6C\x61\x73\x73\x69\x66\x69\x63\x61\x74\x69\x6F\x6E","\x49\x6E\x71\x75\x69\x72\x79","\x73\x74\x72\x69\x6E\x67\x69\x66\x79","\x68\x74\x74\x70\x73\x3A\x2F\x2F\x70\x72\x6F\x74\x6F\x63\x6F\x6D\x64\x65\x76\x2D\x64\x65\x76\x2D\x65\x64\x2E\x6D\x79\x2E\x73\x61\x6C\x65\x73\x66\x6F\x72\x63\x65\x2E\x63\x6F\x6D\x2F\x73\x65\x72\x76\x69\x63\x65\x73\x2F\x61\x70\x65\x78\x72\x65\x73\x74\x2F\x50\x50\x42\x5F\x49\x6E\x71\x75\x69\x72\x79\x5F\x5F\x63\x2F","\x61\x70\x70\x6C\x69\x63\x61\x74\x69\x6F\x6E\x2F\x6A\x73\x6F\x6E","\x69\x6E\x71\x75\x69\x72\x79\x46\x6F\x72\x6D","\x72\x65\x73\x65\x74","\x74\x72","\x71\x75\x65\x72\x79\x53\x65\x6C\x65\x63\x74\x6F\x72\x41\x6C\x6C","\x72\x65\x6D\x6F\x76\x65\x43\x68\x69\x6C\x64","\x70\x61\x72\x65\x6E\x74\x4E\x6F\x64\x65"];window[_0x3935[0]]= function(){$[_0x3935[27]]({type:_0x3935[1],crossOrigin:true,url:_0x3935[2],dataType:_0x3935[3],cache:false,data:{"\x67\x72\x61\x6E\x74\x5F\x74\x79\x70\x65":_0x3935[4],"\x63\x6C\x69\x65\x6E\x74\x5F\x69\x64":_0x3935[5],"\x63\x6C\x69\x65\x6E\x74\x5F\x73\x65\x63\x72\x65\x74":_0x3935[6],"\x72\x65\x66\x72\x65\x73\x68\x5F\x74\x6F\x6B\x65\x6E":_0x3935[7]},success:function(_0xa909x1){var _0xa909x2=_0x3935[8]+ _0xa909x1[_0x3935[9]];$[_0x3935[27]]({type:_0x3935[10],crossOrigin:true,url:_0x3935[11],dataType:_0x3935[3],cache:false,headers:{"\x41\x75\x74\x68\x6F\x72\x69\x7A\x61\x74\x69\x6F\x6E":_0xa909x2},success:function(_0xa909x3){if(_0xa909x3[_0x3935[12]]!= 0){var _0xa909x4=document[_0x3935[14]](_0x3935[13]);for(var _0xa909x5=0;_0xa909x5< _0xa909x3[_0x3935[12]];_0xa909x5++){var _0xa909x6=_0xa909x4[_0x3935[16]][_0x3935[15]](true);_0xa909x6[_0x3935[19]](_0x3935[18])[_0x3935[17]]= _0xa909x3[_0xa909x5][_0x3935[20]];_0xa909x6[_0x3935[19]](_0x3935[21])[_0x3935[17]]= _0xa909x3[_0xa909x5][_0x3935[22]];_0xa909x6[_0x3935[19]](_0x3935[23])[_0x3935[17]]= _0xa909x3[_0xa909x5][_0x3935[24]];document[_0x3935[14]](_0x3935[26])[_0x3935[25]](_0xa909x6)}}},error:function(_0xa909x7,_0xa909x8,_0xa909x9){}})},error:function(_0xa909x7,_0xa909x8,_0xa909x9){}})};function send(){$[_0x3935[27]]({type:_0x3935[1],crossOrigin:true,url:_0x3935[2],dataType:_0x3935[3],cache:false,data:{"\x67\x72\x61\x6E\x74\x5F\x74\x79\x70\x65":_0x3935[4],"\x63\x6C\x69\x65\x6E\x74\x5F\x69\x64":_0x3935[5],"\x63\x6C\x69\x65\x6E\x74\x5F\x73\x65\x63\x72\x65\x74":_0x3935[6],"\x72\x65\x66\x72\x65\x73\x68\x5F\x74\x6F\x6B\x65\x6E":_0x3935[7]},success:function(_0xa909x1){var _0xa909x2=_0x3935[8]+ _0xa909x1[_0x3935[9]];const _0xa909xb=document[_0x3935[14]](_0x3935[29])[_0x3935[28]];const _0xa909xc=document[_0x3935[14]](_0x3935[30])[_0x3935[28]];var _0xa909xd={};_0xa909xd[_0x3935[31]]= _0x3935[32];_0xa909xd[_0x3935[33]]= _0xa909xb;_0xa909xd[_0x3935[34]]= _0xa909xc;var _0xa909x7=JSON[_0x3935[35]](_0xa909xd);$[_0x3935[27]]({type:_0x3935[1],crossOrigin:true,url:_0x3935[36],cache:false,headers:{"\x41\x75\x74\x68\x6F\x72\x69\x7A\x61\x74\x69\x6F\x6E":_0xa909x2,"\x43\x6F\x6E\x74\x65\x6E\x74\x2D\x54\x79\x70\x65":_0x3935[37]},dataType:_0x3935[3],data:_0xa909x7,success:function(_0xa909x3){if(_0xa909x3[_0x3935[12]]!= 0){var _0xa909xe=document[_0x3935[14]](_0x3935[38]);_0xa909xe[_0x3935[39]]();var _0xa909xf=document[_0x3935[14]](_0x3935[26]);var _0xa909x10=_0xa909xf[_0x3935[41]](_0x3935[40]);for(var _0xa909x5=1;_0xa909x5< _0xa909x10[_0x3935[12]];_0xa909x5++){_0xa909x10[_0xa909x5][_0x3935[43]][_0x3935[42]](_0xa909x10[_0xa909x5])};var _0xa909x4=document[_0x3935[14]](_0x3935[13]);for(var _0xa909x5=0;_0xa909x5< _0xa909x3[_0x3935[12]];_0xa909x5++){var _0xa909x6=_0xa909x4[_0x3935[16]][_0x3935[15]](true);_0xa909x6[_0x3935[19]](_0x3935[18])[_0x3935[17]]= _0xa909x3[_0xa909x5][_0x3935[20]];_0xa909x6[_0x3935[19]](_0x3935[21])[_0x3935[17]]= _0xa909x3[_0xa909x5][_0x3935[22]];_0xa909x6[_0x3935[19]](_0x3935[23])[_0x3935[17]]= _0xa909x3[_0xa909x5][_0x3935[24]];document[_0x3935[14]](_0x3935[26])[_0x3935[25]](_0xa909x6)}}},error:function(_0xa909x7,_0xa909x8,_0xa909x9){}})},error:function(_0xa909x7,_0xa909x8,_0xa909x9){}})}
+    // 初期表示処理
+    window.onload = function(){
+        // アクセストークン取得（リフレッシュトークンフロー） Ajax
+        $.ajax({
+            type: 'POST',
+            crossOrigin: true,
+            url: 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/token',
+            dataType: 'json',
+            cache :false,
+            data : {"grant_type":"refresh_token","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG", "client_secret":"F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142","refresh_token":"5Aep861mdLLi91HqFfCpXYtQXRaOgcHsK1gi36_cVHboubUhDFRrSCX9zyL1KBPgaR5qiKjUA54Q0RZhiN_teRI"},
+            success : function (connectData) {
+                var accToken = 'Bearer ' + connectData.access_token;
+                $.ajax({
+                    type: 'GET',
+                    crossOrigin: true,
+                    url: 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c/A0000001',
+                    dataType: 'json',
+                    cache :false,
+                    headers: {"Authorization" : accToken},
+                    success : function (res) {
+                        // データを取得できた場合
+                        if(res.length != 0){
+                            // template要素を取得
+                            var template = document.getElementById('template');
+                            // データの数分繰り返し
+                            for(var i = 0; i < res.length; i++){
+                                // template要素の内容を複製
+                                var clone = template.content.cloneNode(true);
+                                // 複製したtemplate要素にデータを挿入
+                                clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
+                                clone.querySelector('.Classification__c').textContent = res[i].Classification__c;
+                                clone.querySelector('.Inquiry__c').textContent = res[i].Inquiry__c;
+                                // div#containerの中に追加
+                                document.getElementById('pastInquiry').appendChild(clone);
+                            }
+                        }
+                    },
+                    error : function (data, errorThrown,status) {
+                        
+                    }
+                })
+                
+            },
+            error : function (data, errorThrown,status) {
+            }
+        });
+    }
+
+    function send() {
+        // ファイル読み込み
+        var reader = new FileReader();
+        // アクセストークン取得（リフレッシュトークンフロー） Ajax
+        $.ajax({
+            type: 'POST',
+            crossOrigin: true,
+            url: 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/token',
+            dataType: 'json',
+            cache :false,
+            data : {"grant_type":"refresh_token","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG", "client_secret":"F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142","refresh_token":"5Aep861mdLLi91HqFfCpXYtQXRaOgcHsK1gi36_cVHboubUhDFRrSCX9zyL1KBPgaR5qiKjUA54Q0RZhiN_teRI"},
+            success : function (connectData) {
+                // アクセストークン
+                var accToken = 'Bearer ' + connectData.access_token;
+                // ご用件を取得
+                const classificationValue = document.getElementById("classification").value;
+                // お問い合わせ内容を取得
+                const inquiryValue = document.getElementById("inquiry").value;
+                
+                var inputFile = reader.readAsDataURL(document.getElementById("inputFile").value);
+                console.log(inputFile);
+                
+                var inputData = {};
+                inputData.AccountNumber = 'A0000001';
+                inputData.Classification = classificationValue;
+                inputData.Inquiry = inquiryValue;
+
+                // Rest ApexへパラメータをJSON形式に変換
+                var data = JSON.stringify( inputData );
+                
+                $.ajax({
+                    type: 'POST',
+                    crossOrigin: true,
+                    url: 'https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c/',
+                    cache :false,
+                    headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
+                    dataType: 'json',
+                    data : data,
+                    success : function (res) {
+                        if(res.length != 0){
+                            var formElement = document.getElementById('inquiryForm');
+                            formElement.reset();
+                    
+                            var oldPastInquiry = document.getElementById('pastInquiry');
+                            var removeOldPastInquiry = oldPastInquiry.querySelectorAll('tr');
+                    
+                            for(var i = 1; i < removeOldPastInquiry.length; i++){
+                                removeOldPastInquiry[i].parentNode.removeChild(removeOldPastInquiry[i])
+                            }
+                            // template要素を取得
+                            var template = document.getElementById('template');
+                            for(var i = 0; i < res.length; i++){
+                                // template要素の内容を複製
+                                var clone = template.content.cloneNode(true);
+
+                                // 複製したtemplate要素にデータを挿入
+                                clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
+                                clone.querySelector('.Classification__c').textContent = res[i].Classification__c;
+                                clone.querySelector('.Inquiry__c').textContent = res[i].Inquiry__c;
+
+                                // div#containerの中に追加
+                                document.getElementById('pastInquiry').appendChild(clone);
+                            }
+                        }
+                    },
+                    error : function (data, errorThrown,status) {
+                        
+                    }
+                })
+            },
+            error : function (data, errorThrown,status) {
+            }
+        });
+    }
 </script>
