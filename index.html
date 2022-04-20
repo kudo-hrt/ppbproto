@@ -392,7 +392,8 @@
                 // お問い合わせ内容を取得
                 const inquiryValue = document.getElementById("inquiry").value;
                 
-                const inputFile = reader.readAsDataURL(document.getElementById("inputFile"));
+                //const inputFile = reader.readAsDataURL(document.getElementById("inputFile"));
+                const inputFile = document.querySelector('input[type=file]').files[0];
                 console.log(inputFile);
                 
                 var inputData = {};
