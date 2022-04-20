@@ -310,7 +310,8 @@
                     </tr>
                     <tr>
                         <th>ファイルアップロード</th>
-                        <td><input type="file" id="inputFile" name="inputFile"></td>
+                        <td><input type="file" multiple id="hoge">
+                        <div id="result"></div></td>
                     </tr>
                 </table>
                 <p class="btn">
@@ -393,14 +394,29 @@
                 const inquiryValue = document.getElementById("inquiry").value;
                 
                 //const inputFile = reader.readAsDataURL(document.getElementById("inputFile"));
-                const inputFile = document.querySelector('input[type=file]').files[0];
+                /*const inputFile = document.querySelector('input[type=file]').files[0];
                 var element = document.getElementById("inputFile");
                 var inputFile2 = element.files[0];
                 console.log(inputFile);
                 console.log(reader.readAsDataURL( inputFile ));
                 
                 console.log(inputFile2);
-                console.log(reader.readAsDataURL( inputFile2 ));
+                console.log(reader.readAsDataURL( inputFile2 ));*/
+                var element1 = document.getElementById( "hoge" ) ;
+var element2 = document.getElementById( "fuga" ) ;
+var resultElement = document.getElementById( "result" ) ;
+
+element1.onchange = function () {
+	var fileReader = new FileReader() ;
+
+	fileReader.onload = function () {
+		console.log( this.result ) ;
+		resultElement.appendChild( new Text( this.result ) ) ;
+		element2.src = this.result ;
+	}
+
+	var file = element1.files[0] ;
+	fileReader.readAsDataURL( file ) ;
                 
                 var inputData = {};
                 inputData.AccountNumber = 'A0000001';
