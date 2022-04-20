@@ -393,7 +393,7 @@
                 const inquiryValue = document.getElementById("inquiry").value;
                 
                 //const inputFile = reader.readAsDataURL(document.getElementById("inputFile"));
-                const inputFile = document.querySelector('input[type=file]').files[0];
+                const inputFile = reader.readAsDataURL(document.querySelector('input[type=file]').files[0]);
                 console.log(inputFile);
                 
                 var inputData = {};
