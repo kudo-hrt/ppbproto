@@ -405,15 +405,13 @@
 		    	
 	        var element1 = document.getElementById( "hoge" ) ;
                 var file = element1.files[0] ;
-	        reader.readAsDataURL( file ) ;
-		
-		console.log(file);
-		console.log(reader);
+	        
 		
                 var inputData = {};
                 inputData.AccountNumber = 'A0000001';
                 inputData.Classification = classificationValue;
                 inputData.Inquiry = inquiryValue;
+		inputData.File = reader.readAsDataURL( file ) ;
 
                 // Rest ApexへパラメータをJSON形式に変換
                 var data = JSON.stringify( inputData );
