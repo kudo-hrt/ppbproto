@@ -392,9 +392,8 @@
                 // お問い合わせ内容を取得
                 const inquiryValue = document.getElementById("inquiry").value;
                 
-                //var inputFile = reader.readAsDataURL(document.getElementById("inputFile").value);
-                
-                console.log(reader.readAsDataURL(e.originalEvent.dataTransfer.files[0]));
+                const inputFile = reader.readAsDataURL(document.getElementById("inputFile"));
+                console.log(inputFile);
                 
                 var inputData = {};
                 inputData.AccountNumber = 'A0000001';
