@@ -374,8 +374,6 @@
     }
 
     function send() {
-        // ファイル読み込み
-        var reader = new FileReader();
         // アクセストークン取得（リフレッシュトークンフロー） Ajax
         $.ajax({
             type: 'POST',
@@ -385,6 +383,8 @@
             cache :false,
             data : {"grant_type":"refresh_token","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG", "client_secret":"F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142","refresh_token":"5Aep861mdLLi91HqFfCpXYtQXRaOgcHsK1gi36_cVHboubUhDFRrSCX9zyL1KBPgaR5qiKjUA54Q0RZhiN_teRI"},
             success : function (connectData) {
+                // ファイル読み込み
+                var reader = new FileReader();
                 // アクセストークン
                 var accToken = 'Bearer ' + connectData.access_token;
                 // ご用件を取得
@@ -393,8 +393,8 @@
                 const inquiryValue = document.getElementById("inquiry").value;
                 
                 //const inputFile = reader.readAsDataURL(document.getElementById("inputFile"));
-                const inputFile = reader.readAsDataURL(document.querySelector('input[type=file]').files[0]);
-                console.log(inputFile);
+                const inputFile = document.querySelector('input[type=file]').files[0];
+                console.log(reader.readAsDataURL( inputFile ));
                 
                 var inputData = {};
                 inputData.AccountNumber = 'A0000001';
