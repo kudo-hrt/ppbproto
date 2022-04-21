@@ -382,7 +382,6 @@
 
 	fileReader.onload = function () {
 		inputFile = this.result ;
-		console.log(inputFile);
 	}
 
 	var file = element1.files[0] ;
@@ -427,9 +426,7 @@
                     data : data,
                     success : function (res) {
                         if(res.length != 0){
-				console.log(res);
-				var insId = res[0].Id;
-				console.log(insId);
+			    var insId = res[0].Id;
 				
                             var formElement = document.getElementById('inquiryForm');
                             formElement.reset();
@@ -458,14 +455,14 @@
 
                             //Salesforceにアップロードするためのbodyを作成
                             var cvJson = {
-                              "Title" : "アップロードテストファイル",  //アップされるファイルのタイトル
+                              "Title" : "アップロード",  //アップされるファイルのタイトル
                               "PathOnClient" : "test.txt",  //拡張子が.pdfになっていないとプレビューが正しく表示されない。拡張子の前は（多分）何でも大丈夫。PDF以外のファイルの場合はxlsxなどそれぞれの拡張子を設定
                               "VersionData" : inputFile
                             };
 				$.ajax({
                     			type: 'POST',
                     			crossOrigin: true,
-                    			url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v51.0/sobjects/ContentVersion',
+                    			url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion',
                     			cache :false,
                     			headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
                     			dataType: 'json',
@@ -478,14 +475,11 @@
 						$.ajax({
 							type: 'GET',
 							crossOrigin: true,
-							url: "https://protocomdev-dev-ed.my.salesforce.com/services/data/v51.0/query/?q=" + query,
+							url: "https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/query/?q=" + query,
 							cache :false,
 							headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
 							success : function (DocumentIdRes) {
-								//var jsonCdResponse = JSON.parse(DocumentIdRes);
 								var cdRecords = DocumentIdRes["records"];
-								//var jsonCdRecords = JSON.parse(JSON.stringify(cdRecords));
-								
 								var cdId = cdRecords[0].ContentDocumentId;
 
 								//お問い合せレコードとリンクさせるためのbodyを作成
@@ -499,7 +493,7 @@
 								$.ajax({
 									type: 'POST',
 									crossOrigin: true,
-									url: "https://protocomdev-dev-ed.my.salesforce.com/services/data/v51.0/sobjects/ContentDocumentLink",
+									url: "https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentDocumentLink",
 									cache :false,
 									headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
 									dataType: 'json',
@@ -521,57 +515,6 @@
                         
                     			}
 				})
-						/*
-                            var insId = res[0].id;
-                            //Salesforceにアップロードするためのbodyを作成
-                            var cvJson = {
-                              "Title" : "アップロードテストファイル",  //アップされるファイルのタイトル
-                              "PathOnClient" : "test.txt",  //拡張子が.pdfになっていないとプレビューが正しく表示されない。拡張子の前は（多分）何でも大丈夫。PDF以外のファイルの場合はxlsxなどそれぞれの拡張子を設定
-                              "VersionData" : inputFile
-                            };
-                           
-                            //Salesforceにcontent versionとしてアップして、アップされたファイルのcontent version IDを取得
-                            var cvResponse = UrlFetchApp.fetch("https://protocomdev-dev-ed.my.salesforce.com/services/data/v51.0/sobjects/ContentVersion", {
-                              "method" : "POST",
-                              "contentType": "application/json",
-                              "headers" : {
-                                "Authorization": accToken
-                              },
-                              "payload" : JSON.stringify(cvJson)
-                            });
-                            var jsonCvResponse = JSON.parse(cvResponse.getContentText());
-                            var cvId = jsonCvResponse.id;
-                           
-                            //content versionに紐付いて作成されたcontent documentのIDを取得
-                            var query = "SELECT+ContentDocumentId+FROM+ContentVersion+WHERE+Id+=+'" + cvId + "'"
-                            var cdResponse = UrlFetchApp.fetch("https://protocomdev-dev-ed.my.salesforce.com/services/data/v51.0/query/?q=" + query, {
-                              "method" : "GET",
-                              "contentType": "application/json",
-                              "headers" : {
-                                "Authorization": accToken
-                              }
-                            });
-                            var jsonCdResponse = JSON.parse(cdResponse.getContentText());
-                            var cdRecords = jsonCdResponse["records"];
-                            var jsonCdRecords = JSON.parse(JSON.stringify(cdRecords));
-                            var cdId = jsonCdRecords[0].ContentDocumentId;
-                           
-                            //お問い合せレコードとリンクさせるためのbodyを作成
-                            var linkJson = {
-                              "ContentDocumentId" : cdId,
-                              "LinkedEntityId" : insId, //お問い合せのレコードID
-                              "Visibility" : "AllUsers" //閲覧できる人の制限
-                            };
-                           
-                            //お問い合せレコードとファイルをリンクさせる
-                            var linkResponse = UrlFetchApp.fetch("https://protocomdev-dev-ed.my.salesforce.com/services/data/v51.0/sobjects/ContentDocumentLink", {
-                              "method" : "POST",
-                              "contentType": "application/json",
-                              "headers" : {
-                                "Authorization": accToken
-                              },
-                              "payload" : JSON.stringify(linkJson)
-                            });*/
                             //ここまで
                         }
                     },
