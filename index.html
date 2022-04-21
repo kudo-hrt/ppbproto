@@ -481,10 +481,10 @@
 							headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
 							success : function (DocumentIdRes) {
 								//var jsonCdResponse = JSON.parse(DocumentIdRes);
-								//var cdRecords = jsonCdResponse["records"];
+								var cdRecords = DocumentIdRes["records"];
 								//var jsonCdRecords = JSON.parse(JSON.stringify(cdRecords));
 								console.log(DocumentIdRes);
-								var cdId = DocumentIdRes[0].ContentDocumentId;
+								var cdId = cdRecords[0].ContentDocumentId;
 
 								//お問い合せレコードとリンクさせるためのbodyを作成
 								var linkJson = {
