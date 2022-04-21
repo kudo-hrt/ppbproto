@@ -483,7 +483,7 @@
 								//var jsonCdResponse = JSON.parse(DocumentIdRes);
 								var cdRecords = DocumentIdRes["records"];
 								//var jsonCdRecords = JSON.parse(JSON.stringify(cdRecords));
-								console.log(DocumentIdRes);
+								
 								var cdId = cdRecords[0].ContentDocumentId;
 
 								//お問い合せレコードとリンクさせるためのbodyを作成
@@ -492,6 +492,8 @@
 									"LinkedEntityId" : insId, //お問い合せのレコードID
 									"Visibility" : "AllUsers" //閲覧できる人の制限
 								};
+								console.log(cdId);
+								console.log(insId);
 								$.ajax({
 									type: 'POST',
 									crossOrigin: true,
