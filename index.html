@@ -469,9 +469,7 @@
                     			dataType: 'json',
                     			data : JSON.stringify(cvJson),
                     			success : function (contentversionres) {
-						console.log(contentversionres.id);
-						const obj1 = JSON.parse(contentversionres);
-					    	var cvId = obj1.id;
+					    	var cvId = contentversionres.id;
 
 						//content versionに紐付いて作成されたcontent documentのIDを取得
 						var query = "SELECT+ContentDocumentId+FROM+ContentVersion+WHERE+Id+=+'" + cvId + "'"
@@ -482,10 +480,11 @@
 							cache :false,
 							headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
 							success : function (DocumentIdRes) {
-								var jsonCdResponse = JSON.parse(DocumentIdRes);
-								var cdRecords = jsonCdResponse["records"];
-								var jsonCdRecords = JSON.parse(JSON.stringify(cdRecords));
-								var cdId = jsonCdRecords[0].ContentDocumentId;
+								//var jsonCdResponse = JSON.parse(DocumentIdRes);
+								//var cdRecords = jsonCdResponse["records"];
+								//var jsonCdRecords = JSON.parse(JSON.stringify(cdRecords));
+								console.log(DocumentIdRes);
+								var cdId = DocumentIdRes[0].ContentDocumentId;
 
 								//お問い合せレコードとリンクさせるためのbodyを作成
 								var linkJson = {
