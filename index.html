@@ -469,6 +469,7 @@
                     			dataType: 'json',
                     			data : JSON.stringify(cvJson),
                     			success : function (contentversionres) {
+						console.log(contentversionres);
 						var jsonCvResponse = JSON.parse(contentversionres.getContentText());
 					    	var cvId = jsonCvResponse.id;
 
