@@ -451,6 +451,29 @@
                                 document.getElementById('pastInquiry').appendChild(clone);
                             }
 			    // ここからcontentsvesionに登録する処理
+				var insId = res[0].id;
+                            //Salesforceにアップロードするためのbodyを作成
+                            var cvJson = {
+                              "Title" : "アップロードテストファイル",  //アップされるファイルのタイトル
+                              "PathOnClient" : "test.txt",  //拡張子が.pdfになっていないとプレビューが正しく表示されない。拡張子の前は（多分）何でも大丈夫。PDF以外のファイルの場合はxlsxなどそれぞれの拡張子を設定
+                              "VersionData" : inputFile
+                            };
+				$.ajax({
+                    			type: 'POST',
+                    			crossOrigin: true,
+                    			url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v51.0/sobjects/ContentVersion',
+                    			cache :false,
+                    			headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
+                    			dataType: 'json',
+                    			data : JSON.stringify(cvJson),
+                    			success : function (res) {
+						console.log('できた');
+					},
+					error : function (data, errorThrown,status) {
+                        
+                    			}
+				})
+						/*
                             var insId = res[0].id;
                             //Salesforceにアップロードするためのbodyを作成
                             var cvJson = {
@@ -500,7 +523,7 @@
                                 "Authorization": accToken
                               },
                               "payload" : JSON.stringify(linkJson)
-                            });
+                            });*/
                             //ここまで
                         }
                     },
