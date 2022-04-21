@@ -451,10 +451,7 @@
                                 document.getElementById('pastInquiry').appendChild(clone);
                             }
 			    // ここからcontentsvesionに登録する処理
-				console.log(res);
-				/*
-                            var insResJson = JSON.parse(res.getContentText());
-                            var insId = insResJson.id;
+                            var insId = res[0].id;
                             //Salesforceにアップロードするためのbodyを作成
                             var cvJson = {
                               "Title" : "アップロードテストファイル",  //アップされるファイルのタイトル
@@ -503,7 +500,7 @@
                                 "Authorization": accToken
                               },
                               "payload" : JSON.stringify(linkJson)
-                            });*/
+                            });
                             //ここまで
                         }
                     },
