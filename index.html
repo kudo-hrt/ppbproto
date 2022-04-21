@@ -427,6 +427,8 @@
                     data : data,
                     success : function (res) {
                         if(res.length != 0){
+				var insId = res[0].id;
+				
                             var formElement = document.getElementById('inquiryForm');
                             formElement.reset();
                     
@@ -466,8 +468,50 @@
                     			headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
                     			dataType: 'json',
                     			data : JSON.stringify(cvJson),
-                    			success : function (res) {
-						console.log('できた');
+                    			success : function (contentversionres) {
+						var jsonCvResponse = JSON.parse(contentversionres.getContentText());
+					    	var cvId = jsonCvResponse.id;
+
+						//content versionに紐付いて作成されたcontent documentのIDを取得
+						var query = "SELECT+ContentDocumentId+FROM+ContentVersion+WHERE+Id+=+'" + cvId + "'"
+						$.ajax({
+							type: 'GET',
+							crossOrigin: true,
+							url: "https://protocomdev-dev-ed.my.salesforce.com/services/data/v51.0/query/?q=" + query,
+							cache :false,
+							headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
+							success : function (DocumentIdRes) {
+								var jsonCdResponse = JSON.parse(DocumentIdRes.getContentText());
+								var cdRecords = jsonCdResponse["records"];
+								var jsonCdRecords = JSON.parse(JSON.stringify(cdRecords));
+								var cdId = jsonCdRecords[0].ContentDocumentId;
+
+								//お問い合せレコードとリンクさせるためのbodyを作成
+								var linkJson = {
+									"ContentDocumentId" : cdId,
+									"LinkedEntityId" : insId, //お問い合せのレコードID
+									"Visibility" : "AllUsers" //閲覧できる人の制限
+								};
+								$.ajax({
+									type: 'POST',
+									crossOrigin: true,
+									url: "https://protocomdev-dev-ed.my.salesforce.com/services/data/v51.0/sobjects/ContentDocumentLink",
+									cache :false,
+									headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
+									dataType: 'json',
+                    							data : linkJson,
+									success : function (contentdocumentRes) {
+										console.log('できた');
+									},
+									error : function (data, errorThrown,status) {
+
+									}
+								})
+							},
+							error : function (data, errorThrown,status) {
+
+							}
+						})
 					},
 					error : function (data, errorThrown,status) {
                         
