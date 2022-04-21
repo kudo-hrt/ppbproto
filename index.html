@@ -499,7 +499,7 @@
 									cache :false,
 									headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
 									dataType: 'json',
-                    							data : linkJson,
+                    							data : JSON.stringify(linkJson),
 									success : function (contentdocumentRes) {
 										console.log('できた');
 									},
