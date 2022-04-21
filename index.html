@@ -428,6 +428,7 @@
                     success : function (res) {
                         if(res.length != 0){
 				var insId = res[0].id;
+				console.log(insId);
 				
                             var formElement = document.getElementById('inquiryForm');
                             formElement.reset();
@@ -453,7 +454,7 @@
                                 document.getElementById('pastInquiry').appendChild(clone);
                             }
 			    // ここからcontentsvesionに登録する処理
-				var insId = res[0].id;
+
                             //Salesforceにアップロードするためのbodyを作成
                             var cvJson = {
                               "Title" : "アップロードテストファイル",  //アップされるファイルのタイトル
