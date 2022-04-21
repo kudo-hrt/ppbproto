@@ -451,6 +451,8 @@
                                 document.getElementById('pastInquiry').appendChild(clone);
                             }
 			    // ここからcontentsvesionに登録する処理
+				console.log(res);
+				/*
                             var insResJson = JSON.parse(res.getContentText());
                             var insId = insResJson.id;
                             //Salesforceにアップロードするためのbodyを作成
@@ -501,7 +503,7 @@
                                 "Authorization": accToken
                               },
                               "payload" : JSON.stringify(linkJson)
-                            });
+                            });*/
                             //ここまで
                         }
                     },
