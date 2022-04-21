@@ -470,8 +470,8 @@
                     			data : JSON.stringify(cvJson),
                     			success : function (contentversionres) {
 						console.log(contentversionres);
-						var jsonCvResponse = JSON.parse(contentversionres.getContentText());
-					    	var cvId = jsonCvResponse.id;
+						const obj1 = JSON.parse(contentversionres);
+					    	var cvId = obj1.id;
 
 						//content versionに紐付いて作成されたcontent documentのIDを取得
 						var query = "SELECT+ContentDocumentId+FROM+ContentVersion+WHERE+Id+=+'" + cvId + "'"
