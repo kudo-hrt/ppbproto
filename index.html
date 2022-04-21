@@ -482,7 +482,7 @@
 							cache :false,
 							headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
 							success : function (DocumentIdRes) {
-								var jsonCdResponse = JSON.parse(DocumentIdRes.getContentText());
+								var jsonCdResponse = JSON.parse(DocumentIdRes);
 								var cdRecords = jsonCdResponse["records"];
 								var jsonCdRecords = JSON.parse(JSON.stringify(cdRecords));
 								var cdId = jsonCdRecords[0].ContentDocumentId;
