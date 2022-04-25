@@ -384,7 +384,7 @@
 		inputFile = this.result ;
 	}
 
-        cosole.log(files);
+        console.log(files);
 	var file = files.files[0] ;
 	fileReader.readAsDataURL( file ) ;
     }
@@ -453,7 +453,7 @@
                                 document.getElementById('pastInquiry').appendChild(clone);
                             }
 			    // ここからcontentsvesionに登録する処理
-
+console.log(files);
                             //Salesforceにアップロードするためのbodyを作成
                             var cvJson = {
                               "Title" : "アップロード",  //アップされるファイルのタイトル
