@@ -376,6 +376,7 @@
 
     var files = document.getElementById( "inputFile" ) ;
     var inputFile;
+    var fileName;
 
     files.onchange = function () {
 	var fileReader = new FileReader() ;
@@ -385,7 +386,7 @@
 	}
 
 	var file = files.files[0] ;
-	    console.log(file.name);
+        fileName = file.name;
 	fileReader.readAsDataURL( file ) ;
     }
     function send() {
@@ -453,11 +454,11 @@
                                 document.getElementById('pastInquiry').appendChild(clone);
                             }
 			    // ここからcontentsvesionに登録する処理
-console.log(file.name);
+
                             //Salesforceにアップロードするためのbodyを作成
                             var cvJson = {
-                              "Title" : "アップロード",  //アップされるファイルのタイトル
-                              "PathOnClient" : "test.txt",  //拡張子が.pdfになっていないとプレビューが正しく表示されない。拡張子の前は（多分）何でも大丈夫。PDF以外のファイルの場合はxlsxなどそれぞれの拡張子を設定
+                              "Title" : fileName,  //アップされるファイルのタイトル
+                              "PathOnClient" : fileName, 
                               "VersionData" : inputFile
                             };
 				$.ajax({
