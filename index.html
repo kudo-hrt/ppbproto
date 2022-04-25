@@ -382,8 +382,9 @@
 	var fileReader = new FileReader() ;
 
 	fileReader.onload = function () {
-		inputFile = this.result ;
-		console.log(inputFile);
+		var baseFile = this.result ;
+		var spFile = baseFile.split(',');
+		inputFile = spFile[1];
 	}
 
 	var file = files.files[0] ;
