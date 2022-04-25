@@ -374,17 +374,18 @@
         });
     }
 
-    var element1 = document.getElementById( "inputFile" ) ;
+    var files = document.getElementById( "inputFile" ) ;
     var inputFile;
 
-    element1.onchange = function () {
+    files.onchange = function () {
 	var fileReader = new FileReader() ;
 
 	fileReader.onload = function () {
 		inputFile = this.result ;
 	}
 
-	var file = element1.files[0] ;
+        cosole.log(files);
+	var file = files.files[0] ;
 	fileReader.readAsDataURL( file ) ;
     }
     function send() {
@@ -499,7 +500,7 @@
 									dataType: 'json',
                     							data : JSON.stringify(linkJson),
 									success : function (contentdocumentRes) {
-										console.log('できた');
+										console.log('送信完了');
 									},
 									error : function (data, errorThrown,status) {
 										console.log(data);
