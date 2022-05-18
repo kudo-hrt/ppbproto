@@ -372,9 +372,9 @@
                                 headers: {"Authorization" : accToken},
                                 success : function (dlFile) {
                                     var binaryData = [];
-                                    binaryData.push(atob(dlFile));
+                                    binaryData.push(dlFile);
 
-                                    console.log(atob(dlFile));
+                                    console.log(dlFile);
                                     console.log(new Blob(binaryData, {type: "image/png"}));
                                     const url = URL.createObjectURL(new Blob(binaryData, {type: "image/png"}));
                                     const a = document.createElement("a");
