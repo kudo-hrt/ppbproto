@@ -372,6 +372,7 @@
                                 //url: 'https://protocomdev-dev-ed.my.salesforce.com/sfc/servlet.shepherd/document/download/0695j000008VCrCAAW?operationContext=S1',
                                 url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JD1IAAW/VersionData',
                                 dataType: 'text',
+                                responseType:'blob',// ここを追加
                                 cache :false,
                                 headers: {"Authorization" : accToken},
                                 success : function (dlFile) {
