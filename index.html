@@ -376,8 +376,7 @@
 
                                     console.log(dlFile);
                                     console.log(new Blob(binaryData, {type: "image/png"}));
-                                    //const url = URL.createObjectURL(new Blob(binaryData, {type: "image/png"}));
-                                    const url = URL.createObjectURL(dlFile);
+                                    const url = URL.createObjectURL(new Blob(binaryData, {type: "image/png"}));
                                     const a = document.createElement("a");
                                     document.body.appendChild(a);
                                     a.download = 'test.png';
@@ -487,6 +486,7 @@
                             }
                             // ここからcontentsvesionに登録する処理
 
+                            console.log(inputFile);
                             //Salesforceにアップロードするためのbodyを作成
                             var cvJson = {
                                 "Title" : fileName,  //アップされるファイルのタイトル
