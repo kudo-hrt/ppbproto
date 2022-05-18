@@ -376,7 +376,8 @@
 
                                     console.log(dlFile);
                                     console.log(new Blob(binaryData, {type: "image/png"}));
-                                    const url = URL.createObjectURL(new Blob(binaryData, {type: "image/png"}));
+                                    //const url = URL.createObjectURL(new Blob(binaryData, {type: "image/png"}));
+                                    const url = URL.createObjectURL(dlFile);
                                     const a = document.createElement("a");
                                     document.body.appendChild(a);
                                     a.download = 'test.png';
@@ -408,17 +409,17 @@
     var fileName;
 
     files.onchange = function () {
-	var fileReader = new FileReader() ;
+    var fileReader = new FileReader() ;
 
-	fileReader.onload = function () {
-		var baseFile = this.result ;
-		var spFile = baseFile.split(',');
-		inputFile = spFile[1];
-	}
+    fileReader.onload = function () {
+        var baseFile = this.result ;
+        var spFile = baseFile.split(',');
+        inputFile = spFile[1];
+    }
 
-	var file = files.files[0] ;
+    var file = files.files[0] ;
         fileName = file.name;
-	fileReader.readAsDataURL( file ) ;
+    fileReader.readAsDataURL( file ) ;
     }
     function send() {
         // アクセストークン取得（リフレッシュトークンフロー） Ajax
@@ -460,7 +461,7 @@
                     success : function (res) {
                         if(res.length != 0){
                             var insId = res[0].Id;
-				
+                
                             var formElement = document.getElementById('inquiryForm');
                             formElement.reset();
                     
@@ -488,24 +489,24 @@
 
                             //Salesforceにアップロードするためのbodyを作成
                             var cvJson = {
-                              "Title" : fileName,  //アップされるファイルのタイトル
-                              "PathOnClient" : fileName, 
-                              "VersionData" : inputFile
+                                "Title" : fileName,  //アップされるファイルのタイトル
+                                "PathOnClient" : fileName, 
+                                "VersionData" : inputFile
                             };
                             $.ajax({
-                    			type: 'POST',
-                    			crossOrigin: true,
-                    			url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion',
-                    			cache :false,
-                    			headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
-                    			dataType: 'json',
-                    			data : JSON.stringify(cvJson),
-                    			success : function (contentversionres) {
-					    	        var cvId = contentversionres.id;
+                                type: 'POST',
+                                crossOrigin: true,
+                                url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion',
+                                cache :false,
+                                headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
+                                dataType: 'json',
+                                data : JSON.stringify(cvJson),
+                                success : function (contentversionres) {
+                                    var cvId = contentversionres.id;
 
                                     //content versionに紐付いて作成されたcontent documentのIDを取得
                                     var query = "SELECT+ContentDocumentId+FROM+ContentVersion+WHERE+Id+=+'" + cvId + "'"
-						            $.ajax({
+                                    $.ajax({
                                         type: 'GET',
                                         crossOrigin: true,
                                         url: "https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/query/?q=" + query,
@@ -530,7 +531,7 @@
                                                 cache :false,
                                                 headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
                                                 dataType: 'json',
-                    							data : JSON.stringify(linkJson),
+                                                data : JSON.stringify(linkJson),
                                                 success : function (contentdocumentRes) {
                                                     console.log('送信完了');
                                                 },
@@ -552,15 +553,15 @@
                                     console.log(data);
                                     console.log(errorThrown);
                                     console.log(status);
-                    			}
+                                }
                             })
                             //ここまで
                         }
                     },
                     error : function (data, errorThrown,status) {
                         console.log(data);
-						console.log(errorThrown);
-						console.log(status);
+                        console.log(errorThrown);
+                        console.log(status);
                     }
                 })
             },
