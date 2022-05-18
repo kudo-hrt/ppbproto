@@ -375,7 +375,8 @@
                                     var binaryData = [];
                                     binaryData.push(dlFile);
 
-                                    const url = URL.createObjectURL(new Blob(binaryData, {type: "application/octet-stream"}));
+                                    //const url = URL.createObjectURL(new Blob(binaryData, {type: "application/octet-stream"}));
+                                    const url = URL.createObjectURL(dlFile);
                                     const a = document.createElement("a");
                                     document.body.appendChild(a);
                                     a.download = 'test.png';
