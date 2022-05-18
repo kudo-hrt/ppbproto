@@ -369,13 +369,21 @@
                                 //url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JCOAAA4',　ほんとにContentVersionの内容
                                 //url: 'https://protocomdev-dev-ed.my.salesforce.com/sfc/servlet.shepherd/document/download/0695j000008VCU7AAO?operationContext=S1',
                                 //url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentDocument/0695j000008VCU7AAO',
-                                url: 'https://protocomdev-dev-ed.my.salesforce.com/sfc/servlet.shepherd/document/download/0695j000008VCrCAAW?operationContext=S1',
+                                //url: 'https://protocomdev-dev-ed.my.salesforce.com/sfc/servlet.shepherd/document/download/0695j000008VCrCAAW?operationContext=S1',
+                                url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JCOAAA4/VersionData',
                                 dataType: 'text',
                                 cache :false,
                                 headers: {"Authorization" : accToken},
                                 success : function (dlFile) {
                                     console.log('でけた');
-                                    console.log(dlFile);
+                                    const url = URL.createObjectURL(dlFile);
+                                    const a = document.createElement("a");
+                                    document.body.appendChild(a);
+                                    a.download = 'test.txt';
+                                    a.href = url;
+                                    a.click();
+                                    a.remove();
+                                    console.log('でけた');
                                 },
                                 error : function (data, errorThrown,status) {
                                     console.log('でけない');
