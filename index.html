@@ -361,6 +361,7 @@
                                 // div#containerの中に追加
                                 document.getElementById('pastInquiry').appendChild(clone);
                             }
+                            console.log('これからファイル取得');
                             $.ajax({
                                 type: 'GET',
                                 crossOrigin: true,
@@ -373,7 +374,7 @@
                                     console.log(dlFile);
                                 },
                                 error : function (data, errorThrown,status) {
-                                    
+                                    console.log('でけない');
                                 }
                             })
                         }
