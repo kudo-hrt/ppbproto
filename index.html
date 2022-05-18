@@ -376,7 +376,10 @@
                                 headers: {"Authorization" : accToken},
                                 success : function (dlFile) {
                                     console.log('でけた');
-                                    const url = URL.createObjectURL(dlFile);
+                                    var binaryData = [];
+                                    binaryData.push(dlFile);
+
+                                    const url = URL.createObjectURL(new Blob(binaryData, {type: "text/plain"}));
                                     const a = document.createElement("a");
                                     document.body.appendChild(a);
                                     a.download = 'test.txt';
