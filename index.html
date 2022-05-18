@@ -436,8 +436,8 @@
                 inputData.AccountNumber = 'A0000001';
                 inputData.Classification = classificationValue;
                 inputData.Inquiry = inquiryValue;
-		//inputData.File = inputFile ;
-		inputData.File = '' ;
+                //inputData.File = inputFile ;
+                inputData.File = '' ;
 
                 // Rest ApexへパラメータをJSON形式に変換
                 var data = JSON.stringify( inputData );
@@ -452,7 +452,7 @@
                     data : data,
                     success : function (res) {
                         if(res.length != 0){
-			    var insId = res[0].Id;
+                            var insId = res[0].Id;
 				
                             var formElement = document.getElementById('inquiryForm');
                             formElement.reset();
@@ -477,7 +477,7 @@
                                 // div#containerの中に追加
                                 document.getElementById('pastInquiry').appendChild(clone);
                             }
-			    // ここからcontentsvesionに登録する処理
+                            // ここからcontentsvesionに登録する処理
 
                             //Salesforceにアップロードするためのbodyを作成
                             var cvJson = {
@@ -485,7 +485,7 @@
                               "PathOnClient" : fileName, 
                               "VersionData" : inputFile
                             };
-				$.ajax({
+                            $.ajax({
                     			type: 'POST',
                     			crossOrigin: true,
                     			url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion',
@@ -494,59 +494,59 @@
                     			dataType: 'json',
                     			data : JSON.stringify(cvJson),
                     			success : function (contentversionres) {
-					    	var cvId = contentversionres.id;
+					    	        var cvId = contentversionres.id;
 
-						//content versionに紐付いて作成されたcontent documentのIDを取得
-						var query = "SELECT+ContentDocumentId+FROM+ContentVersion+WHERE+Id+=+'" + cvId + "'"
-						$.ajax({
-							type: 'GET',
-							crossOrigin: true,
-							url: "https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/query/?q=" + query,
-							cache :false,
-							headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
-							success : function (DocumentIdRes) {
-								var cdRecords = DocumentIdRes["records"];
-								var cdId = cdRecords[0].ContentDocumentId;
+                                    //content versionに紐付いて作成されたcontent documentのIDを取得
+                                    var query = "SELECT+ContentDocumentId+FROM+ContentVersion+WHERE+Id+=+'" + cvId + "'"
+						            $.ajax({
+                                        type: 'GET',
+                                        crossOrigin: true,
+                                        url: "https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/query/?q=" + query,
+                                        cache :false,
+                                        headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
+                                        success : function (DocumentIdRes) {
+                                            var cdRecords = DocumentIdRes["records"];
+                                            var cdId = cdRecords[0].ContentDocumentId;
 
-								//お問い合せレコードとリンクさせるためのbodyを作成
-								var linkJson = {
-									"ContentDocumentId" : cdId,
-									"LinkedEntityId" : insId, //お問い合せのレコードID
-									"Visibility" : "AllUsers" //閲覧できる人の制限
-								};
-								console.log(cdId);
-								console.log(insId);
-								$.ajax({
-									type: 'POST',
-									crossOrigin: true,
-									url: "https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentDocumentLink",
-									cache :false,
-									headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
-									dataType: 'json',
+                                            //お問い合せレコードとリンクさせるためのbodyを作成
+                                            var linkJson = {
+                                                "ContentDocumentId" : cdId,
+                                                "LinkedEntityId" : insId, //お問い合せのレコードID
+                                                "Visibility" : "AllUsers" //閲覧できる人の制限
+                                            };
+                                            console.log(cdId);
+                                            console.log(insId);
+                                            $.ajax({
+                                                type: 'POST',
+                                                crossOrigin: true,
+                                                url: "https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentDocumentLink",
+                                                cache :false,
+                                                headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
+                                                dataType: 'json',
                     							data : JSON.stringify(linkJson),
-									success : function (contentdocumentRes) {
-										console.log('送信完了');
-									},
-									error : function (data, errorThrown,status) {
-										console.log(data);
-										console.log(errorThrown);
-										console.log(status);
-									}
-								})
-							},
-							error : function (data, errorThrown,status) {
-console.log(data);
-						console.log(errorThrown);
-						console.log(status);
-							}
-						})
-					},
-					error : function (data, errorThrown,status) {
-                        			console.log(data);
-						console.log(errorThrown);
-						console.log(status);
+                                                success : function (contentdocumentRes) {
+                                                    console.log('送信完了');
+                                                },
+                                                error : function (data, errorThrown,status) {
+                                                    console.log(data);
+                                                    console.log(errorThrown);
+                                                    console.log(status);
+                                                }
+                                            })
+                                        },
+                                        error : function (data, errorThrown,status) {
+                                            console.log(data);
+                                            console.log(errorThrown);
+                                            console.log(status);
+                                        }
+                                    })
+                                },
+                                error : function (data, errorThrown,status) {
+                                    console.log(data);
+                                    console.log(errorThrown);
+                                    console.log(status);
                     			}
-				})
+                            })
                             //ここまで
                         }
                     },
