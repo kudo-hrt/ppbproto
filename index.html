@@ -364,13 +364,14 @@
                                 // div#containerの中に追加
                                 document.getElementById('pastInquiry').appendChild(clone);
                             }
+                            /*
                             console.log('これからファイル取得');
                             $.ajax({
                                 type: 'GET',
                                 crossOrigin: true,
                                 //url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JCOAAA4/VersionData',
-				//url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JCOAAA4',
-				url: 'https://protocomdev-dev-ed.my.salesforce.com/sfc/servlet.shepherd/document/download/0695j000008VCU7AAO?operationContext=S1',
+                                //url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JCOAAA4',
+                                url: 'https://protocomdev-dev-ed.my.salesforce.com/sfc/servlet.shepherd/document/download/0695j000008VCU7AAO?operationContext=S1',
                                 dataType: 'text',
                                 cache :false,
                                 headers: {"Authorization" : accToken},
@@ -380,11 +381,12 @@
                                 },
                                 error : function (data, errorThrown,status) {
                                     console.log('でけない');
-					console.log(data);
-						console.log(errorThrown);
-						console.log(status);
+                                    console.log(data);
+                                    console.log(errorThrown);
+                                    console.log(status);
                                 }
                             })
+                            */
                         }
                     },
                     error : function (data, errorThrown,status) {
