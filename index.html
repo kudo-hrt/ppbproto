@@ -379,7 +379,7 @@
                                     var binaryData = [];
                                     binaryData.push(dlFile);
 
-                                    const url = URL.createObjectURL(new Blob(binaryData, {type: "text/plain"}));
+                                    const url = URL.createObjectURL(new Blob(binaryData, {type: "application/octet-stream"}));
                                     const a = document.createElement("a");
                                     document.body.appendChild(a);
                                     a.download = 'test.xlsx';
