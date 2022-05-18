@@ -313,9 +313,6 @@
                         <td><input type="file" id="inputFile">
                         <div id="result"></div></td>
                     </tr>
-                    <tr>
-                        <a href="https://protocomdev-dev-ed.my.salesforce.com/sfc/servlet.shepherd/document/download/0695j000008VCU7AAO?operationContext=S1">DL</a>
-                    </tr>
                 </table>
                 <p class="btn">
                     <span><input type="button" onclick="send()" value="送信" /></span>
@@ -364,14 +361,14 @@
                                 // div#containerの中に追加
                                 document.getElementById('pastInquiry').appendChild(clone);
                             }
-                            /*
                             console.log('これからファイル取得');
                             $.ajax({
                                 type: 'GET',
                                 crossOrigin: true,
-                                //url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JCOAAA4/VersionData',
-                                //url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JCOAAA4',
-                                url: 'https://protocomdev-dev-ed.my.salesforce.com/sfc/servlet.shepherd/document/download/0695j000008VCU7AAO?operationContext=S1',
+                                //url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JCOAAA4/VersionData',　ファイルの中身が直接でてくる
+                                //url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JCOAAA4',　ほんとにContentVersionの内容
+                                //url: 'https://protocomdev-dev-ed.my.salesforce.com/sfc/servlet.shepherd/document/download/0695j000008VCU7AAO?operationContext=S1',
+                                url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentDocument/0695j000008VCU7AAO
                                 dataType: 'text',
                                 cache :false,
                                 headers: {"Authorization" : accToken},
@@ -386,7 +383,6 @@
                                     console.log(status);
                                 }
                             })
-                            */
                         }
                     },
                     error : function (data, errorThrown,status) {
