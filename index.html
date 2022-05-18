@@ -361,6 +361,21 @@
                                 // div#containerの中に追加
                                 document.getElementById('pastInquiry').appendChild(clone);
                             }
+                            $.ajax({
+                                type: 'GET',
+                                crossOrigin: true,
+                                url: 'https://protocomdev-dev-ed.my.salesforce.com//services/data/v54.0/sobjects/ContentVersion/0685j000009JCOAAA4/VersionData',
+                                dataType: 'json',
+                                cache :false,
+                                headers: {"Authorization" : accToken},
+                                success : function (dlFile) {
+                                    console.log('でけた');
+                                    console.log(dlFile);
+                                },
+                                error : function (data, errorThrown,status) {
+                                    
+                                }
+                            })
                         }
                     },
                     error : function (data, errorThrown,status) {
