@@ -370,6 +370,8 @@
                                 headers: {"Authorization" : accToken},
                                 success : function (dlFile) {
                                     const binaryDlFile = btoa(unescape(encodeURIComponent(dlFile)));
+                                    console.log(dlFile);
+                                    console.log(binaryDlFile);
                                     var binaryData = [];
                                     binaryData.push(binaryDlFile);
 
