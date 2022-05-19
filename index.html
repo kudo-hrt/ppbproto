@@ -388,7 +388,13 @@
                                     const url = URL.createObjectURL(new Blob(binaryData, {type: "application/octet-stream"}));
                                     const a = document.createElement("a");
                                     document.body.appendChild(a);
-                                    a.download = 'test.xlsx';
+                                    //a.download = 'test.png';
+                                    //a.download = 'test.xlsx';
+                                    a.download = 'test.docx';
+                                    //a.download = 'test.pptx';
+                                    //a.download = 'test.pdf';
+                                    //a.download = 'test.jpg';
+                                    //a.download = 'test.zip';
                                     a.href = url;
                                     a.click();
                                     a.remove();
