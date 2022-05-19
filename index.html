@@ -373,7 +373,8 @@
                                     console.log(dlFile);
                                     console.log(binaryDlFile);
                                     var binaryData = [];
-                                    binaryData.push(binaryDlFile);
+                                    //binaryData.push(binaryDlFile);
+                                    binaryData.push(dlFile);
 
                                     const url = URL.createObjectURL(new Blob(binaryData, {type: "image/png"}));
                                     const a = document.createElement("a");
