@@ -368,6 +368,7 @@
                                 crossOrigin: true,
                                 url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JD6IAAW/VersionData',
                                 cache :false,
+                                scriptCharset: 'UTF-8',
                                 headers: {"Authorization" : accToken},
                                 success : function (dlFile) {
                                     const binaryDlFile = btoa(unescape(encodeURIComponent(dlFile)));
@@ -531,7 +532,6 @@
                                                 url: "https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentDocumentLink",
                                                 cache :false,
                                                 headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
-                                                scriptCharset: 'UTF-8',
                                                 dataType: 'json',
                                                 data : JSON.stringify(linkJson),
                                                 success : function (contentdocumentRes) {
