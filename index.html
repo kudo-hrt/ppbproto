@@ -376,14 +376,11 @@
                                 headers: {"Authorization" : accToken},
                                 xhrFields : {responseType : 'blob'},
                                 success : function (dlFile) {
-                                    const binaryDlFile = btoa(unescape(encodeURIComponent(dlFile)));
-                                    console.log(dlFile);
-                                    console.log(binaryDlFile);
                                     var binaryData = [];
-                                    //binaryData.push(binaryDlFile);
                                     binaryData.push(dlFile);
 
-                                    const url = URL.createObjectURL(new Blob(binaryData, {type: "image/png"}));
+                                    //const url = URL.createObjectURL(new Blob(binaryData, {type: "image/png"}));
+                                    const url = URL.createObjectURL(new Blob(binaryData, {type: "application/octet-stream"}));
                                     const a = document.createElement("a");
                                     document.body.appendChild(a);
                                     a.download = 'test.png';
