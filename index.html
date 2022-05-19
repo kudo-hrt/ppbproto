@@ -370,7 +370,8 @@
                                 //},
                                 type: 'GET',
                                 crossOrigin: true,
-                                url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JD6IAAW/VersionData',
+                                //url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JD6IAAW/VersionData', // png
+                                url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0695j000008VEtiAAG/VersionData',
                                 cache :false,
                                 //scriptCharset: 'Shift_JIS',
                                 headers: {"Authorization" : accToken},
@@ -379,7 +380,6 @@
                                     var binaryData = [];
                                     binaryData.push(dlFile);
 
-                                    //const url = URL.createObjectURL(new Blob(binaryData, {type: "image/png"}));
                                     const url = URL.createObjectURL(new Blob(binaryData, {type: "application/octet-stream"}));
                                     const a = document.createElement("a");
                                     document.body.appendChild(a);
