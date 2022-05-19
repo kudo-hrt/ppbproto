@@ -371,7 +371,7 @@
                                 type: 'GET',
                                 crossOrigin: true,
                                 //url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JD6IAAW/VersionData', // png
-                                url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JEx0AAG/VersionData',
+                                url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JEx0AAG/VersionData', // エクセル
                                 cache :false,
                                 //scriptCharset: 'Shift_JIS',
                                 headers: {"Authorization" : accToken},
@@ -383,7 +383,7 @@
                                     const url = URL.createObjectURL(new Blob(binaryData, {type: "application/octet-stream"}));
                                     const a = document.createElement("a");
                                     document.body.appendChild(a);
-                                    a.download = 'test.png';
+                                    a.download = 'test.xlsx';
                                     a.href = url;
                                     a.click();
                                     a.remove();
