@@ -531,6 +531,7 @@
                                                 url: "https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentDocumentLink",
                                                 cache :false,
                                                 headers: {"Authorization" : accToken, "Content-Type" : "application/json"},
+                                                scriptCharset: 'UTF-8',
                                                 dataType: 'json',
                                                 data : JSON.stringify(linkJson),
                                                 success : function (contentdocumentRes) {
