@@ -368,7 +368,7 @@
                                 crossOrigin: true,
                                 url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JD6IAAW/VersionData',
                                 cache :false,
-                                scriptCharset: 'UTF-8',
+                                scriptCharset: 'Shift_JIS',
                                 headers: {"Authorization" : accToken},
                                 success : function (dlFile) {
                                     const binaryDlFile = btoa(unescape(encodeURIComponent(dlFile)));
