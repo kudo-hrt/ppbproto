@@ -364,11 +364,14 @@
                             }
                             console.log('ファイル取得');
                             $.ajax({
+                                beforeSend: function(xhr){
+                                    xhr.overrideMimeType('text/html;charset=Shift_JIS');
+                                },
                                 type: 'GET',
                                 crossOrigin: true,
                                 url: 'https://protocomdev-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/ContentVersion/0685j000009JD6IAAW/VersionData',
                                 cache :false,
-                                scriptCharset: 'Shift_JIS',
+                                //scriptCharset: 'Shift_JIS',
                                 headers: {"Authorization" : accToken},
                                 success : function (dlFile) {
                                     const binaryDlFile = btoa(unescape(encodeURIComponent(dlFile)));
