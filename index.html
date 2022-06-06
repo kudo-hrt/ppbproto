@@ -312,7 +312,8 @@
                     <tr>
                         <th>ファイルアップロード</th>
                         <td><input type="file" id="inputFile">
-                        <div id="result"></div></td>
+                        <div id="result"></div><br/>
+                        <a id="searchLink" href="http://www.google.co.jp">リンク</a></td>
                     </tr>
                 </table>
                 <p class="btn">
@@ -387,6 +388,11 @@
                                     binaryData.push(dlFile);
 
                                     const url = URL.createObjectURL(new Blob(binaryData, {type: "application/octet-stream"}));
+                                    // ボタンでファイルDL 追加
+                                    var target = document.getElementById("searchLink");
+                                    target.href = url;
+                                    // 追加終わり
+                                    /* 自動ファイルDL コメントアウト
                                     const a = document.createElement("a");
                                     document.body.appendChild(a);
                                     //a.download = 'test.png';
@@ -398,7 +404,7 @@
                                     a.download = 'test.zip';
                                     a.href = url;
                                     a.click();
-                                    a.remove();
+                                    a.remove();*/
                                 },
                                 error : function (data, errorThrown,status) {
                                     console.log(data);
