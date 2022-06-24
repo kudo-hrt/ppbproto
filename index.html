@@ -346,7 +346,9 @@
                     "state":{}},
             success : function (connectData) {
                 console.log('成功');
+                
                 var accToken = 'Bearer ' + connectData.access_token;
+                
                 $.ajax({
                     type: 'GET',
                     crossOrigin: true,
@@ -427,6 +429,7 @@
                         console.log('失敗2');
                     }
                 })
+                */
                 
             },
             error : function (data, errorThrown,status) {
