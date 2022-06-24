@@ -333,7 +333,7 @@
         console.log('最初');
         // アクセストークン取得（リフレッシュトークンフロー） Ajax
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             crossOrigin: true,
             url: 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/authorize',
             dataType: 'json',
