@@ -346,7 +346,7 @@
                     "state":{}},
             success : function (connectData) {
                 console.log('成功');
-                
+                /*
                 var accToken = 'Bearer ' + connectData.access_token;
                 
                 $.ajax({
@@ -403,7 +403,7 @@
                                     target.innerText = "ファイルDL";
                                     target.download="test.zip"
                                     // 追加終わり
-                                    /* 自動ファイルDL コメントアウト
+                                    // 自動ファイルDL コメントアウト
                                     const a = document.createElement("a");
                                     document.body.appendChild(a);
                                     //a.download = 'test.png';
@@ -415,7 +415,7 @@
                                     a.download = 'test.zip';
                                     a.href = url;
                                     a.click();
-                                    a.remove();*/
+                                    a.remove();
                                 },
                                 error : function (data, errorThrown,status) {
                                     console.log(data);
