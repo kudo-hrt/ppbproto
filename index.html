@@ -343,6 +343,7 @@
                     "redirect_uri":"https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c",
                     "state":{}},
             success : function (connectData) {
+                console.log('成功');
                 var accToken = 'Bearer ' + connectData.access_token;
                 $.ajax({
                     type: 'GET',
@@ -421,12 +422,13 @@
                         }
                     },
                     error : function (data, errorThrown,status) {
-                        
+                        console.log('失敗2');
                     }
                 })
                 
             },
             error : function (data, errorThrown,status) {
+                console.log('失敗1');
             }
         });
     }
