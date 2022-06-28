@@ -56,7 +56,6 @@
               font-style: normal;
             }
             /*----リセットcss*----/
-
             /*デザインcss↓*/
             .box_con02 {
               max-width: 900px;
@@ -164,7 +163,6 @@
             .box_con02 form table tr textarea {
               height: 10em;
             }
-
             /*プライバシーのデザインcss↓*/
             .con_pri {
               max-width: 700px;
@@ -244,7 +242,6 @@
                 padding: 3% 0 0 3%;
               }
             }
-
             .box_check {
               text-align: center;
               margin: 1em auto;
@@ -255,7 +252,6 @@
             .box_check label span {
               margin-left: .3em;
             }
-
             .btn {
               text-align: center;
             }
@@ -312,8 +308,7 @@
                     <tr>
                         <th>ファイルアップロード</th>
                         <td><input type="file" id="inputFile">
-                        <div id="result"></div><br/>
-                        <a id="searchLink" href="http://www.google.co.jp">リンク</a></td>
+                        <div id="result"></div></td>
                     </tr>
                 </table>
                 <p class="btn">
@@ -330,27 +325,16 @@
 <script type="text/javascript">
     // 初期表示処理
     window.onload = function(){
-        console.log('最初');
         // アクセストークン取得（リフレッシュトークンフロー） Ajax
         $.ajax({
             type: 'POST',
             crossOrigin: true,
             url: 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/token',
-            dataType: 'jsonp',
-            jsonpCallback: 'callback',
-            contentType: "application/json",
+            dataType: 'json',
             cache :false,
             data : {"grant_type":"refresh_token","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG", "client_secret":"F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142","refresh_token":"5Aep861mdLLi91HqFfCpXYtQXRaOgcHsK1gi36_cVHboubUhDFRrSCX9zyL1KBPgaR5qiKjUA54Q0RZhiN_teRI"},
-//            data : {"response_type":"token",
-//                    "client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG",
-//                    "redirect_uri":"https://protocomdev-dev-ed.my.salesforce.com/services/apexrest/PPB_Inquiry__c",
-//                    "state":{}},
-//                    "client_secret":"F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142",
             success : function (connectData) {
-                console.log('成功');
-                
                 var accToken = 'Bearer ' + connectData.access_token;
-                
                 $.ajax({
                     type: 'GET',
                     crossOrigin: true,
@@ -374,10 +358,24 @@
                                 // div#containerの中に追加
                                 document.getElementById('pastInquiry').appendChild(clone);
                             }
-                            
                             console.log('ファイル取得');
                             $.ajax({
                                 //beforeSend: function(xhr){
+
+    
+          
+            
+    
+
+          
+          
+            
+    
+
+          
+    
+    @@ -404,7 +405,7 @@
+  
                                     //xhr.overrideMimeType('text/html;charset=Shift_JIS');
                                     //xhr.overrideMimeType('text/html;charset=utf-8');
                                 //},
@@ -397,15 +395,7 @@
                                 success : function (dlFile) {
                                     var binaryData = [];
                                     binaryData.push(dlFile);
-
                                     const url = URL.createObjectURL(new Blob(binaryData, {type: "application/octet-stream"}));
-                                    // ボタンでファイルDL 追加
-                                    var target = document.getElementById("searchLink");
-                                    target.href = url;
-                                    target.innerText = "ファイルDL";
-                                    target.download="test.zip"
-                                    // 追加終わり
-                                    /* 自動ファイルDL コメントアウト
                                     const a = document.createElement("a");
                                     document.body.appendChild(a);
                                     //a.download = 'test.png';
@@ -417,7 +407,7 @@
                                     a.download = 'test.zip';
                                     a.href = url;
                                     a.click();
-                                    a.remove();*/
+                                    a.remove();
                                 },
                                 error : function (data, errorThrown,status) {
                                     console.log(data);
@@ -428,31 +418,35 @@
                         }
                     },
                     error : function (data, errorThrown,status) {
-                        console.log('失敗2');
+
+    
+          
+            
+    
+
+          
+    
+    
+  
+                        
                     }
                 })
-                console.log('Ajaxの後の処理');
                 
             },
             error : function (data, errorThrown,status) {
-                console.log('失敗1');
             }
         });
     }
-
     var files = document.getElementById( "inputFile" ) ;
     var inputFile;
     var fileName;
-
     files.onchange = function () {
     var fileReader = new FileReader() ;
-
     fileReader.onload = function () {
         var baseFile = this.result ;
         var spFile = baseFile.split(',');
         inputFile = spFile[1];
     }
-
     var file = files.files[0] ;
         fileName = file.name;
     fileReader.readAsDataURL( file ) ;
@@ -482,7 +476,6 @@
                 inputData.Inquiry = inquiryValue;
                 //inputData.File = inputFile ;
                 inputData.File = '' ;
-
                 // Rest ApexへパラメータをJSON形式に変換
                 var data = JSON.stringify( inputData );
                 
@@ -512,17 +505,14 @@
                             for(var i = 0; i < res.length; i++){
                                 // template要素の内容を複製
                                 var clone = template.content.cloneNode(true);
-
                                 // 複製したtemplate要素にデータを挿入
                                 clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
                                 clone.querySelector('.Classification__c').textContent = res[i].Classification__c;
                                 clone.querySelector('.Inquiry__c').textContent = res[i].Inquiry__c;
-
                                 // div#containerの中に追加
                                 document.getElementById('pastInquiry').appendChild(clone);
                             }
                             // ここからcontentsvesionに登録する処理
-
                             console.log(inputFile);
                             //Salesforceにアップロードするためのbodyを作成
                             var cvJson = {
@@ -540,7 +530,6 @@
                                 data : JSON.stringify(cvJson),
                                 success : function (contentversionres) {
                                     var cvId = contentversionres.id;
-
                                     //content versionに紐付いて作成されたcontent documentのIDを取得
                                     var query = "SELECT+ContentDocumentId+FROM+ContentVersion+WHERE+Id+=+'" + cvId + "'"
                                     $.ajax({
@@ -552,7 +541,6 @@
                                         success : function (DocumentIdRes) {
                                             var cdRecords = DocumentIdRes["records"];
                                             var cdId = cdRecords[0].ContentDocumentId;
-
                                             //お問い合せレコードとリンクさせるためのbodyを作成
                                             var linkJson = {
                                                 "ContentDocumentId" : cdId,
