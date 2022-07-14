@@ -354,12 +354,8 @@
                             for(var i = 0; i < res.length; i++){
                                 // template要素の内容を複製
                                 var clone = template.content.cloneNode(true);
-                                // JST変換
-                                var time = new Date(res[i].CreatedDate);
-                                time.setHours(time.getHours() + 9);
-                                var formatted = $.datepicker.formatDate( "yyyy/mm/dd hh:mm", time);
                                 // 複製したtemplate要素にデータを挿入
-                                clone.querySelector('.CreatedDate').textContent = time;
+                                clone.querySelector('.CreatedDate').textContent = res[i].CreatedDate;
                                 clone.querySelector('.Classification__c').textContent = res[i].Classification__c;
                                 clone.querySelector('.Inquiry__c').textContent = res[i].Inquiry__c;
                                 // div#containerの中に追加
