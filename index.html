@@ -357,6 +357,7 @@
                                 // JST変換
                                 var time = new Date(res[i].CreatedDate);
                                 time.setHours(time.getHours() + 9);
+                                var formatted = $.datepicker.formatDate( "yyyy/mm/dd hh:mm", time);
                                 // 複製したtemplate要素にデータを挿入
                                 clone.querySelector('.CreatedDate').textContent = time;
                                 clone.querySelector('.Classification__c').textContent = res[i].Classification__c;
