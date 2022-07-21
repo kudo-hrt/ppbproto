@@ -333,9 +333,11 @@
             url: 'https://protocomdev-dev-ed.my.salesforce.com/services/oauth2/token',
             dataType: 'json',
             cache :false,
-            data : {"grant_type":"refresh_token","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG", 
+            /*data : {"grant_type":"refresh_token","client_id":"3MVG9pRzvMkjMb6nsLsmTx_FqB0rQ9AHEMYt85TrwFp6b3yeP.ta18VQpmha_Ds31fssFdYib4DdLPcLKqtQG", 
                     //"client_secret":"F864BDD8ADFB8B17EA27F0623CF9039A503A76F9312032654DBFFDB25E87B142",
-                    "refresh_token":"5Aep861mdLLi91HqFfCpXYtQXRaOgcHsK1gi36_cVHboubUhDFRrSCX9zyL1KBPgaR5qiKjUA54Q0RZhiN_teRI"},
+                    "refresh_token":"5Aep861mdLLi91HqFfCpXYtQXRaOgcHsK1gi36_cVHboubUhDFRrSCX9zyL1KBPgaR5qiKjUA54Q0RZhiN_teRI"},*/
+            data : {"grant_type":"urn:ietf:params:oauth:grant-type:jwt-bearer",
+                    "assertion":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiIzTVZHOXBSenZNa2pNYjZuc0xzbVR4X0ZxQjZiYkhJbmZ1eUxpeDBfakxybkVqYnQycW9ENTNweWtlaW1FZlVOSndxc2ZTUURMdlQ0MC5xR0pXeFBiIiwic3ViIjoiM01WRzlwUnp2TWtqTWI2bnNMc21UeF9GcUI2YmJISW5mdXlMaXgwX2pMcm5FamJ0MnFvRDUzcHlrZWltRWZVTkp3cXNmU1FETHZUNDAucUdKV3hQYiIsImF1ZCI6Imh0dHBzOi8vcHJvdG9jb21kZXYtZGV2LWVkLm15LnNhbGVzZm9yY2UuY29tL3NlcnZpY2VzL29hdXRoMi90b2tlbiIsImV4cCI6IjEzMzM2ODU2MjgifQ==.TatATzOg4g76rf2g5NjNxHZdZtMEFeY8dkWmJxNbr3ely5yWM558IUvre1sDgO/Md63L+XIT7yTxPhPrAe0"},
             success : function (connectData) {
                 var accToken = 'Bearer ' + connectData.access_token;
                 $.ajax({
