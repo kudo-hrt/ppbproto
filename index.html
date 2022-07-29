@@ -389,6 +389,7 @@
                                     var binaryData = [];
                                     binaryData.push(dlFile);
                                     const url = URL.createObjectURL(new Blob(binaryData, {type: "application/octet-stream"}));
+                                    console.log(url);
                                     // ボタンでファイルDL 追加
                                     var target = document.getElementById("searchLink");
                                     target.href = url;
