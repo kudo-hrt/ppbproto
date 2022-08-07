@@ -842,10 +842,11 @@
 				if(response.errorMessage){
 					errorMessageText = response.errorMessage.replace(/\n/g, '<br>');
 				}
+				init();
 				// 成功
 				if(response.result == 'SUCCESS'){
 					res = response;
-					init();
+					
 					// 時限チェック
 				}else if(response.result == 'TIMED_CHECK'){
 					dispTimeoutErrModal();
