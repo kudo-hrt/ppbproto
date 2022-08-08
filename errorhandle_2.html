@@ -1939,90 +1939,91 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	
-	<div class="blkCont layout-form layout-form-normal">
-		<div class="input-textarea">
-			<label for="textInput" class="input-title">お問い合わせ詳細</label>
-			<div class="textinput-box">
-				<textarea type="text" id="inqTextInput" name="textInput" maxlength="" rows="10" wrap="soft" class="reqEntry" placeholder="ご記入ください" style="overflow: auto;"></textarea>
-				<span id="inqContentDel" class="InputClear inputClear" style="margin-right: 16px;">×</span>
-			</div>
-			<span class="input-message">2000文字以内で入力</span>
-			<div id="inqOutputError"></div>
-		</div>
-	</div>
 	
-	<div class="blkCont layout-form layout-form-normal">
-		<div>
-			<p class="input-title">メールアドレス</p>
-			<p id="newInqMail"></p>
-		</div>
-	</div>
-	
-	<div class="blkCont mt-16">
-		<div class="note">
-			<p>当社からの回答がお問い合わせフォームに投稿されると、上記の登録メールアドレス宛にお知らせします。回答内容はお問い合わせフォームにログインしてご確認ください。</p>
-		</div>
-	</div>
-	
-	<div class="blkCont layout-form layout-form-normal">
-		<div class="wrap-input upfile-wrap">
-			<label class="input-title">ファイルアップロード（任意）
-				<span class="upfileLink">ファイルを選択（24MBまで）</span>
-				<input type="file" name="fileName" id="inqFileName" class="dn" multiple="multiple">
-			</label>
-			<div id="inqFileAlert" style="font-weight:bold;color:red;"></div>
-			<div id="inqFileList"></div>
-		</div>
-	</div>
-	
-	<div class="modalWrap_error error-type1">
-		<div class="modalOuter_error">
-			<div class="modal__headArea"><img src="/commontpl/images/category/contact_error.png" alt="" width="128" height="64"></div>
-			<div class="modal__bodyArea">
-				<p class="fBold">入力された内容が失われます。<br>それでも問題ない場合は戻るを選択して下さい。</p>
-			</div>
-			<div class="modal_error_btnArea">
-				<p><a href="javascript:void(0);" class="btn btn01 btnL modal__close" onclick="inqClearInput();">戻る</a></p>
-				<p><a href="javascript:void(0);" class="btn btn03 btnL modal__close">閉じる</a></p>
+		<div class="blkCont layout-form layout-form-normal">
+			<div class="input-textarea">
+				<label for="textInput" class="input-title">お問い合わせ詳細</label>
+				<div class="textinput-box">
+					<textarea type="text" id="inqTextInput" name="textInput" maxlength="" rows="10" wrap="soft" class="reqEntry" placeholder="ご記入ください" style="overflow: auto;"></textarea>
+					<span id="inqContentDel" class="InputClear inputClear" style="margin-right: 16px;">×</span>
+				</div>
+				<span class="input-message">2000文字以内で入力</span>
+				<div id="inqOutputError"></div>
 			</div>
 		</div>
-	</div>
-	
-	<div class="modalWrap_error error-type2">
-		<div class="modalOuter_error">
-			<div class="modal__headArea">
-				<img src="/commontpl/images/category/contact_error.png" alt="" width="128" height="64">
-			</div>
-			<div class="modal__bodyArea">
-				<p class="fBold">入力された内容が失われます。<br>それでも問題ない場合は「削除する」を選択してください。</p>
-			</div>
-			<div class="modal_error_btnArea">
-				<p><a id="inqDelBtn" href="javascript:void(0);" class="btn btn01 btnL modal__close">削除する</a></p>
-				<p><a href="javascript:void(0);" class="btn btn03 btnL modal__close">閉じる</a></p>
+
+		<div class="blkCont layout-form layout-form-normal">
+			<div>
+				<p class="input-title">メールアドレス</p>
+				<p id="newInqMail"></p>
 			</div>
 		</div>
-	</div>
-	
-	<div class="modalWrap_error error-type3">
-		<div class="modalOuter_error">
-			<div class="modal__headArea">
-				<img src="/commontpl/images/category/contact_error.png" alt="" width="128" height="64">
-			</div>
-			<div class="modal__bodyArea">
-				<p class="fBold">アップロードしたファイルが削除されます。<br>それでも問題ない場合は「削除する」を選択してください。</p>
-			</div>
-			<div class="modal_error_btnArea">
-				<p><a href="javascript:void(0);" class="btn btn01 btnL modal__close" onclick="inqDeleteFile();">削除する</a></p>
-				<p><a href="javascript:void(0);" class="btn btn03 btnL modal__close">閉じる</a></p>
+
+		<div class="blkCont mt-16">
+			<div class="note">
+				<p>当社からの回答がお問い合わせフォームに投稿されると、上記の登録メールアドレス宛にお知らせします。回答内容はお問い合わせフォームにログインしてご確認ください。</p>
 			</div>
 		</div>
-	</div>
-	
-	<div class="blkCont contbrd-btnArea-box">
-		<p><input id="confButton" type="submit" onclick="outputValueInqConf();" class="btn btn01 btnL" value="確認する"></p>
-		<p class="mt-16"><a href="javascript:void(0);" onclick="inqPrevAction();" class="btn btn03 btnL prevBtn">戻る</a></p>
+
+		<div class="blkCont layout-form layout-form-normal">
+			<div class="wrap-input upfile-wrap">
+				<label class="input-title">ファイルアップロード（任意）
+					<span class="upfileLink">ファイルを選択（24MBまで）</span>
+					<input type="file" name="fileName" id="inqFileName" class="dn" multiple="multiple">
+				</label>
+				<div id="inqFileAlert" style="font-weight:bold;color:red;"></div>
+				<div id="inqFileList"></div>
+			</div>
+		</div>
+
+		<div class="modalWrap_error error-type1">
+			<div class="modalOuter_error">
+				<div class="modal__headArea"><img src="/commontpl/images/category/contact_error.png" alt="" width="128" height="64"></div>
+				<div class="modal__bodyArea">
+					<p class="fBold">入力された内容が失われます。<br>それでも問題ない場合は戻るを選択して下さい。</p>
+				</div>
+				<div class="modal_error_btnArea">
+					<p><a href="javascript:void(0);" class="btn btn01 btnL modal__close" onclick="inqClearInput();">戻る</a></p>
+					<p><a href="javascript:void(0);" class="btn btn03 btnL modal__close">閉じる</a></p>
+				</div>
+			</div>
+		</div>
+
+		<div class="modalWrap_error error-type2">
+			<div class="modalOuter_error">
+				<div class="modal__headArea">
+					<img src="/commontpl/images/category/contact_error.png" alt="" width="128" height="64">
+				</div>
+				<div class="modal__bodyArea">
+					<p class="fBold">入力された内容が失われます。<br>それでも問題ない場合は「削除する」を選択してください。</p>
+				</div>
+				<div class="modal_error_btnArea">
+					<p><a id="inqDelBtn" href="javascript:void(0);" class="btn btn01 btnL modal__close">削除する</a></p>
+					<p><a href="javascript:void(0);" class="btn btn03 btnL modal__close">閉じる</a></p>
+				</div>
+			</div>
+		</div>
+
+		<div class="modalWrap_error error-type3">
+			<div class="modalOuter_error">
+				<div class="modal__headArea">
+					<img src="/commontpl/images/category/contact_error.png" alt="" width="128" height="64">
+				</div>
+				<div class="modal__bodyArea">
+					<p class="fBold">アップロードしたファイルが削除されます。<br>それでも問題ない場合は「削除する」を選択してください。</p>
+				</div>
+				<div class="modal_error_btnArea">
+					<p><a href="javascript:void(0);" class="btn btn01 btnL modal__close" onclick="inqDeleteFile();">削除する</a></p>
+					<p><a href="javascript:void(0);" class="btn btn03 btnL modal__close">閉じる</a></p>
+				</div>
+			</div>
+		</div>
+
+		<div class="blkCont contbrd-btnArea-box">
+			<p><input id="confButton" type="submit" onclick="outputValueInqConf();" class="btn btn01 btnL" value="確認する"></p>
+			<p class="mt-16"><a href="javascript:void(0);" onclick="inqPrevAction();" class="btn btn03 btnL prevBtn">戻る</a></p>
+		</div>
 	</div>
 </div>
 
