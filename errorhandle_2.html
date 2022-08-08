@@ -121,9 +121,7 @@
 	 */
 	$(function(){
 		// 連携文字列取得
-		//linkedStr = $('input[name="SFConnectParam"]').val();
-		//linkedStr = 'bd1fcec2a09397bdac42bdba68beca74a28e90a646bffae6d0b2f3a376aa9993'; //いっぱい
-		linkedStr = 'b0d9fb640d1619065677920ae3734436346a058da071975e0df730ab6da7a43c' // ケース0件
+		linkedStr = $('input[name="SFConnectParam"]').val();
 		// ホーム画面を表示
 		changeDisp('inquiryForm');
 		
@@ -382,8 +380,7 @@
 			}
 		});
 		
-		//const jinkakuCode = $('input[name="JinkakuCode"]').val();
-		const jinkakuCode = '個人';
+		const jinkakuCode = $('input[name="JinkakuCode"]').val();
 		
 		if(jinkakuCode){
 			// 人格コードが個人または非居住者の場合
@@ -1593,6 +1590,7 @@
 			$("body").css({position:"fixed",top:-1});
 		// いずれも未入力の場合
 		}else{
+			inqClearInput();
 			if(!res.caseList || res.caseList.length <= 0){ // お問い合わせ0件(null)の場合
 				// ホーム画面（履歴なし）を表示
 				changeDisp('noInq');
@@ -1634,6 +1632,7 @@
 	function cbdPrevAction(){
 		// 問い合わせ内容が未入力
 		if($("#cbdTextInput").val() === "" && inputFiles.length <= 0){
+			 cbdClearInput();
 			// 詳細画面に遷移
 			changeDisp('detailsScreen');
 		// 入力されている
