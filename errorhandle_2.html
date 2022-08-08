@@ -1,4 +1,15 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/commontpl/css/reset.css" media="screen, print">
+<link rel="stylesheet" type="text/css" href="/commontpl/css/component_smt.css" media="screen, print">
+<link rel="stylesheet" type="text/css" href="/commontpl/css/category/contact_smt.css" media="screen, print">
+<link rel="stylesheet" type="text/css" href="/commontpl/css/component_pc.css" media="screen, print">
+<link rel="stylesheet" type="text/css" href="/commontpl/css/category/contact_pc.css" media="screen, print">
+<script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="/commontpl/js/category/modal_accountopen.js"></script>
+<script type="text/javascript" src="/commontpl/js/common.js"></script>
+<script type="text/javascript" src="/commontpl/js/cookie.js"></script>
+<script type="text/javascript" src="/js/javalib.js"></script>
+<script type="text/javascript" src="/js/check.js"></script>
+<script type="text/javascript" src="/js/nb_error.js"></script>
 <!--### template ###-->
 <!-- InquiryForm -->
 <template id="caseTemplate">
@@ -204,7 +215,7 @@
 			}
 		});
 		//入力時の下線制御
-		//setReqCls("#Modal-inqType, #inqTextInput");
+		setReqCls("#Modal-inqType, #inqTextInput");
 		
 		//モーダル開閉
 		$(".ModalBtn").on("click", function(){
@@ -284,7 +295,7 @@
 			}
 		});
 		//入力時の下線制御
-		//setReqCls("#Modal-inqType, #cbdTextInput");
+		setReqCls("#Modal-inqType, #cbdTextInput");
 		
 		$("#outputCbdTemp").on("click", ".contbrd-cont", function(){
 			$(this).toggleClass("open");
@@ -583,7 +594,7 @@
 		uploadedFileSize = 0;
 		// RestApexとの通信時erorrだった場合にエラーのモーダルを表示する処理に変更する
 		if(res.result == 'SUCCESS'){
-			if(!res.caseList){ // お問い合わせ0件(null)の場合
+			if(!res.caseList || res.caseList.length <= 0){ // お問い合わせ0件(null)の場合
 				// ホーム画面（履歴なし）を表示
 				changeDisp('noInq');
 				return;
@@ -767,7 +778,7 @@
 				// ケースのIdを設定
 				clone.querySelector('.inq-id').dataset.cId = c.record.Id;
 				// ケース番号を設定する
-				clone.querySelector('.inq-title').textContent = 'No.' + c.record.CaseNumber;
+				clone.querySelector('.inq-title').textContent = 'No.T' + c.record.CaseNumber;
 				// お問い合わせ内容を設定する
 				clone.querySelector('.cbd-content').textContent = content;
 				// ケースの作成日をJST日付かつスラッシュに変換して、設定
@@ -842,7 +853,6 @@
 				if(response.errorMessage){
 					errorMessageText = response.errorMessage.replace(/\n/g, '<br>');
 				}
-				
 				// 成功
 				if(response.result == 'SUCCESS'){
 					res = response;
@@ -1175,7 +1185,7 @@
 			// URLのケースIdとセッションストレージから取得したケースIdが一致する場合
 			if(selectedCaseId == rec.Id){
 				// ページタイトルを設定
-				document.getElementById('contbrdTitle').textContent = 'お問い合わせ番号：No.' + rec.CaseNumber;
+				document.getElementById('contbrdTitle').textContent = 'お問い合わせ番号：No.T' + rec.CaseNumber;
 				
 				cbdFileList = res.caseList[i].cbdFileList;
 				// コンタクトボード明細レコードとファイルの組み合わせリストの件数分
@@ -1472,9 +1482,15 @@
 		
 		document.getElementById("inqUploadFiles").innerHTML = null;
 		
-		for(let i = 0; i < inputFiles.length; i++){
+		if(inputFiles.length > 0){
+			for(let i = 0; i < inputFiles.length; i++){
+				const p = document.createElement("p");
+				p.innerText = inputFiles[i].name;
+				document.getElementById("inqUploadFiles").appendChild(p);
+			}
+		}else{
 			const p = document.createElement("p");
-			p.innerText = inputFiles[i].name;
+			p.innerText = "なし";
 			document.getElementById("inqUploadFiles").appendChild(p);
 		}
 		
@@ -1515,9 +1531,15 @@
         
         document.getElementById("cbdUploadFiles").innerHTML = null;
 		
-		for(let i = 0; i < inputFiles.length; i++){
+		if(inputFiles.length > 0){
+			for(let i = 0; i < inputFiles.length; i++){
+				const p = document.createElement("p");
+				p.innerText = inputFiles[i].name;
+				document.getElementById("cbdUploadFiles").appendChild(p);
+			}
+		}else{
 			const p = document.createElement("p");
-			p.innerText = inputFiles[i].name;
+			p.innerText = "なし";
 			document.getElementById("cbdUploadFiles").appendChild(p);
 		}
         
@@ -1582,8 +1604,13 @@
 			$("body").css({position:"fixed",top:-1});
 		// いずれも未入力の場合
 		}else{
-			// ホーム画面に遷移
-			changeDisp('inquiryForm');
+			if(!res.caseList || res.caseList.length <= 0){ // お問い合わせ0件(null)の場合
+				// ホーム画面（履歴なし）を表示
+				changeDisp('noInq');
+			}else{
+				// ホーム画面に遷移
+				changeDisp('inquiryForm');
+			}
 		}
 	}
 	/**
@@ -1603,6 +1630,10 @@
 		inputFiles = new Array();
 		// アップロード済ファイルサイズをリセット
 		uploadedFileSize = 0;
+		// 警告表示のクリア
+		$("#inqFileAlert").html(null);
+		// アップロードファイル表示のクリア
+		$("#inqFileList").html(null);
 		// オーバレイをクリア（残すと前画面でオーバレイが残るため）
 		$('.modalOverlay,.error-type1').fadeOut();
 		// ホーム画面に遷移
@@ -1633,6 +1664,10 @@
 		inputFiles = new Array();
 		// アップロード済ファイルサイズをリセット
 		uploadedFileSize = 0;
+		// 警告表示のクリア
+		$("#cbdFileAlert").html(null);
+		// アップロードファイル表示のクリア
+		$("#cbdFileList").html(null);
 		// オーバレイをクリア（残すと前画面でオーバレイが残るため）
 		$(".modalOverlay,.error-type1").fadeOut();
 		// 詳細画面に遷移
@@ -1945,7 +1980,6 @@
 			<label class="input-title">ファイルアップロード（任意）
 				<span class="upfileLink">ファイルを選択（24MBまで）</span>
 				<input type="file" name="fileName" id="inqFileName" class="dn" multiple="multiple">
-				<input type="text" id="inqFileText" name="fileText" value="">
 			</label>
 			<div id="inqFileAlert" style="font-weight:bold;color:red;"></div>
 			<div id="inqFileList"></div>
@@ -2025,6 +2059,8 @@
 		</div>
 		<div class="blkTitle">
 			<h2 class="h201">ファイルアップロード</h2>
+		</div>
+		<div class="blkCont bdrT0">
 			<p id="inqUploadFiles"></p>
 		</div>
 		<div class="blkCont bdrT0">
@@ -2055,7 +2091,6 @@
 						<label class="input-title">ファイルアップロード（任意）
 							<span class="upfileLink">ファイルを選択（24MBまで）</span>
 							<input type="file" name="fileName" id="cbdFileName" class="dn" multiple="multiple">
-							<input type="text" id="cbdFileText" name="fileText" value="">
 						</label>
 						<div id="cbdFileAlert" style="font-weight:bold;color:red;"></div>
 						<div id="cbdFileList"></div>
