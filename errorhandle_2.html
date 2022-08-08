@@ -829,6 +829,7 @@
 				"refresh_token":REFLESH_TOKEN
 			}
 		}).done(function(connectData){
+			console.log(connectData.access_token);
 			var accToken = 'Bearer ' + connectData.access_token;
 			$.ajax({
 				type:'GET',
