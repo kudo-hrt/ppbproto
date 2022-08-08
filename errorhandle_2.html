@@ -589,6 +589,10 @@
 		// RestApexとの通信時erorrだった場合にエラーのモーダルを表示する処理に変更する
 		if(res.result == 'SUCCESS'){
 			if(!res.caseList || res.caseList.length <= 0){ // お問い合わせ0件(null)の場合
+				// 入力画面出力用
+				eMail = res.accMail;
+				// 新規入力画面に反映
+				document.getElementById('newInqMail').innerHTML = eMail;
 				// ホーム画面（履歴なし）を表示
 				changeDisp('noInq');
 				return;
@@ -665,7 +669,6 @@
         }
 		// 入力画面出力用
 		eMail = res.accMail;
-		console.log(eMail);
 		// 新規入力画面に反映
 		document.getElementById('newInqMail').innerHTML = eMail;
 		// コンテンツバーション取得のためのPromise生成
