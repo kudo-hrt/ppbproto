@@ -284,7 +284,7 @@
 			}
 		});
 		//入力時の下線制御
-		//setReqCls("#Modal-inqType, #cbdTextInput");
+		setReqCls("#Modal-inqType, #cbdTextInput");
 		
 		$("#outputCbdTemp").on("click", ".contbrd-cont", function(){
 			$(this).toggleClass("open");
@@ -717,11 +717,11 @@
 					// 日を取得する
 					const date = nowDateTime.getDate();
 					// 先頭文字列'0'に、1）から時間(h)を取得して結合した値を最後から2文字までを変数に格納
-					const hour = (`0` + (nowDateTime.getHours())).slice(-2);
+					const hour = ("0" + (nowDateTime.getHours())).slice(-2);
 					// 先頭文字列'0'に、1）から分(m)を取得して結合した値を最後から2文字までを変数に格納
-					const minute = (`0` + (nowDateTime.getMinutes())).slice(-2);
+					const minute = ("0" + (nowDateTime.getMinutes())).slice(-2);
 					// Dateに変換
-					nowDateTIme = new Date(`${year}/${month-1}/${date} ${hour}:${minute}`);
+					nowDateTIme = new Date(year + "/" + (month - 1) + "/" + date + " " + hour + ":" + minute);
 					// コンタクトボード明細の時間
 					let cbdDateTime = new Date(cbdFileList[i].cbd.CreatedDate);
 					// 以下のいずれかの条件でnew表示を付与
@@ -829,7 +829,6 @@
 				"refresh_token":REFLESH_TOKEN
 			}
 		}).done(function(connectData){
-			console.log(connectData.access_token);
 			var accToken = 'Bearer ' + connectData.access_token;
 			$.ajax({
 				type:'GET',
@@ -1192,10 +1191,10 @@
 					// 日を取得する
 					const date = nowDateTime.getDate();
 					// 先頭文字列'0'に、1）から時間(h)を取得して結合した値を最後から2文字までを変数に格納
-					const hour = (`0` + (nowDateTime.getHours())).slice(-2);
+					const hour = ("0" + (nowDateTime.getHours())).slice(-2);
 					// 先頭文字列'0'に、1）から分(m)を取得して結合した値を最後から2文字までを変数に格納
-					const minute = (`0` + (nowDateTime.getMinutes())).slice(-2);
-					nowDateTime = new Date(`${year}/${month-1}/${date} ${hour}:${minute}`);
+					const minute = ("0" + (nowDateTime.getMinutes())).slice(-2);
+					nowDateTime = new Date(year + "/" + (month - 1) + "/" + date + " " + hour + ":" + minute);
 					// コンタクトボード明細の時間
 					let cbdDateTime = new Date(cbdFileList[j].CreatedDate);
 					// 以下のいずれかの条件でnew表示を付与
@@ -1410,15 +1409,15 @@
 		// 年を取得
 		const year = newDate.getFullYear();
 		// 月を取得し1を加算
-		const month = (`0` + (newDate.getMonth() + 1)).slice(-2);
+		const month = ("0" + (newDate.getMonth() + 1)).slice(-2);
 		// 日を取得
-		const day = (`0` + (newDate.getDate())).slice(-2);
+		const day = ("0" + (newDate.getDate())).slice(-2);
 		// 先頭文字列'0'に、1）から時間(h)を取得して結合した値を最後から2文字までを変数に格納
-		const hour = (`0` + (newDate.getHours())).slice(-2);
+		const hour = ("0" + (newDate.getHours())).slice(-2);
 		// 先頭文字列'0'に、1）から分(m)を取得して結合した値を最後から2文字までを変数に格納
-		const minute = (`0` + (newDate.getMinutes())).slice(-2);
+		const minute = ("0" + (newDate.getMinutes())).slice(-2);
 		// 値を返却
-		return `${year}/${month}/${day} ${hour}:${minute}`;
+		return year + "/" + month + "/" + day + " " + hour + ":" + minute;
 	}
 	
 	/**
@@ -1941,7 +1940,6 @@
 			</div>
 		</div>
 	
-	
 		<div class="blkCont layout-form layout-form-normal">
 			<div class="input-textarea">
 				<label for="textInput" class="input-title">お問い合わせ詳細</label>
@@ -1953,20 +1951,20 @@
 				<div id="inqOutputError"></div>
 			</div>
 		</div>
-
+		
 		<div class="blkCont layout-form layout-form-normal">
 			<div>
 				<p class="input-title">メールアドレス</p>
 				<p id="newInqMail"></p>
 			</div>
 		</div>
-
+		
 		<div class="blkCont mt-16">
 			<div class="note">
 				<p>当社からの回答がお問い合わせフォームに投稿されると、上記の登録メールアドレス宛にお知らせします。回答内容はお問い合わせフォームにログインしてご確認ください。</p>
 			</div>
 		</div>
-
+		
 		<div class="blkCont layout-form layout-form-normal">
 			<div class="wrap-input upfile-wrap">
 				<label class="input-title">ファイルアップロード（任意）
@@ -1977,7 +1975,7 @@
 				<div id="inqFileList"></div>
 			</div>
 		</div>
-
+		
 		<div class="modalWrap_error error-type1">
 			<div class="modalOuter_error">
 				<div class="modal__headArea"><img src="/commontpl/images/category/contact_error.png" alt="" width="128" height="64"></div>
@@ -1990,7 +1988,7 @@
 				</div>
 			</div>
 		</div>
-
+		
 		<div class="modalWrap_error error-type2">
 			<div class="modalOuter_error">
 				<div class="modal__headArea">
@@ -2005,7 +2003,7 @@
 				</div>
 			</div>
 		</div>
-
+		
 		<div class="modalWrap_error error-type3">
 			<div class="modalOuter_error">
 				<div class="modal__headArea">
@@ -2020,7 +2018,7 @@
 				</div>
 			</div>
 		</div>
-
+		
 		<div class="blkCont contbrd-btnArea-box">
 			<p><input id="confButton" type="submit" onclick="outputValueInqConf();" class="btn btn01 btnL" value="確認する"></p>
 			<p class="mt-16"><a href="javascript:void(0);" onclick="inqPrevAction();" class="btn btn03 btnL prevBtn">戻る</a></p>
