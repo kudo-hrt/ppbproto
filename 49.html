@@ -196,6 +196,7 @@
 				$("body").css({position:"fixed",top:-1 * CurrentScrollY});
 			}
 		});
+/*
 		// お問い合わせ内容入力
 		$("#inqTextInput").on("keydown keyup change blur", function() {
 			if($(this).val().length){
@@ -206,6 +207,7 @@
 				$("#inqTextInput").addClass("reqEntry").removeClass("data-on");
 			}
 		});
+*/
 		// 削除確認時に削除するボタン押下
 		$("#inqDelBtn").on({
 			"click":function(){
@@ -218,6 +220,7 @@
 				$("#inqTextInput").addClass("reqEntry").removeClass("data-on");
 			}
 		});
+		/*
 		// お問い合わせ内容入力
 		$("#cbdTextInput").on("keydown keyup change blur", function() {
 			if ($(this).val().length) {
@@ -228,6 +231,7 @@
 				$("#cbdTextInput").addClass("reqEntry").removeClass("data-on");
 			}
 		});
+		*/
 		// 削除確認時に削除するボタン押下
 		$("#cbdDelBtn").on({
 			"click":function(){
@@ -272,7 +276,7 @@
 			// 黄色
 			$("#inqTextInput").css("background", "#ffffcc");
 		}
-/*
+
 		$("#inqTextInput").on("keydown keyup change focus blur", function() {
 			// 値が空の時
 			if($(this).val() == ""){
@@ -284,13 +288,13 @@
 				$(this).css("background", "");
 			}
 		});
-*/
+
 		// 個別問い合わせ画面 入力欄の背景色を黄色にする
 		if($("#cbdTextInput").val() == ""){
 			// 黄色
 			$("#cbdTextInput").css("background", "#ffffcc");
 		}
-/*
+
 		$("#cbdTextInput").on("keydown keyup change focus blur", function() {
 			// 値が空の時
 			if($(this).val() == ""){
@@ -302,7 +306,7 @@
 				$(this).css("background", "");
 			}
 		});
-*/
+
 		// モーダル閉じるボタン(画面遷移なし)
 		$(".mClose").on("click", function(){
 			var CurrentScrollY = $(window).scrollTop();
