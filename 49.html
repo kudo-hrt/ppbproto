@@ -1455,10 +1455,11 @@
 		uploadedFileSize += fileSize;
 		// ファイル表示用テンプレートをロード
 		const fileUpTemplate = $("#fileUpTemplate");
+		console.log(files.length);
 		// アップロードファイル分繰り返す
 		for(let i = 0; i < files.length; i++){
 			// クローンする
-			const clone = fileUpTemplate.content.cloneNode(true);
+			const clone = fileUpTemplate.get(0).content.cloneNode(true);
 			// ファイルパスをセパレータ分割
 			const filePathList = files[i].name.split("\\");
 			// ファイル出力対象のアンカー部分取得
