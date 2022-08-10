@@ -549,7 +549,7 @@
 				// ケース番号を設定する
 				clone.querySelector(".inq-title").textContent = "No.T" + c.record.CaseNumber;
 				// お問い合わせ内容を設定する
-				clone.find(".cbd-content").textContent = content;
+				clone.querySelector(".cbd-content").textContent = content;
 				// ケースの作成日をJST日付かつスラッシュに変換して、設定
 				clone.querySelector(".inq-createdate").textContent = changeSlashDate(c.record.CreatedDate);
 				// お問い合わせ種類を設定する
