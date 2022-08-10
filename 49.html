@@ -470,8 +470,10 @@
 			}
 			// 添付ファイルがある場合
 			if(fileIdList.length > 0){
-				// 添付ファイルを取得
-				getContentVersion(fileIdList, resolve, 0);
+				restAuthorize(function(accToken){
+					// 添付ファイルを取得
+					getContentVersion(accToken, fileIdList, resolve, 0);
+				},dispRegisComErrModal);
 			// 添付ファイルなし
 			}else{
 				// 次の処理を呼び出す
@@ -791,13 +793,13 @@
 	 * 引数　：コンテンツバージョンId
 	 * 返却値：ファイルの中身
 	 ***/
-	function getContentVersion(fileIdList, resolve, index){
+	function getContentVersion(accToken, fileIdList, resolve, index){
 		
 		restAuthorize(function(accToken){
 			$.ajax({
 				type:"GET",
 				crossOrigin:true,
-				url:REQUEST_DOMAIN + "/services/data/v54.0/sobjects/ContentVersion/" + fileId + "/VersionData",
+				url:REQUEST_DOMAIN + "/services/data/v54.0/sobjects/ContentVersion/" + fileIdList[index] + "/VersionData",
 				cache:false,
 				headers:{"Authorization":accToken},
 				xhrFields:{responseType:"blob"}
@@ -817,7 +819,7 @@
 								// 要素をインスタンス化
 								const cv = cbdFileList[j].contentVersions[k];
 								
-								if(cv.Id == fileId){
+								if(cv.Id == fileIdList[index]){
 									// IDを条件に添付ファイルのBlobデータを取得
 									res.caseList[i].cbdFileList[j].contentVersions[k]["versionData"] = fileContent;
 									// 紐付け済にする
@@ -846,7 +848,7 @@
 				// まだ終わってない場合
 				}else{
 					// 再帰実行する
-					getContentVersion(fileIdList, resolve, index + 1);
+					getContentVersion(accToken, fileIdList, resolve, index + 1);
 				}
 			}).fail(function (data, errorThrown, status) {
 				dispRegisComErrModal();
