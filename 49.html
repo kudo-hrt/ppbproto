@@ -596,7 +596,6 @@
 	 * REST認証
 	 */
 	function restAuthorize(doneMethod, faliMethod){
-		console.log('restAuthorize');
 		$.ajax({
 			type:"POST",
 			crossOrigin:true,
@@ -609,11 +608,9 @@
 				"refresh_token":REFLESH_TOKEN
 			}
 		}).done(function(response){
-			console.log('restAuthorize done');
 			var accToken = "Bearer " + response.access_token;
 			doneMethod(accToken);
 		}).fail(function (data, errorThrown, status) {
-			console.log('restAuthorize fail');
 			faliMethod();
 		});
 	}
@@ -622,7 +619,6 @@
 	 * 初期表示時データ取得
 	 */
 	function getAllCase(){
-		console.log('getAllCase');
 		restAuthorize(function(accToken){
 			$.ajax({
 				type:"GET",
@@ -633,7 +629,7 @@
 				data:{inquiry:linkedStr},
 				headers: {"Authorization":accToken}
 			}).done(function(response){
-				console.log('done');
+				console.log(response.result);
 				if(response.errorMessage){
 					errorMessageText = response.errorMessage.replace(/\n/g, "<br>");
 				}
@@ -651,7 +647,6 @@
 					dispAbnormalErrModal();
 				}
 			}).fail(function(data, errorThrown, status){
-				console.log('fail');
 				dispComErrModal();
 			});
 		}, dispComErrModal);
