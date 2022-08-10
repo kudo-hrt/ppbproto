@@ -546,28 +546,28 @@
 				}
 				// 複製したtemplate要素にデータを挿入
 				// ケースのIdを設定
-				clone.querySelector(".inq-id").dataset.cId = c.record.Id;
+				clone.querySelector('.inq-id').dataset.cId = c.record.Id;
 				// ケース番号を設定する
-				clone.find(".inq-title").text("No.T" + c.record.CaseNumber);
+				clone.querySelector('.inq-title').textContent = 'No.T' + c.record.CaseNumber;
 				// お問い合わせ内容を設定する
-				clone.find(".cbd-content").text(content);
+				clone.querySelector('.cbd-content').textContent = content;
 				// ケースの作成日をJST日付かつスラッシュに変換して、設定
-				clone.find(".inq-createdate").text(changeSlashDate(c.record.CreatedDate));
+				clone.querySelector('.inq-createdate').textContent = changeSlashDate(c.record.CreatedDate);
 				// お問い合わせ種類を設定する
-				clone.find(".inq-type").text(c.record.SubjectIMF__c);
+				clone.querySelector('.inq-type').textContent = c.record.SubjectIMF__c;
 				// ケースのステータスを設定する
-				clone.find(".inq-status").text(c.record.StatusClient__c);
+				clone.querySelector('.inq-status').textContent = c.record.StatusClient__c;
 				// 「回答完了」、「回答に少しお時間をいただいております。」の場合
-				if(c.record.StatusClient__c == "回答完了" || c.record.StatusClient__c == "回答に少しお時間をいただいております。"){
+				if(c.record.StatusClient__c == '回答完了' || c.record.StatusClient__c == '回答に少しお時間をいただいております。'){
 					// CSSクラスを削除（グレー）
-					clone.find(".inq-status").removeClass("txt-not-fin");
+					clone.querySelector('.inq-status').classList.remove('txt-not-fin');
 					// CSSクラスを追加（グリーン）
-					clone.find(".inq-status").addClass("txt-fin");
+					clone.querySelector('.inq-status').classList.add('txt-fin');
 				}
 				// NEW表示しない場合
 				if(!c.isNew){
 					// newを非表示にする
-					clone.find(".list-qa-ic").hide();
+					clone.querySelector(".list-qa-ic").style.display = "none";
 				}
 				// caseを画面に出力
 				$("#listQa").append(clone);
