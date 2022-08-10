@@ -348,20 +348,20 @@
 			if(jinkakuCode == "個人" || jinkakuCode == "非居住者"){
 				// 個人用を表示
 				for(let i = 0; i < dialPriv.length; i++){
-					$("#" + dilaPriv[i]).show();
+					$("#" + dialPriv[i]).show();
 				}
 				// 法人用を非表示
 				for(let i = 0; i < dialCorp.length; i++){
-					$("#" + dilaCorp[i]).hide();
+					$("#" + dialCorp[i]).hide();
 				}
 			}else{
 				// 個人用を非表示
 				for(let i = 0; i < dialPriv.length; i++){
-					$("#" + dilaPriv[i]).hide();
+					$("#" + dialPriv[i]).hide();
 				}
 				// 法人用を表示
 				for(let i = 0; i < dialCorp.length; i++){
-					$("#" + dilaCorp[i]).show();
+					$("#" + dialCorp[i]).show();
 				}
 			}
 		}
