@@ -687,7 +687,7 @@
 					dispAbnormalErrModal();
 				}
 				if(inputFiles.length > 0){
-					uploadFileRegist(accToken, inputFiles);
+					uploadFileRegist(cbdId, accToken, inputFiles);
 				}
 			}).fail(function (data, errorThrown, status) {
 				dispRegisComErrModal();
@@ -725,7 +725,7 @@
 					dispAbnormalErrModal();
 				}
 				if(inputFiles.length){
-					uploadFileRegist(accToken, inputFiles);
+					uploadFileRegist(cbdId, accToken, inputFiles);
 				}
 			}).fail(function (data, errorThrown, status) {
 				dispRegisComErrModal();
@@ -733,7 +733,7 @@
 		}, dispRegisComErrModal);
 	}
 	
-	function uploadFileRegist(accToken, inputFiles){
+	function uploadFileRegist(cbdId, accToken, inputFiles){
 	
 		for(let i = 0; i < inputFiles.length; i++){
 			const cvJson = {
