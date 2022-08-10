@@ -533,7 +533,7 @@
 				// 要素を取得
 				const c = res.caseList[i];
 				// case template要素の内容を複製
-				let clone = caseTemplate.clone(true);
+				let clone = caseTemplate.get(0).content.cloneNode(true);
 				// お問い合わせ内容を取得
 				let content = c.content;
 				// お問い合わせ詳細がnullでない
@@ -545,11 +545,8 @@
 					}
 				}
 				// 複製したtemplate要素にデータを挿入
-				console.log(clone);
-				console.log(clone.html());
-				console.log(clone.children(".inq-id"));
 				// ケースのIdを設定
-				clone.find(".inq-id").get(0).dataset.cId = c.record.Id;
+				clone.querySelector(".inq-id").dataset.cId = c.record.Id;
 				// ケース番号を設定する
 				clone.find(".inq-title").text("No.T" + c.record.CaseNumber);
 				// お問い合わせ内容を設定する
