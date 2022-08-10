@@ -1528,13 +1528,13 @@
 				$(".eMessage-error-noaccError").html(errorMessageText);
 			}
 			// モーダル表示
-			dispErrModal("error-noaccError");
+			dispErrorModal("error-noaccError");
 		}
 	}
 	/**
 	 * モーダル表示共通
 	 */
-	function dispErrModal(modalClassName){
+	function dispErrorModal(modalClassName){
 		const CurrentScrollY = $(window).scrollTop();
 		$(".modalOverlay,." + modalClassName).fadeIn();
 		$("." + modalClassName).css("display", "block");
