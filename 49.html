@@ -6,7 +6,7 @@
 		<a class="inq-id" href="javascript:void(0)" onclick="inquiryDetailScreenTransition(this.dataset.cId)" data-cId="">
 			<dt class="inq-title"></dt>
 			<dd>
-				<div id="caseContent" class="inq-outputNew list-qa-box">
+				<div class="inq-outputNew list-qa-box">
 					<p class="list-qa-cont cbd-content"></p>
 						<p class="list-qa-ic">NEW</p>
 				</div>
@@ -57,16 +57,16 @@
 <script type="text/javascript">
 <!--
 	// 通信先URL　※環境に併せて変更する必要あり！
-	/* 開発環境
+	// 開発環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt49.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG99S6MzYiT5k.KkcZzmtcXubr_J8l8N8473VR.oFizQeVyWXFV5ARIiXmwhmXqjuNU.K6Pk9mc9M3btLBQ";
 	const REFLESH_TOKEN = "5Aep861hjC52juQoBcsFRsbEALR2k2PEkuCJTzezJjsxYDFcfM3Xu_8fN.OBDlZ6BJFv9GwwXc8hH5doNmlIiVu";
-	*/
-	// IT環境
+	
+	/* IT環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt52.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG9Po2PmyYruunauqSmSe1tO_B3XTZIsmbyWG9BxfOXr_UKDN7GA2xyv1J2b24N7OjXdjgf7wAQ6Fc94AGS";
 	const REFLESH_TOKEN = "5Aep861sY.Bl4bMk9ncKxoBVfALQO4xgWbT1fgtPWYc4OPxUGXMzTGo34qQxOYv9jkYyD4lzx7h0uekBz9LDZ89";
-	
+	*/
 	// 通信処理結果を退避するための変数
 	let res;
 	// 連携用文字列
@@ -383,7 +383,6 @@
 	 * 初期処理
 	 */
 	function init(){
-		console.log(res.result);
 		// ファイルアップロード用ファイルをリセット
 		inputFiles = new Array();
 		// アップロード済ファイルサイズをリセット
@@ -473,7 +472,7 @@
 				restAuthorize(function(accToken){
 					// 添付ファイルを取得
 					getContentVersion(accToken, fileIdList, resolve, 0);
-				},dispRegisComErrModal);
+				}, dispRegisComErrModal);
 			// 添付ファイルなし
 			}else{
 				// 次の処理を呼び出す
@@ -546,23 +545,23 @@
 				}
 				// 複製したtemplate要素にデータを挿入
 				// ケースのIdを設定
-				clone.querySelector('.inq-id').dataset.cId = c.record.Id;
+				clone.querySelector(".inq-id").dataset.cId = c.record.Id;
 				// ケース番号を設定する
-				clone.querySelector('.inq-title').textContent = 'No.T' + c.record.CaseNumber;
+				clone.querySelector(".inq-title").textContent = "No.T" + c.record.CaseNumber;
 				// お問い合わせ内容を設定する
-				clone.querySelector('.cbd-content').textContent = content;
+				clone.find(".cbd-content").textContent = content;
 				// ケースの作成日をJST日付かつスラッシュに変換して、設定
-				clone.querySelector('.inq-createdate').textContent = changeSlashDate(c.record.CreatedDate);
+				clone.querySelector(".inq-createdate").textContent = changeSlashDate(c.record.CreatedDate);
 				// お問い合わせ種類を設定する
-				clone.querySelector('.inq-type').textContent = c.record.SubjectIMF__c;
+				clone.querySelector(".inq-type").textContent = c.record.SubjectIMF__c;
 				// ケースのステータスを設定する
-				clone.querySelector('.inq-status').textContent = c.record.StatusClient__c;
+				clone.querySelector(".inq-status").textContent = c.record.StatusClient__c;
 				// 「回答完了」、「回答に少しお時間をいただいております。」の場合
-				if(c.record.StatusClient__c == '回答完了' || c.record.StatusClient__c == '回答に少しお時間をいただいております。'){
+				if(c.record.StatusClient__c == "回答完了" || c.record.StatusClient__c == "回答に少しお時間をいただいております。"){
 					// CSSクラスを削除（グレー）
-					clone.querySelector('.inq-status').classList.remove('txt-not-fin');
+					clone.querySelector(".inq-status").classList.remove("txt-not-fin");
 					// CSSクラスを追加（グリーン）
-					clone.querySelector('.inq-status').classList.add('txt-fin');
+					clone.querySelector('.inq-status').classList.add("txt-fin");
 				}
 				// NEW表示しない場合
 				if(!c.isNew){
@@ -612,7 +611,7 @@
 		}).done(function(response){
 			var accToken = "Bearer " + response.access_token;
 			doneMethod(accToken);
-		}).fail(function (data, errorThrown, status) {
+		}).fail(function (data, errorThrown, status){
 			faliMethod();
 		});
 	}
@@ -631,7 +630,6 @@
 				data:{inquiry:linkedStr},
 				headers: {"Authorization":accToken}
 			}).done(function(response){
-				console.log(response.result);
 				if(response.errorMessage){
 					errorMessageText = response.errorMessage.replace(/\n/g, "<br>");
 				}
@@ -725,7 +723,7 @@
 					dispAbnormalErrModal();
 				}
 				if(inputFiles.length){
-					uploadFileRegist(cbdId, accToken, inputFiles);
+					uploadFileRegist(cbdId,accToken, inputFiles);
 				}
 			}).fail(function (data, errorThrown, status) {
 				dispRegisComErrModal();
@@ -794,42 +792,34 @@
 	 * 返却値：ファイルの中身
 	 ***/
 	function getContentVersion(accToken, fileIdList, resolve, index){
-		
-		restAuthorize(function(accToken){
-			$.ajax({
-				type:"GET",
-				crossOrigin:true,
-				url:REQUEST_DOMAIN + "/services/data/v54.0/sobjects/ContentVersion/" + fileIdList[index] + "/VersionData",
-				cache:false,
-				headers:{"Authorization":accToken},
-				xhrFields:{responseType:"blob"}
-			}).done(function(fileContent){
-				// ケースのリストサイズが0でない
-				if(res.caseList.length != 0){
-					// ファイルの紐付け有無
-					let fileAttached = false;
-					// ケースをループ
-					for(let i = 0; i < res.caseList.length; i++){
-						// コンタクトボード明細を取得
-						const cbdFileList = res.caseList[i].cbdFileList;
-						// コンタクトボード明細をループ
-						for(let j = 0; j < cbdFileList.length; j++){
-							// 添付ファイルをループ
-							for(let k = 0; k < cbdFileList[j].contentVersions.length; k++){
-								// 要素をインスタンス化
-								const cv = cbdFileList[j].contentVersions[k];
-								
-								if(cv.Id == fileIdList[index]){
-									// IDを条件に添付ファイルのBlobデータを取得
-									res.caseList[i].cbdFileList[j].contentVersions[k]["versionData"] = fileContent;
-									// 紐付け済にする
-									fileAttached = true;
-									// 以後処理不要
-									break;
-								}
-							}
-							// 紐付け済の場合
-							if(fileAttached){
+		$.ajax({
+			type:"GET",
+			crossOrigin:true,
+			url:REQUEST_DOMAIN + "/services/data/v54.0/sobjects/ContentVersion/" + fileIdList[index] + "/VersionData",
+			cache:false,
+			headers:{"Authorization":accToken},
+			xhrFields:{responseType:"blob"}
+		}).done(function(fileContent){
+			// ケースのリストサイズが0でない
+			if(res.caseList.length != 0){
+				// ファイルの紐付け有無
+				let fileAttached = false;
+				// ケースをループ
+				for(let i = 0; i < res.caseList.length; i++){
+					// コンタクトボード明細を取得
+					const cbdFileList = res.caseList[i].cbdFileList;
+					// コンタクトボード明細をループ
+					for(let j = 0; j < cbdFileList.length; j++){
+						// 添付ファイルをループ
+						for(let k = 0; k < cbdFileList[j].contentVersions.length; k++){
+							// 要素をインスタンス化
+							const cv = cbdFileList[j].contentVersions[k];
+							
+							if(cv.Id == fileIdList[index]){
+								// IDを条件に添付ファイルのBlobデータを取得
+								res.caseList[i].cbdFileList[j].contentVersions[k]["versionData"] = fileContent;
+								// 紐付け済にする
+								fileAttached = true;
 								// 以後処理不要
 								break;
 							}
@@ -840,20 +830,25 @@
 							break;
 						}
 					}
+					// 紐付け済の場合
+					if(fileAttached){
+						// 以後処理不要
+						break;
+					}
 				}
-				// 全て紐付け終わったら
-				if(fileIdList.length - 1 == index){
-					// 次の処理を呼ぶ
-					resolve();
-				// まだ終わってない場合
-				}else{
-					// 再帰実行する
-					getContentVersion(accToken, fileIdList, resolve, index + 1);
-				}
-			}).fail(function (data, errorThrown, status) {
-				dispRegisComErrModal();
-			});
-		}, dispRegisComErrModal);
+			}
+			// 全て紐付け終わったら
+			if(fileIdList.length - 1 == index){
+				// 次の処理を呼ぶ
+				resolve();
+			// まだ終わってない場合
+			}else{
+				// 再帰実行する
+				getContentVersion(accToken, fileIdList, resolve, index + 1);
+			}
+		}).fail(function (data, errorThrown, status) {
+			dispRegisComErrModal();
+		});
 	}
 	
 	/**
@@ -927,37 +922,47 @@
 			// 紐付く添付ファイルを取得
 			const cvList = cbdFileList[i].contentVersions;
 			// コンタクトボード明細templateの内容を複製
-			let clone = cbdTemplate.clone();
-			// 複製したtemplate要素にデータを挿入	
+			let clone = cbdTemplate.get(0).content.cloneNode(true);
+			// 複製したtemplate要素にデータを挿入
 			// レコード種別が、お客さまの場合
 			if(cbd.Classification__c == "問い合わせ"){
 				// お客さまクラスを付与
-				clone.find(".contbrd-head").addClass("customer");
+				clone.querySelector(".contbrd-head").classList.add("customer");
 				// アクター名を「お客さま」に設定
-				clone.find(".actor-text").text("お客さま");
+				clone.querySelector(".actor-text").textContent = "お客さま";
 				// コンタクトボード明細の投稿内容をそのまま設定
-				clone.find(".contbrd-content").text(cbd.Content__c);
+				clone.querySelector(".contbrd-content").textContent = cbd.Content__c;
 			// PayPay銀行の場合
 			}else{
 				// 回答クラスを付与
-				clone.find(".contbrd-head").addClass("answer");
+				clone.querySelector(".contbrd-head").classList.add("answer");
 				// アクター名を「PayPay銀行」に設定
-				clone.find(".actor-text").text("PayPay銀行");
-				// コンタクトボード明細の投稿内容を引数にURLリンク化処理を行い書き込む
-				clone.find(".contbrd-content").html(AutoLink(cbd.Content__c));
+				clone.querySelector(".actor-text").textContent = "PayPay銀行";
+				// コンタクトボード明細の投稿内容を引数にURLリンク化処理を呼び出し
+				let content = AutoLink(cbd.Content__c);
+				// 値がNullではない場合
+				if(content != null){
+					// リンク化した投稿内容を設定
+					// textContentに入れるとHTMLエンティティに変換されるため、innerHTMLに入れる
+					clone.querySelector(".contbrd-content").innerHTML = content;
+				// 値がNullの場合
+				}else{
+					// コンタクトボード明細の投稿内容をそのまま設定
+					clone.querySelector(".contbrd-content").innerHTML = cbd.Content__c;
+				}
 			}
 			// コンタクトボード明細の作成日を日付をJSTに変換する処理を呼び出して、設定する
-			clone.find(".createddate").text(changeSlashDate(cbd.CreatedDate));
-			clone.find(".contbrd-txt").attr("id", "file" + cbd.Id);
+			clone.querySelector(".createddate").textContent = changeSlashDate(cbd.CreatedDate);
+			clone.querySelector(".contbrd-txt").id = "file" + cbd.Id;
 			// 繰り返し初回の場合
 			if(i == 0){
 				// 初回の全表示用クラスを付与
-				clone.find(".contbrd-body").addClass("first");
+				clone.querySelector(".contbrd-body").classList.add("first");
 			}
 			// NEW表示しない場合
 			if(!cbdFileList[i].isNew){
 				// New表示を隠す
-				clone.find(".new-icon").hide();
+				clone.querySelector(".new-icon").style.display = "none";
 			}
 			// コンタクトボード明細を画面に出力
 			$("#outputCbdTemp").append(clone);
@@ -976,18 +981,18 @@
 				// ファイルの件数分
 				for(j = 0; j < cvList.length; j++){
 					// file template要素の内容を複製
-					let fileClone = fileTemplate.clone();
+					let fileClone = fileTemplate.get(0).content.cloneNode(true);
 					// ファイルの中身からダウンロード用リンクを生成
 					let fileUrl = URL.createObjectURL(new Blob(
 						[cvList[j].versionData],
 						{type: "application/octet-stream"}
 					));
 					// 画面出力するファイル名を設定する
-					fileClone.find(".fileLink").text(cvList[j].Name);
+					fileClone.querySelector('.fileLink').textContent = cvList[j].Name;
 					// ダウンロードされる際のファイル名を設定する
-					fileClone.find(".fileLink").attr("download", cvList[j].Name);
+					fileClone.querySelector('.fileLink').download = cvList[j].Name;
 					// ダウンロード用リンクを設定する
-					fileClone.find(".fileLink").attr("href", fileUrl);
+					fileClone.querySelector('.fileLink').href = fileUrl;
 					// ファイルを画面に出力
 					$("#file" + cbd.Id).append(fileClone);
 				}
@@ -1388,7 +1393,6 @@
 	 * お問い合わせ種別選択時処理
 	 */
 	function SelectRadio(id){
-		console.log(id);
 		var childName = $("#"+id).children("li").attr("name");
 		var selectValue = $("input[name='"+childName+"']:checked").next().html();
 		$("#Modal-"+ id).html(selectValue);
@@ -1408,7 +1412,6 @@
 	 * ファイルアップロード時共通処理
 	 */
 	function uploadCommon(uploadElemId, uploadDispAreaId, alertAreaId){
-		console.log('uploadCommon');
 		// 警告表示のクリア
 		$("#" + alertAreaId).html(null);
 		// ファイルアップロード用のInputを取得
@@ -1455,7 +1458,6 @@
 		uploadedFileSize += fileSize;
 		// ファイル表示用テンプレートをロード
 		const fileUpTemplate = $("#fileUpTemplate");
-		console.log(files.length);
 		// アップロードファイル分繰り返す
 		for(let i = 0; i < files.length; i++){
 			// クローンする
@@ -1464,7 +1466,7 @@
 			const filePathList = files[i].name.split("\\");
 			// ファイル出力対象のアンカー部分取得
 			const anchor = clone.querySelector(".upfile-text").getElementsByTagName("a")[0];
-			// ファイル名のみを反映				
+			// ファイル名のみを反映
 			anchor.innerHTML = filePathList[filePathList.length - 1];
 			// 遷移先をダウンロード用に設定
 			anchor.href = URL.createObjectURL(files[i]);
@@ -1479,7 +1481,6 @@
 			// 画面に反映
 			$("#" + uploadDispAreaId).append(clone);
 		}
-		console.log('file');
 		// 再帰呼び出しによるファイル読み取り
 		recursiveFileRead(elemFile, files, 0);
 	}
