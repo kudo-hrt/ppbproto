@@ -1388,6 +1388,7 @@
 	 * お問い合わせ種別選択時処理
 	 */
 	function SelectRadio(id){
+		console.log(id);
 		var childName = $("#"+id).children("li").attr("name");
 		var selectValue = $("input[name='"+childName+"']:checked").next().html();
 		$("#Modal-"+ id).html(selectValue);
