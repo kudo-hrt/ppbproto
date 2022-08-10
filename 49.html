@@ -533,7 +533,7 @@
 				// 要素を取得
 				const c = res.caseList[i];
 				// case template要素の内容を複製
-				let clone = caseTemplate.clone();
+				let clone = caseTemplate.clone(true);
 				// お問い合わせ内容を取得
 				let content = c.content;
 				// お問い合わせ詳細がnullでない
