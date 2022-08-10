@@ -423,10 +423,7 @@
 			inqTypeElem.removeClass("data-on");
 			inqTypeElem.addClass("reqEntry");
 			inqTypeElem.html("選択してください");
-			let choiceList = $("input[name='inqType']");
-			for(let i = 0; i < choiceList.length; i++){
-				choiceList[i].prop("checked", false);
-			}
+			$("input[name='inqType']").prop("checked", false);
 		}
 		// 新規のファイル出力先に子要素があれば削除
         $("#inqFileList").empty();
