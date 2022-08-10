@@ -545,6 +545,8 @@
 					}
 				}
 				// 複製したtemplate要素にデータを挿入
+				console.log(clone.find(".inq-id"));
+				console.log(clone.find(".inq-id").get(0));
 				// ケースのIdを設定
 				clone.find(".inq-id").get(0).dataset.cId = c.record.Id;
 				// ケース番号を設定する
