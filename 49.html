@@ -596,23 +596,22 @@
 	 */
 	function restAuthorize(doneMethod, faliMethod){
 		$.ajax({
-				type:"POST",
-				crossOrigin:true,
-				url: REQUEST_DOMAIN + "/services/oauth2/token",
-				dataType:"json",
-				cache:false,
-				data:{
-					"grant_type":"refresh_token",
-					"client_id":CLIENT_ID, 
-					"refresh_token":REFLESH_TOKEN
-				}
-			}).done(function(response){
-				var accToken = "Bearer " + response.access_token;
-				doneMethod(accToken);
-			}).fail(function (data, errorThrown, status) {
-				faliMethod();
-			});
-		}
+			type:"POST",
+			crossOrigin:true,
+			url: REQUEST_DOMAIN + "/services/oauth2/token",
+			dataType:"json",
+			cache:false,
+			data:{
+				"grant_type":"refresh_token",
+				"client_id":CLIENT_ID, 
+				"refresh_token":REFLESH_TOKEN
+			}
+		}).done(function(response){
+			var accToken = "Bearer " + response.access_token;
+			doneMethod(accToken);
+		}).fail(function (data, errorThrown, status) {
+			faliMethod();
+		});
 	}
 	
 	/**
