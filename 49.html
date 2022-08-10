@@ -1458,17 +1458,17 @@
 		// アップロードファイル分繰り返す
 		for(let i = 0; i < files.length; i++){
 			// クローンする
-			const clone = fileUpTemplate.clone();
+			const clone = fileUpTemplate.content.cloneNode(true);
 			// ファイルパスをセパレータ分割
 			const filePathList = files[i].name.split("\\");
 			// ファイル出力対象のアンカー部分取得
-			const anchor = clone.find(".upfile-text a");
-			// ファイル名のみを反映
-			anchor.html(filePathList[filePathList.length - 1]);
+			const anchor = clone.querySelector(".upfile-text").getElementsByTagName("a")[0];
+			// ファイル名のみを反映				
+			anchor.innerHTML = filePathList[filePathList.length - 1];
 			// 遷移先をダウンロード用に設定
-			anchor.attr("href", URL.createObjectURL(files[i]));
+			anchor.href = URL.createObjectURL(files[i]);
 			// ファイル名右の×ボタン押下時の処理
-			clone.find(".inputClear").on("click", function(){
+			$(clone.querySelector(".inputClear")).on("click", function(){
 				// 画面表示位置の取得
 				selectFileIndex = $(this.parentNode).prevAll().length;
 				// 確認用ダイアログの表示
