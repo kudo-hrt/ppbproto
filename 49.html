@@ -900,7 +900,7 @@
 				// アクター名を「お客さま」に設定
 				clone.querySelector(".actor-text").textContent = "お客さま";
 				// コンタクトボード明細の投稿内容を改行をタグ変換して設定
-				clone.querySelector(".contbrd-content").innerHTML = cbd.Content__c.replace("<", "&lt;").replace(">", "&gt;").replace(/\n/g, "<br>");
+				clone.querySelector(".contbrd-content").innerHTML = cbd.Content__c.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replace(/\n/g, "<br>");
 			// PayPay銀行の場合
 			}else{
 				// 回答クラスを付与
@@ -913,7 +913,7 @@
 				if(content){
 					// リンク化した投稿内容を設定
 					// textContentに入れるとHTMLエンティティに変換されるため、innerHTMLに入れる
-					clone.querySelector(".contbrd-content").innerHTML = content.replace("<", "&lt;").replace(">", "&gt;").replace(/\n/g, "<br>");
+					clone.querySelector(".contbrd-content").innerHTML = content.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replace(/\n/g, "<br>");
 				}
 			}
 			// コンタクトボード明細の作成日を日付をJSTに変換する処理を呼び出して、設定する
@@ -1114,7 +1114,7 @@
         // 画面表示用に値を反映
 		$("#inqConfMailText").html(eMail);
 		$("#inqConfTypeText").html(inqRegistData.Subject);
-		$("#inqConfDtailsText").html(inqRegistData.Content.replace("<", "&lt;").replace(">", "&gt;").replace(/\n/g, "<br>"));
+		$("#inqConfDtailsText").html(inqRegistData.Content.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replace(/\n/g, "<br>"));
 		// 選択値を取得
 		//const jinkakuCode = $("input[name='JinkakuCode']").val();
 		const jinkakuCode = '個人';
@@ -1166,7 +1166,7 @@
 		cbdRegistData.CaseId = $("#replyButton").get(0).dataset.cId;
 		cbdRegistData.Content = $("#cbdTextInput").val();
 		// 画面表示用に値を反映
-		$("#cbdConfDtailsText").html(cbdRegistData.Content.replace("<", "&lt;").replace(">", "&gt;").replace(/\n/g, "<br>"));
+		$("#cbdConfDtailsText").html(cbdRegistData.Content.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replace(/\n/g, "<br>"));
 		// アップロード表示のクリア
         $("#cbdUploadFiles").html(null);
 		// アップロードファイルがある場合
