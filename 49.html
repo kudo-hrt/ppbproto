@@ -57,16 +57,16 @@
 <script type="text/javascript">
 <!--
 	// 通信先URL　※環境に併せて変更する必要あり！
-	// 開発環境
+	/* 開発環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt49.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG99S6MzYiT5k.KkcZzmtcXubr_J8l8N8473VR.oFizQeVyWXFV5ARIiXmwhmXqjuNU.K6Pk9mc9M3btLBQ";
 	const REFLESH_TOKEN = "5Aep861hjC52juQoBcsFRsbEALR2k2PEkuCJTzezJjsxYDFcfM3Xu_8fN.OBDlZ6BJFv9GwwXc8hH5doNmlIiVu";
-	
-	/* IT環境
+	*/
+	// IT環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt52.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG9Po2PmyYruunauqSmSe1tO_B3XTZIsmbyWG9BxfOXr_UKDN7GA2xyv1J2b24N7OjXdjgf7wAQ6Fc94AGS";
 	const REFLESH_TOKEN = "5Aep861sY.Bl4bMk9ncKxoBVfALQO4xgWbT1fgtPWYc4OPxUGXMzTGo34qQxOYv9jkYyD4lzx7h0uekBz9LDZ89";
-	*/
+	
 	// 通信処理結果を退避するための変数
 	let res;
 	// 連携用文字列
@@ -166,14 +166,6 @@
 		$(".x-data-inqType").change(function(){
 			SelectRadio(selectId);
 		});
-		// モーダル開閉　戻る、ログアウト時
-		$(".prevBtn, .logout").on("click", function(){
-			if($("body").find(".data-on").length){
-				var CurrentScrollY = $(window).scrollTop();
-				$(".modalOverlay,.modalWrap_error.confirm-back").fadeIn();
-				$("body").css({position:"fixed",top:-1 * CurrentScrollY});
-			}
-		});
 		// お問い合わせ内容：入力クリア
 		$(".textinput-box .inputClear").on("click", function(){
 			if($("body").find(".data-on").length){
@@ -196,18 +188,6 @@
 				$("body").css({position:"fixed",top:-1 * CurrentScrollY});
 			}
 		});
-/*
-		// お問い合わせ内容入力
-		$("#inqTextInput").on("keydown keyup change blur", function() {
-			if($(this).val().length){
-				$("#inqContentDel").css("opacity", 1);
-				$("#inqTextInput").removeClass("reqEntry").addClass("data-on");
-			}else{
-				$("#inqContentDel").css("opacity", 0);
-				$("#inqTextInput").addClass("reqEntry").removeClass("data-on");
-			}
-		});
-*/
 		// 削除確認時に削除するボタン押下
 		$("#inqDelBtn").on({
 			"click":function(){
@@ -220,18 +200,6 @@
 				$("#inqTextInput").addClass("reqEntry").removeClass("data-on");
 			}
 		});
-		/*
-		// お問い合わせ内容入力
-		$("#cbdTextInput").on("keydown keyup change blur", function() {
-			if ($(this).val().length) {
-				$("#cbdContentDel").css("opacity", 1);
-				$("#cbdTextInput").removeClass("reqEntry").addClass("data-on");
-			}else{
-				$("#cbdContentDel").css("opacity", 0);
-				$("#cbdTextInput").addClass("reqEntry").removeClass("data-on");
-			}
-		});
-		*/
 		// 削除確認時に削除するボタン押下
 		$("#cbdDelBtn").on({
 			"click":function(){
@@ -247,11 +215,6 @@
 		// 入力時の下線制御
 		//setReqCls("#Modal-inqType, #cbdTextInput");
 		// お問い合わせ内容（コンタクトボード明細）をクリック時の処理
-/*
-		$("#outputCbdTemp").on("click", ".contbrd-cont", function(){
-			$(this).toggleClass("open");
-		});
-*/
 		$(".contbrd-cont").click(function(){
 			$(this).toggleClass("open");
 		});
@@ -261,52 +224,48 @@
 		$("#modalText").change( function(){
 			inqReqCheck();
 		});
-		// お問い合わせ内容変更時の処理
-		$("#inqTextInput").change(function(){
-			inqReqCheck();
-		});
 		// 確認するボタンを非活性にする
 		$("#cbdConfButton").prop("disabled", true);
-		// お問い合わせ内容変更時の処理
-		$("#cbdTextInput").change(function(){
-			cbdReqCheck();
-		});
-		// 新規問い合わせ画面 入力欄の背景色を黄色にする
+		// 新規問い合わせ画面 入力欄の背景色を黄色にする（初期状態の設定）
 		if($("#inqTextInput").val() == ""){
 			// 黄色
 			$("#inqTextInput").css("background", "#ffffcc");
 		}
-
-		$("#inqTextInput").on("keydown keyup change focus blur", function() {
+		// お問い合わせ内容入力時処理（背景色の制御）
+		$("#inqTextInput").on("keydown keyup focus blur", function() {
 			// 値が空の時
 			if($(this).val() == ""){
 				// 黄色
 				$(this).css("background", "#ffffcc");
+				$("#inqContentDel").css("opacity", 0);
 			// 値が入っている時に白色
 			}else{
 				// 白色
 				$(this).css("background", "");
+				$("#inqContentDel").css("opacity", 1);
 			}
+			inqReqCheck();
 		});
-
-		// 個別問い合わせ画面 入力欄の背景色を黄色にする
+		// 個別問い合わせ画面 入力欄の背景色を黄色にする（初期状態の設定）
 		if($("#cbdTextInput").val() == ""){
 			// 黄色
 			$("#cbdTextInput").css("background", "#ffffcc");
 		}
-
-		$("#cbdTextInput").on("keydown keyup change focus blur", function() {
+		// お問い合わせ内容入力時処理（背景色の制御）
+		$("#cbdTextInput").on("keydown keyup focus blur", function() {
 			// 値が空の時
 			if($(this).val() == ""){
 				// 黄色
 				$(this).css("background", "#ffffcc");
+				$("#cbdContentDel").css("opacity", 0);
 			// 値が入っている時に白色
 			}else{
 				// 白色
 				$(this).css("background", "");
+				$("#cbdContentDel").css("opacity", 1);
 			}
+			cbdReqCheck();
 		});
-
 		// モーダル閉じるボタン(画面遷移なし)
 		$(".mClose").on("click", function(){
 			var CurrentScrollY = $(window).scrollTop();
@@ -314,33 +273,6 @@
 			$(".modalWrap_error").css("display", "none");
 			$("body").css({position:"",top:0 * CurrentScrollY});
 		});
-/*
-		// 削除ボタン押下時入力欄
-		$("#inqDelbtn").click(function(){
-			// 値が空の時
-			if($("#inqTextInput").val() == ""){
-				// 黄色
-				$("#inqTextInput").css("background", "#ffffcc");
-			// 値が入っている時に白色
-			}else{
-				// 白色
-				$("#inqTextInput").css("background", "");
-			}
-		});
-		
-		// 削除ボタン押下時入力欄
-		$("#cbdDelBtn").click(function(){
-			// 値が空の時
-			if($("#cbdTextInput").val() == ""){
-				// 黄色
-				$("#cbdTextInput").css("background", "#ffffcc");
-			// 値が入っている時に白色
-			}else{
-				// 白色
-				$("#cbdTextInput").css("background", "");
-			}
-		});
-*/
 		// 人格コードの取得
 		//const jinkakuCode = $("input[name='JinkakuCode']").val();
 		const jinkakuCode = '個人';
@@ -377,12 +309,14 @@
 			// ファイルアップロード共通処理の実行
 			uploadCommon("cbdFileName", "cbdFileList", "cbdFileAlert");
 		});
-		// AjaxによりSalesforceから表示データを取得
+		// Ajaxによりケースを取得
 		getAllCase();
 	});
 	
 	/**
 	 * 初期処理
+	 * @args:なし
+	 * @return:なし
 	 */
 	function init(){
 		// ファイルアップロード用ファイルをリセット
@@ -391,7 +325,8 @@
 		uploadedFileSize = 0;
 		// RestApexとの通信時erorrだった場合にエラーのモーダルを表示する処理に変更する
 		if(res.result == "SUCCESS"){
-			if(!res.caseList || res.caseList.length <= 0){ // お問い合わせ0件(null)の場合
+			// お問い合わせ0件(null含む)の場合
+			if(!res.caseList || res.caseList.length <= 0){
 				// 入力画面出力用
 				eMail = res.accMail;
 				// 新規入力画面に反映
@@ -439,6 +374,10 @@
         $("#cbdFileList").empty();
 		// 出力先要素に子要素があれば削除
         $("#listQa").empty();
+        // 投稿ボタンを活性化
+        $("#inqPost").prop("disabled", false);
+        // 投稿ボタンを活性化
+        $("#cbdPost").prop("disabled", false);
 		// 入力画面出力用
 		eMail = res.accMail;
 		// 新規入力画面に反映
@@ -574,10 +513,12 @@
 		});
 	}
 	
-	/***
+	/**
 	 * 画面の表示非表示切り替え
-	 * 引数：遷移先画面(div)Id
-	 ***/
+	 * @args:
+	 * nextScreen…画面ID
+	 * @return:なし
+	 */
 	function changeDisp(nextScreen){
 		// 画面IDリストループ
 		for(i = 0; i < screenNameList.length; i++){
@@ -595,6 +536,11 @@
 	
 	/**
 	 * REST認証
+	 * @args:
+	 * doneMethod…正常終了時に実行される関数
+	 * failMethod…異常終了時に実行される関数
+	 * @return:なし
+	 * @remakrs:doneMethodの引数には
 	 */
 	function restAuthorize(doneMethod, faliMethod){
 		$.ajax({
@@ -618,6 +564,9 @@
 	
 	/**
 	 * 初期表示時データ取得
+	 * @args:
+	 * accToken…アクセストークン
+	 * @return:なし
 	 */
 	function getAllCase(){
 		restAuthorize(function(accToken){
@@ -654,8 +603,11 @@
 	
     /**
 	 * 初期表示時データ取得
+	 * @args:なし
+	 * @return:なし
 	 */
 	function registInquery(){
+		$("#inqPost").prop("disabled", true);
 		restAuthorize(function(accToken){
 			$.ajax({
 				type:"POST",
@@ -700,8 +652,11 @@
 	
 	/**
 	 * 個別投稿
+	 * @args:なし
+	 * @return:なし
 	 */
 	function registContactBoard(){
+		$("#cbdPost").prop("disabled", true);
 		restAuthorize(function(accToken){
 			$.ajax({
 				type:"POST",
@@ -741,14 +696,24 @@
 		}, dispRegisComErrModal);
 	}
 	
+	/**
+	 * 添付ファイル登録
+	 * @args:
+	 * cbdId…コンタクトボード明細のID
+	 * accToken…アクセストークン
+	 * inputFiles…登録する添付ファイル
+	 * @return:なし
+	 */
 	function uploadFileRegist(cbdId, accToken, inputFiles){
-	
+		// 添付ファイルループ
 		for(let i = 0; i < inputFiles.length; i++){
+			// 登録用のJSON生成
 			const cvJson = {
 				Title:inputFiles[i].name,
 				PathOnClient:inputFiles[i].name,
 				VersionData:inputFiles[i].versionData
 			}
+			// ContentVersionへの登録
 			$.ajax({
 				type:"POST",
 				url:REQUEST_DOMAIN + "/services/data/v54.0/sobjects/ContentVersion",
@@ -757,8 +722,11 @@
 				dataType:"json",
 				data:JSON.stringify(cvJson)
 			}).done(function(cv){
+				// 処理結果からContentVersionレコードのIDを取得
 				const cvId = cv.id;
+				// ContentDocumentId取得用のクエリ生成
 				const query = "SELECT+ContentDocumentId+FROM+ContentVersion+WHERE+Id+=+'" + cvId + "'";
+				// クエリによる問い合わせ
 				$.ajax({
 					type:"GET",
 					crossOrigin:true,
@@ -766,13 +734,17 @@
 					cache:false,
 					headers: {"Authorization":accToken}
 				}).done(function(res){
+					// 処理結果レコードの取得
 					const records = res.records;
+					// ContentDocumentIdを取得
 					const cdId = records[0].ContentDocumentId;
+					// ContentDocumentLink登録用のJSON生成
 					const linkJson = {
 						ContentDocumentId:cdId,
 						LinkedEntityId:cbdId,
 						Visibility:"AllUsers"
 					};
+					// ContentDocumentLink登録
 					$.ajax({
 						type:"POST",
 						crossOrigin:true,
@@ -782,7 +754,7 @@
 						dataType:"json",
 						data:JSON.stringify(linkJson)
 					}).done(function(res){
-
+						// Do Nothing
 					}).fail(function(data, errorThrown, status) {
 						dispRegisComErrModal();
 					});
@@ -795,12 +767,17 @@
 		}
 	}
 	
-	
-	/***
-	 * コンテンツバージョン（ファイル）取得処理
-	 * 引数　：コンテンツバージョンId
-	 * 返却値：ファイルの中身
-	 ***/
+	/**
+	 * コンテンツバージョン（添付ファイル）取得処理
+	 * @args:
+	 * accToken…アクセストークン
+	 * fileIdList…添付ファイルのIDリスト
+	 * resolve…処理完了時に実行される関数
+	 * index…処理番号
+	 * @return:なし
+	 * @remakrs:全てのファイルの紐付けが完了するとresolveが実行される
+	 * 添付ファイルの取得は非同期で行われるため、resolveを使うことで処理の同期化を図れる
+	 */
 	function getContentVersion(accToken, fileIdList, resolve, index){
 		$.ajax({
 			type:"GET",
@@ -863,6 +840,9 @@
 	
 	/**
 	 * 初期表示処理（コンタクトボード明細）
+	 * @args:
+	 * selectedCaseId:選択されたケースID
+	 * @return:なし
 	 */
 	function sendDetailsScreen(selectedCaseId){
 		// 画面内容をクリアする
@@ -1010,12 +990,16 @@
 		}
 		// NEW表示対象がある場合
 		if(newTargetList.length > 0){
+			console.log('setcookie')
 			// 表示したため、Cookieの情報を書き換える
 			setCookie(newTargetList);
 		}
 	}
 	/**
 	 * URLの記載があった場合、リンク化する
+	 * @args:
+	 * str:対象の文字列
+	 * @return:URLをリンク用のタグに変換した文字列
 	 */
 	function AutoLink(str) {
 		// 値が無ければ何もしない
@@ -1031,6 +1015,8 @@
 
 	/**
 	 * Cookie取得
+	 * @args:なし
+	 * @return:Cookieに格納されている参照済のコンタクトボード明細の配列
 	 **/
 	function getCookie(){
 		// 結果返却用配列
@@ -1058,6 +1044,9 @@
 	
 	/**
 	 * Cookieに値設定
+	 * @args:
+	 * cbdIdList…Cookieに格納するコンタクトボード明細のIDリスト
+	 * @return:なし
 	 */
 	function setCookie(cbdIdList){
 		// Cookieを分割して格納する配列
@@ -1092,9 +1081,9 @@
 	}
 	
 	/**
-	 * 個別問い合わせ 詳細画面の遷移処理
-	 * 引数　：ケースId
-	 * 返却値：なし
+	 * 個別問い合わせ 詳細画面へ遷移
+	 * @args:ケースID
+	 * @return:なし
 	 */
 	 function inquiryDetailScreenTransition(caseId){
 	 	// 個別問い合わせ画面に内容を反映
@@ -1103,9 +1092,9 @@
 		changeDisp("detailsScreen");
 	}
 	/** 
-	 * 日付をJSTに変換する処理
-	 * 引数　：2022-06-06T04:43:08.000+0000
-	 * 返却値：2022/06/06 04:43
+	 * 日付をJSTに変換
+	 * @args:変換前(UTC形式)の日付文字列
+	 * @return:変換後(JST形式)の日付文字列
 	 */
 	function changeSlashDate(dateTime){
 		// 日付オブジェクトに引数の日付を設定して準備
@@ -1126,28 +1115,16 @@
 	
 	/**
 	 * 入力画面で入力された情報を確認画面の要素に反映
+	 * @args:なし
+	 * @return:なし
 	 */
 	function outputValueInqConf(){
 		// 2000文字以下チェック
-		if(checkLength(inqRegistData.Content, 2000)){
-			// エラーメッセージがない場合
-			if(!$("#inqTextareaErrorMessege")){
-				// エラー要素を作成
-				const errorMessege = $("<span>");
-				errorMessege.attr("id", "inqTextareaErrorMessege");
-				errorMessege.html("文字数が制限を超えています。<BR>全角2000文字以内で、もう一度入力してください。");
-				errorMessege.css({"color":"#FF0033"});
-				// エラー表示領域に反映
-				$("#inqOutputError").append(errorMessege);
-				// 処理を中断する
-				return null;
-			}else{
-				// エラーメッセージがある場合
-				if($("#inqTextareaErrorMessege")){
-					// エラーメッセージを削除する
-					$("#inqTextareaErrorMessege").remove();
-				}
-			}
+		if(checkLength($("#inqTextInput").val(), 2000)){
+			// エラーメッセージの表示
+			$("#inqOutputError").html("文字数が制限を超えています。<BR>全角2000文字以内で、もう一度入力してください。");
+			// 処理を中断する
+			return null;
 		}
 		// 登録用データに値を退避
 		inqRegistData.EncryptedData = linkedStr;
@@ -1156,25 +1133,20 @@
         // 画面表示用に値を反映
 		$("#inqConfMailText").html(eMail);
 		$("#inqConfTypeText").html(inqRegistData.Subject);
-		$("#inqConfDtailsText").html(inqRegistData.Content);
+		$("#inqConfDtailsText").html(inqRegistData.Content.replace(/\n/g, "<br>"));
 		// 選択値を取得
 		const jinkakuCode = $("input[name='JinkakuCode']").val();
 		let selectedItem = $("#Modal-inqType").html();
 		// 人格コードが個人、もしくは非居住者の場合
-		console.log(jinkakuCode);
 		if(jinkakuCode == "個人" || jinkakuCode == "非居住者"){
-			console.log(jinkakuCode);
 			// 各種手続きダイヤル設定対象の場合
 			if(procedureDialList.includes(selectedItem)){
 				inqRegistData.LinkedDial = "各種手続きダイヤル";
-				console.log('各種');
 			}else{
-				console.log('その他');
 				inqRegistData.LinkedDial = "その他ダイヤル";
 			}
 		// 人格コードが法人の場合
 		}else{
-			console.log('法人');
 			inqRegistData.LinkedDial = "法人ダイヤル";
 		}
 		// アップロード表示のクリア
@@ -1193,37 +1165,26 @@
 		// 確認画面へ遷移する
         changeDisp("inqConfirmScreen");
 	}
+	
 	/**
 	 * 入力画面で入力された情報を確認画面の要素に反映
+	 * @args:なし
+	 * @return:なし
 	 */
 	function outputValueCbdConf(){
 		// 2000文字チェック
-		if(checkLength(cbdRegistData.Content, 2000)){
-			// エラーメッセージがない場合実行
-			if(!$("#cbdTextareaErrorMessege")){
-				// エラー要素を作成
-				const errorMessege = $("<span>");
-				errorMessege.attr("id", "cbdTextareaErrorMessege");
-				errorMessege.html("文字数が制限を超えています。<BR>全角2000文字以内で、もう一度入力してください。");
-				errorMessege.css({"color":"#FF0033"});
-				// エラー表示領域に反映
-				$("#cbdOutputError").append(errorMessege);
-				// 処理を中断する
-				return null;
-			}else{
-				// エラーメッセージがある場合
-				if($("#cbdTextareaErrorMessege")){
-					// エラーメッセージを削除する
-					$("#cbdTextareaErrorMessege").remove();
-				}
-			}
+		if(checkLength($("#cbdTextInput").val(), 2000)){
+			// エラーメッセージの表示
+			$("#cbdOutputError").html("文字数が制限を超えています。<BR>全角2000文字以内で、もう一度入力してください。");
+			// 処理を中断する
+			return null;
 		}
 		// 登録用にデータを退避
 		cbdRegistData.EncryptedData = linkedStr;
 		cbdRegistData.CaseId = $("#replyButton").get(0).dataset.cId;
 		cbdRegistData.Content = $("#cbdTextInput").val();
 		// 画面表示用に値を反映
-		$("#cbdConfDtailsText").html(cbdRegistData.Content);
+		$("#cbdConfDtailsText").html(cbdRegistData.Content.replace(/\n/g, "<br>"));
 		// アップロード表示のクリア
         $("#cbdUploadFiles").html(null);
 		// アップロードファイルがある場合
@@ -1240,8 +1201,13 @@
 		// 確認画面へ遷移する
 		changeDisp("replyConfirmScreen");
 	}
+	
 	/**
 	 * 文字数チェック
+	 * @args:
+	 * content:入力された内容(文字列)
+	 * limitLength:最大文字数(数値)
+	 * @return:チェック結果(True:文字数超過/False:文字数制限内)
 	 */
 	function checkLength(content, limitLength){
 		// 値がない場合、エラー
@@ -1249,8 +1215,11 @@
 		// 文字数チェックの結果を返却
 		return (content.length <= limitLength) ? false : true;
 	}
+	
 	/**
-	 * 入力されたらボタンを活性化する
+	 * 入力されたらボタンを活性化する（新規投稿）
+	 * @args:なし
+	 * @return:なし
 	 */
 	function inqReqCheck(){
 		// 問い合わせ種別の選択状態の取得
@@ -1262,7 +1231,9 @@
 	}
 	
 	/**
-	 * 入力されたらボタンを活性化する
+	 * 入力されたらボタンを活性化する（個別投稿）
+	 * @args:なし
+	 * @return:なし
 	 */	
 	function cbdReqCheck(){
 		// 問い合わせ内容の入力状態の取得
@@ -1270,8 +1241,11 @@
 		// 入力状態によってボタンの活性／非活性の切り替え
 		$("#cbdConfButton").prop("disabled", !cdtail_flg);
 	}
+	
 	/**
 	 * 戻るボタン処理（新規投稿）
+	 * @args:なし
+	 * @return:なし
 	 */
 	function inqPrevAction(){
 		// 問い合わせ種類選択の値設定状況確認
@@ -1297,8 +1271,11 @@
 			}
 		}
 	}
+	
 	/**
 	 * 戻るボタン時の入力内容クリア処理（新規投稿）
+	 * @args:なし
+	 * @return:なし
 	 */
 	function inqClearInput(){
 		// 問い合わせ種類選択をクリア
@@ -1323,8 +1300,11 @@
 		// ホーム画面に遷移
 		changeDisp("inquiryForm");
 	}
+	
 	/**
-	 * 戻るボタン処理（追加投稿）
+	 * 戻るボタン処理（個別投稿）
+	 * @args:なし
+	 * @return:なし
 	 */
 	function cbdPrevAction(){
 		// 問い合わせ内容が未入力
@@ -1339,8 +1319,11 @@
 			$("body").css({position:"fixed",top:-1});
 		}
 	}
+	
 	/**
-	 * 戻るボタン時の入力内容クリア処理（追加投稿）
+	 * 戻るボタン時の入力内容クリア処理（個別投稿）
+	 * @args:なし
+	 * @return:なし
 	 */
 	function cbdClearInput(){
 		// 入力内容のクリア
@@ -1358,8 +1341,11 @@
 		// 詳細画面に遷移
 		changeDisp("detailsScreen");
 	}
+	
 	/**
-	 * 新規投稿時のファイル削除
+	 * ファイル削除（新規投稿）
+	 * @args:なし
+	 * @return:なし
 	 */
 	function inqDeleteFile(){
 		// 選択された画面要素の削除
@@ -1367,8 +1353,11 @@
 		// 裏で持っているデータの削除
 		inputFiles.splice(selectFileIndex, 1);
 	}
+	
 	/**
-	 * 追加投稿時のファイル削除
+	 * ファイル削除（個別投稿）
+	 * @args:なし
+	 * @return:なし
 	 */
 	function cbdDeleteFile(){
 		// 選択された画面要素の削除
@@ -1376,8 +1365,17 @@
 		// 裏で持っているデータの削除
 		inputFiles.splice(selectFileIndex, 1);
 	}
+	
 	/**
 	 * ファイルアップロード処理（再帰）
+	 * @args:
+	 * elemFile…ファイルアップロード用のElement(input type="file"の要素)
+	 * files…アップロード対象のファイルリスト(input type="files"要素の.files)
+	 * index…処理番号
+	 * @return:なし
+	 * @remakrs:本処理は非同期処理を順序立てて呼び出す必要があるため、本処理内部で自身を再帰的にコールしている
+	 * 実装者はindexに最初の番号=0を付与してあげれば後のファイル読み込みを再帰的に行ってくれるため、ループ呼び出し
+	 * 等をしないこと
 	 */
 	function recursiveFileRead(elemFile, files, index){
 		// FileReader生成
@@ -1410,8 +1408,13 @@
 		// ファイル読込の開始
 		reader.readAsDataURL(files[index]);
 	}
+	
 	/**
 	 * お問い合わせ種別選択時処理
+	 * @args:
+	 * id:対象の項目ID
+	 * @return:なし
+	 * @remakrs:idはModal-xxxの形式になっている前提
 	 */
 	function SelectRadio(id){
 		// 選択要素名を取得
@@ -1440,8 +1443,14 @@
 			$("#Modal-"+ id).removeClass("reqEntry").addClass("inputSelectItem-on data-on");
 		}
 	}
+	
 	/**
 	 * ファイルアップロード時共通処理
+	 * @args:
+	 * uploadElemId…アップロード用の要素(input type="file"の要素）
+	 * uploadDispAreaId…アップロードされたファイルを表示するための要素のID
+	 * alertAreaId…アップロード時の警告を表示する要素のID
+	 * @return:なし
 	 */
 	function uploadCommon(uploadElemId, uploadDispAreaId, alertAreaId){
 		// 警告表示のクリア
@@ -1467,8 +1476,8 @@
 		for(let i = 0; i < files.length; i++){
 			// 拡張子で区切る
 			const extensionSplit = files[i].name.split(".");
-			// 拡張子を取得
-			const extension = extensionSplit[extensionSplit.length - 1];
+			// 拡張子を取得 ※小文字に変換
+			const extension = extensionSplit[extensionSplit.length - 1].toLowerCase();
 			// 拡張子が規定のファイルでない場合
 			if(extensionList.indexOf(extension) < 0){
 				// 警告表示
@@ -1500,6 +1509,8 @@
 			const anchor = clone.querySelector(".upfile-text").getElementsByTagName("a")[0];
 			// ファイル名のみを反映
 			anchor.innerHTML = filePathList[filePathList.length - 1];
+			// ダウンロード時のファイル名の設定
+			anchor.download = filePathList[filePathList.length - 1];
 			// 遷移先をダウンロード用に設定
 			anchor.href = URL.createObjectURL(files[i]);
 			// ファイル名右の×ボタン押下時の処理
@@ -1516,15 +1527,21 @@
 		// 再帰呼び出しによるファイル読み取り
 		recursiveFileRead(elemFile, files, 0);
 	}
+	
 	/**
 	 * 通信失敗 出力
+	 * @args:なし
+	 * @return:なし
 	 */
 	function dispComErrModal(){
 		// モーダル表示
 		dispErrorModal("error-comError");
 	}
+	
 	/**
 	 * 時限チェック 出力
+	 * @args:なし
+	 * @return:なし
 	 */
 	function dispTimeoutErrModal(){
 		if(errorMessageText){
@@ -1533,15 +1550,21 @@
 		// モーダル表示
 		dispErrorModal("error-timeoutError");
 	}
+	
 	/**
 	 * 通信失敗 出力(登録時)
+	 * @args:なし
+	 * @return:なし
 	 */
 	function dispRegisComErrModal(){
 		// モーダル表示
 		dispErrorModal("error-comErrorRegis");
 	}
+	
 	/**
 	 * システムエラー 出力
+	 * @args:なし
+	 * @return:なし
 	 */
 	function dispAbnormalErrModal(){
 		if(errorMessageText){
@@ -1550,8 +1573,11 @@
 		// モーダル表示
 		dispErrorModal("error-abnormalError");
 	}
+	
 	/**
 	 * メールアドレス不正 出力
+	 * @args:なし
+	 * @return:なし
 	 */
 	function dispInvmailErrModal(){
 		if(errorMessageText){
@@ -1560,8 +1586,11 @@
 		// モーダル表示
 		dispErrorModal("error-invmailError");
 	}
+	
 	/**
 	 * 取引先が存在しない(新規問い合わせ登録画面) 出力
+	 * @args:なし
+	 * @return:なし
 	 */
 	function dispNoaccErrModal(){
 		if(res.result == "NO_ACCOUNT"){
@@ -1572,8 +1601,12 @@
 			dispErrorModal("error-noaccError");
 		}
 	}
+	
 	/**
 	 * モーダル表示共通
+	 * @args:
+	 * modalClassName:表示するモーダルのクラス名
+	 * @return:なし
 	 */
 	function dispErrorModal(modalClassName){
 		const CurrentScrollY = $(window).scrollTop();
@@ -1586,9 +1619,11 @@
 
 <!-- InquiryForm -->
 <div id="inquiryForm" class="contents" style="display:none;">
+	<!--title-->
 	<div id="title">
 		<div class="titleL"><h1>お問い合わせフォーム</h1></div>
 	</div>
+	<!--/title-->
 	<div class="blk">
 		<div class="blkCont bdrT0">
 			<div class="note">
@@ -1606,9 +1641,10 @@
 		</div>
 	</div>
 </div>
-						
+
 <!-- InquiryFormNoInq -->
 <div id="noInq" class="contents contbrd-pt-cont" style="display:none;">
+	<!--title-->
 	<div id="title">
 		<div class="titleL"><h1>お問い合わせフォーム</h1></div>
 	</div>
@@ -1796,7 +1832,6 @@
 				</div>
 			</div>
 		</div>
-	
 		<div class="blkCont layout-form layout-form-normal">
 			<div class="input-textarea">
 				<label for="textInput" class="input-title">お問い合わせ詳細</label>
@@ -1805,23 +1840,20 @@
 					<span id="inqContentDel" class="inputClear" style="margin-right: 16px;">×</span>
 				</div>
 				<span class="input-message">2000文字以内で入力</span>
-				<div id="inqOutputError"></div>
+				<div id="inqOutputError" style="color:#FF0033;"></div>
 			</div>
 		</div>
-		
 		<div class="blkCont layout-form layout-form-normal">
 			<div>
 				<p class="input-title">メールアドレス</p>
 				<p id="newInqMail"></p>
 			</div>
 		</div>
-		
 		<div class="blkCont mt-16">
 			<div class="note">
 				<p>当社からの回答がお問い合わせフォームに投稿されると、上記の登録メールアドレス宛にお知らせします。回答内容はお問い合わせフォームにログインしてご確認ください。</p>
 			</div>
 		</div>
-		
 		<div class="blkCont layout-form layout-form-normal">
 			<div class="wrap-input upfile-wrap">
 				<label class="input-title">ファイルアップロード（任意）
@@ -1832,7 +1864,6 @@
 				<div id="inqFileList"></div>
 			</div>
 		</div>
-		
 		<div class="modalWrap_error confirm-back">
 			<div class="modalOuter_error">
 				<div class="modal__headArea"><img src="/commontpl/images/category/contact_error.png" alt="" width="128" height="64"></div>
@@ -1845,7 +1876,6 @@
 				</div>
 			</div>
 		</div>
-		
 		<div class="modalWrap_error confirm-clear">
 			<div class="modalOuter_error">
 				<div class="modal__headArea">
@@ -1860,7 +1890,6 @@
 				</div>
 			</div>
 		</div>
-		
 		<div class="modalWrap_error confirm-uploadfile-delete">
 			<div class="modalOuter_error">
 				<div class="modal__headArea">
@@ -1875,9 +1904,8 @@
 				</div>
 			</div>
 		</div>
-		
 		<div class="blkCont contbrd-btnArea-box">
-			<p><input id="inqConfButton" type="submit" onclick="outputValueInqConf();" class="btn btn01 btnL" value="確認する"></p>
+			<p><input id="inqConfButton" type="button" onclick="outputValueInqConf();" class="btn btn01 btnL" value="確認する"></p>
 			<p class="mt-16"><a href="javascript:void(0);" onclick="inqPrevAction();" class="btn btn03 btnL prevBtn">戻る</a></p>
 		</div>
 	</div>
@@ -1885,7 +1913,6 @@
 
 <!-- NewInquiry_ConfirmationScreen -->
 <div id="inqConfirmScreen" class="contents no-title-h1" style="display:none;">
-
 	<div class="blk">
 		<div class="blkTitle">
 			<h2 id="inqConfType" class="h201">お問い合わせ種類</h2>
@@ -1913,8 +1940,12 @@
 		</div>
 		<div class="blkCont bdrT0">
 			<div class="contbrd-btnArea-box">
-				<p><a href="javascript:void(0);" onclick="registInquery();" class="btn btn01 btnL">投稿する</a></p>
-				<p class="mt-16"><a href="javascript:void(0);" onclick="changeDisp('inqInputScreen')" class="btn btn03 btnL">戻る</a></p>
+				<p>
+					<input type="button" id="inqPost" onclick="registInquery();" class="btn btn01 btnL" value="投稿する">
+				</p>
+				<p class="mt-16">
+					<a href="javascript:void(0);" onclick="changeDisp('inqInputScreen')" class="btn btn03 btnL">戻る</a>
+				</p>
 			</div>
 		</div>
 	</div>
@@ -1931,7 +1962,7 @@
 					<span id="cbdContentDel" class="inputClear" style="margin-right: 16px;">×</span>
 				</div>
 				<span class="input-message">2000文字以内で入力</span>
-				<div id="cbdOutputError"></div>
+				<div id="cbdOutputError" style="color:#FF0033;"></div>
 			</div>
 			<div class="blkCont layout-form layout-form-normal">
 				<div class="mt-16">
@@ -1958,7 +1989,6 @@
 						</div>
 					</div>
 				</div>
-				
 				<div class="modalWrap_error confirm-clear">
 					<div class="modalOuter_error">
 						<div class="modal__headArea">
@@ -1973,7 +2003,6 @@
 						</div>
 					</div>
 				</div>
-				
 				<div class="modalWrap_error confirm-uploadfile-delete">
 					<div class="modalOuter_error">
 						<div class="modal__headArea">
@@ -1988,7 +2017,6 @@
 						</div>
 					</div>
 				</div>
-				
 				<div class="contbrd-btnArea-box">
 					<p class="mt-24">
 						<input type="submit" id='cbdConfButton' onclick="outputValueCbdConf();" class="btn btn01 btnL" value="確認する" disabled>
@@ -2012,7 +2040,7 @@
 			<p id="cbdUploadFiles"></p>
 			<div class="contbrd-btnArea-box">
 				<p>
-					<input type="submit" id="" onclick="registContactBoard();" class="btn btn01 btnL" value="投稿する">
+					<input type="button" id="cbdPost" onclick="registContactBoard();" class="btn btn01 btnL" value="投稿する">
 				</p>
 				<p class="mt-16">
 					<a href="javascript:void(0);" onclick="changeDisp('replyInputScreen')" class="btn btn03 btnL">戻る</a>
@@ -2041,7 +2069,7 @@
 					<input type="submit" id="" onclick="getAllCase(); changeDisp('inquiryForm')" class="btn btn02 btnL" value="お問い合わせフォーム">
 				</p>
 				<p class="mt-16">
-					<input type="submit" id="" class="btn btn03 btnL" value="Welcome Page">
+					<input type="submit" class="btn btn03 btnL" value="Welcome Page" onclick="commonSubmit('ln0001');">
 				</p>
 			</div>
 		</div>
