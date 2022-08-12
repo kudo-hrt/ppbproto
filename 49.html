@@ -1272,6 +1272,10 @@
 		}
 		// 問い合わせ内容をクリア
 		$("#inqTextInput").val(null);
+		// 背景色を黄色
+		$("#inqTextInput").css("background", "#ffffcc");
+		// 確認するボタンを非活性にする
+		$("#inqConfButton").prop("disabled", true);
 		// ファイルアップロード用ファイルをリセット
 		inputFiles = new Array();
 		// アップロード済ファイルサイズをリセット
@@ -1319,6 +1323,10 @@
 	function cbdClearInput(){
 		// 入力内容のクリア
 		$("#cbdTextInput").val(null);
+		// 黄色
+		$("#cbdTextInput").css("background", "#ffffcc");
+		// 確認するボタンを非活性にする
+		$("#cbdConfButton").prop("disabled", true);
 		// ファイルアップロード用ファイルをリセット
 		inputFiles = new Array();
 		// アップロード済ファイルサイズをリセット
