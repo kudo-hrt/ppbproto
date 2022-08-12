@@ -215,13 +215,9 @@
 		});
 		// 入力時の下線制御
 		//setReqCls("#Modal-inqType, #cbdTextInput");
-		// お問い合わせ内容（コンタクトボード明細）をクリック時の処理
-		$(".contbrd-cont").click(function(){
-			$(this).toggleClass("open");
-		});
 		// 確認するボタンを非活性にする
 		$("#inqConfButton").prop("disabled", true);
-		
+		// 問い合わせ種別変更時に確認するボタンを活性化させる
 		$("#modalText").change( function(){
 			inqReqCheck();
 		});
@@ -903,8 +899,8 @@
 				clone.querySelector(".contbrd-head").classList.add("customer");
 				// アクター名を「お客さま」に設定
 				clone.querySelector(".actor-text").textContent = "お客さま";
-				// コンタクトボード明細の投稿内容をそのまま設定
-				clone.querySelector(".contbrd-content").textContent = cbd.Content__c;
+				// コンタクトボード明細の投稿内容を改行をタグ変換して設定
+				clone.querySelector(".contbrd-content").innerHTML = cbd.Content__c.replace("<", "&lt;").replace(">", "&gt;").replace(/\n/g, "<br>");
 			// PayPay銀行の場合
 			}else{
 				// 回答クラスを付与
@@ -913,15 +909,11 @@
 				clone.querySelector(".actor-text").textContent = "PayPay銀行";
 				// コンタクトボード明細の投稿内容を引数にURLリンク化処理を呼び出し
 				let content = AutoLink(cbd.Content__c);
-				// 値がNullではない場合
-				if(content != null){
+				// 値が入力されている場合
+				if(content){
 					// リンク化した投稿内容を設定
 					// textContentに入れるとHTMLエンティティに変換されるため、innerHTMLに入れる
-					clone.querySelector(".contbrd-content").innerHTML = content;
-				// 値がNullの場合
-				}else{
-					// コンタクトボード明細の投稿内容をそのまま設定
-					clone.querySelector(".contbrd-content").innerHTML = cbd.Content__c;
+					clone.querySelector(".contbrd-content").innerHTML = content.replace("<", "&lt;").replace(">", "&gt;").replace(/\n/g, "<br>");
 				}
 			}
 			// コンタクトボード明細の作成日を日付をJSTに変換する処理を呼び出して、設定する
@@ -931,6 +923,11 @@
 			if(i == 0){
 				// 初回の全表示用クラスを付与
 				clone.querySelector(".contbrd-body").classList.add("first");
+			}else{
+				// クリック時の開閉を入れる
+				$(clone.querySelector(".contbrd-cont")).click(function(){
+					$(this).toggleClass("open");
+				});
 			}
 			// NEW表示しない場合
 			if(!cbdFileList[i].isNew){
@@ -1117,7 +1114,7 @@
         // 画面表示用に値を反映
 		$("#inqConfMailText").html(eMail);
 		$("#inqConfTypeText").html(inqRegistData.Subject);
-		$("#inqConfDtailsText").html(inqRegistData.Content.replace(/\n/g, "<br>"));
+		$("#inqConfDtailsText").html(inqRegistData.Content.replace("<", "&lt;").replace(">", "&gt;").replace(/\n/g, "<br>"));
 		// 選択値を取得
 		//const jinkakuCode = $("input[name='JinkakuCode']").val();
 		const jinkakuCode = '個人';
@@ -1169,7 +1166,7 @@
 		cbdRegistData.CaseId = $("#replyButton").get(0).dataset.cId;
 		cbdRegistData.Content = $("#cbdTextInput").val();
 		// 画面表示用に値を反映
-		$("#cbdConfDtailsText").html(cbdRegistData.Content.replace(/\n/g, "<br>"));
+		$("#cbdConfDtailsText").html(cbdRegistData.Content.replace("<", "&lt;").replace(">", "&gt;").replace(/\n/g, "<br>"));
 		// アップロード表示のクリア
         $("#cbdUploadFiles").html(null);
 		// アップロードファイルがある場合
