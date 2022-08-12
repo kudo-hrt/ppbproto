@@ -842,6 +842,7 @@
 		$("#replyButton").get(0).dataset.cId = selectedCaseId;
 		// Cookie取得処理を呼び出す
 		const cookieList = getCookie();
+		console.log(cookieList);
 		// NEW付与対象のIDを格納する配列
 		let newTargetList = [];
 		// 添付ファイルのリスト
@@ -971,7 +972,6 @@
 				}
 			}
 		}
-		console.log(newTargetList);
 		// NEW表示対象がある場合
 		if(newTargetList.length > 0){
 			// 表示したため、Cookieの情報を書き換える
