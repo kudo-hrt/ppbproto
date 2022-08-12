@@ -872,7 +872,7 @@
 					// ・（お客様からの）問い合わせ以外
 					// ・（Cookieにて）未参照
 					if(
-						cbdDateTime >= nowDateTIme &&
+						cbdDateTime >= nowDateTime &&
 						cbdFileList[j].cbd.Classification__c != "問い合わせ" &&
 						cookieList.indexOf(cbdFileList[j].cbd.Id) < 0
 					){
