@@ -1060,7 +1060,7 @@
 			}
 		}
 		const d = new Date();
-		d.addMonths(d.getMonth() + 1);
+		d.setMonth(d.getMonth() + 1);
 		// Cookieに書き込む（保持期限は30日）
 		document.cookie = "IMFCookie=" + JSON.stringify(resultCbdIdList) + "; expires=" + d.toUTCString();
 	}
