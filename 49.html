@@ -213,7 +213,7 @@
 			}
 		});
 		// 入力時の下線制御
-		//setReqCls("#Modal-inqType, #cbdTextInput");
+		setReqCls("#Modal-inqType, #cbdTextInput");
 		// お問い合わせ内容（コンタクトボード明細）をクリック時の処理
 		$(".contbrd-cont").click(function(){
 			$(this).toggleClass("open");
@@ -430,20 +430,10 @@
 				const cbdFileList = res.caseList[c].cbdFileList;
 				// コンタクトボード明細をループ
 				for(let i = 0; i < cbdFileList.length; i++){
-					// 1ヶ月前の日付用変数に現在日を取得して-1ヶ月する
+					// 日付用変数に現在日を取得
 					let nowDateTime = new Date();
-					// 現在年を取得
-					const year = nowDateTime.getFullYear();
-					// 月を取得して、1ヶ月増やして
-					const month = nowDateTime.getMonth() + 1;
-					// 日を取得する
-					const date = nowDateTime.getDate();
-					// 先頭文字列"0"に、1）から時間(h)を取得して結合した値を最後から2文字までを変数に格納
-					const hour = ("0" + (nowDateTime.getHours())).slice(-2);
-					// 先頭文字列"0"に、1）から分(m)を取得して結合した値を最後から2文字までを変数に格納
-					const minute = ("0" + (nowDateTime.getMinutes())).slice(-2);
-					// Dateに変換
-					nowDateTIme = new Date(year + "/" + (month - 1) + "/" + date + " " + hour + ":" + minute);
+					// 1ヶ月前にする
+					nowDateTIme.setMonth(nowDateTIme.getMonth() - 1);
 					// コンタクトボード明細の時間
 					let cbdDateTime = new Date(cbdFileList[i].cbd.CreatedDate);
 					// 以下のいずれかの条件でnew表示を付与
@@ -871,31 +861,23 @@
 					let idFlg = {};
 					// NEW表示フラグをfalseで初期化
 					let newDisplayFlag = false;
-					// 1ヶ月前の日付用変数に現在日を取得して-1ヶ月する
+					// 日付用変数に現在日を取得
 					let nowDateTime = new Date();
-					// 年取得
-					const year = nowDateTime.getFullYear();
-					// 月を取得して、1ヶ月増やす
-					const month = nowDateTime.getMonth() + 1;
-					// 日を取得する
-					const date = nowDateTime.getDate();
-					// 先頭文字列"0"に、1）から時間(h)を取得して結合した値を最後から2文字までを変数に格納
-					const hour = ("0" + (nowDateTime.getHours())).slice(-2);
-					// 先頭文字列"0"に、1）から分(m)を取得して結合した値を最後から2文字までを変数に格納
-					const minute = ("0" + (nowDateTime.getMinutes())).slice(-2);
-					nowDateTime = new Date(year + "/" + (month - 1) + "/" + date + " " + hour + ":" + minute);
+					//  1ヶ月前にする
+					nowDateTime.setMonth(nowDateTime.getMonth() - 1);
 					// コンタクトボード明細の時間
-					let cbdDateTime = new Date(cbdFileList[j].CreatedDate);
+					let cbdDateTime = new Date(cbdFileList[j].cbd.CreatedDate);
 					// 以下のいずれかの条件でnew表示を付与
 					// ・コンタクトボード明細の最終更新日が現在日時 - 1ヶ月以後（同値を含む）
 					// ・（お客様からの）問い合わせ以外
 					// ・（Cookieにて）未参照
 					if(
 						cbdDateTime >= nowDateTIme &&
-						cbdFileList[i].cbd.Classification__c != "問い合わせ" &&
-						cookieList.indexOf(cbdFileList[i].cbd.Id) < 0
+						cbdFileList[j].cbd.Classification__c != "問い合わせ" &&
+						cookieList.indexOf(cbdFileList[j].cbd.Id) < 0
 					){
-						newTargetList.push(cbdFileList[i].cbd.Id);
+						newTargetList.push(cbdFileList[j].cbd.Id);
+						cookieList.push(cbdFileList[j].cbd.Id);
 						newDisplayFlag = true;
 					}
 					// New表示可否の退避
@@ -990,7 +972,6 @@
 		}
 		// NEW表示対象がある場合
 		if(newTargetList.length > 0){
-			console.log('setcookie')
 			// 表示したため、Cookieの情報を書き換える
 			setCookie(newTargetList);
 		}
@@ -1297,8 +1278,14 @@
 		$("#inqFileList").html(null);
 		// オーバレイをクリア（残すと前画面でオーバレイが残るため）
 		$(".modalOverlay,.confirm-back").fadeOut();
-		// ホーム画面に遷移
-		changeDisp("inquiryForm");
+		// お問い合わせ0件(null)の場合
+		if(!res.caseList || res.caseList.length <= 0){
+			// ホーム画面（履歴なし）を表示
+			changeDisp("noInq");
+		}else{
+			// ホーム画面に遷移
+			changeDisp("inquiryForm");
+		}
 	}
 	
 	/**
