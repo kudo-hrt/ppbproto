@@ -1,4 +1,15 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/commontpl/css/reset.css" media="screen, print">
+<link rel="stylesheet" type="text/css" href="/commontpl/css/component_smt.css" media="screen, print">
+<link rel="stylesheet" type="text/css" href="/commontpl/css/category/contact_smt.css" media="screen, print">
+<link rel="stylesheet" type="text/css" href="/commontpl/css/component_pc.css" media="screen, print">
+<link rel="stylesheet" type="text/css" href="/commontpl/css/category/contact_pc.css" media="screen, print">
+<script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="/commontpl/js/category/modal_accountopen.js"></script>
+<script type="text/javascript" src="/commontpl/js/common.js"></script>
+<script type="text/javascript" src="/commontpl/js/cookie.js"></script>
+<script type="text/javascript" src="/js/javalib.js"></script>
+<script type="text/javascript" src="/js/check.js"></script>
+<script type="text/javascript" src="/js/nb_error.js"></script>
 <!--### template ###-->
 <!-- InquiryForm -->
 <template id="caseTemplate">
@@ -57,16 +68,16 @@
 <script type="text/javascript">
 <!--
 	// 通信先URL　※環境に併せて変更する必要あり！
-	// 開発環境
+	/* 開発環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt49.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG99S6MzYiT5k.KkcZzmtcXubr_J8l8N8473VR.oFizQeVyWXFV5ARIiXmwhmXqjuNU.K6Pk9mc9M3btLBQ";
 	const REFLESH_TOKEN = "5Aep861hjC52juQoBcsFRsbEALR2k2PEkuCJTzezJjsxYDFcfM3Xu_8fN.OBDlZ6BJFv9GwwXc8hH5doNmlIiVu";
-	
-	/* IT環境
+	*/
+	// IT環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt52.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG9Po2PmyYruunauqSmSe1tO_B3XTZIsmbyWG9BxfOXr_UKDN7GA2xyv1J2b24N7OjXdjgf7wAQ6Fc94AGS";
 	const REFLESH_TOKEN = "5Aep861sY.Bl4bMk9ncKxoBVfALQO4xgWbT1fgtPWYc4OPxUGXMzTGo34qQxOYv9jkYyD4lzx7h0uekBz9LDZ89";
-	*/
+	
 	// 通信処理結果を退避するための変数
 	let res;
 	// 連携用文字列
@@ -146,9 +157,7 @@
 	 */
 	$(function(){
 		// 連携文字列取得
-		//linkedStr = $("input[name='SFConnectParam']").val();
-		linkedStr = 'd5b8d90ceb5ff5f3505dd311e1e74f6ee058829898eb84215abbd5fcb495d002';
-		//linkedStr = '5e037e3b273d43372a158103c503ce94a42e786826c4373010ed3d9af2a1368b'; 0件
+		linkedStr = $("input[name='SFConnectParam']").val();
 		// ホーム画面を表示
 		changeDisp("inquiryForm");
 		// モーダル開閉
@@ -214,7 +223,7 @@
 			}
 		});
 		// 入力時の下線制御
-		//setReqCls("#Modal-inqType, #cbdTextInput");
+		setReqCls("#Modal-inqType, #cbdTextInput");
 		// お問い合わせ内容（コンタクトボード明細）をクリック時の処理
 		$(".contbrd-cont").click(function(){
 			$(this).toggleClass("open");
@@ -275,8 +284,7 @@
 			$("body").css({position:"",top:0 * CurrentScrollY});
 		});
 		// 人格コードの取得
-		//const jinkakuCode = $("input[name='JinkakuCode']").val();
-		const jinkakuCode = '法人';
+		const jinkakuCode = $("input[name='JinkakuCode']").val();
 		// 人格コードが取得できた場合
 		if(jinkakuCode){
 			// 人格コードが個人または非居住者の場合
@@ -592,8 +600,79 @@
 		}, dispComErrModal);
 	}
 	
+	/**
+	 * コンテンツバージョン（添付ファイル）取得処理
+	 * @args:
+	 * accToken…アクセストークン
+	 * fileIdList…添付ファイルのIDリスト
+	 * resolve…処理完了時に実行される関数
+	 * index…処理番号
+	 * @return:なし
+	 * @remakrs:全てのファイルの紐付けが完了するとresolveが実行される
+	 * 添付ファイルの取得は非同期で行われるため、resolveを使うことで処理の同期化を図れる
+	 */
+	function getContentVersion(accToken, fileIdList, resolve, index){
+		$.ajax({
+			type:"GET",
+			crossOrigin:true,
+			url:REQUEST_DOMAIN + "/services/data/v54.0/sobjects/ContentVersion/" + fileIdList[index] + "/VersionData",
+			cache:false,
+			headers:{"Authorization":accToken},
+			xhrFields:{responseType:"blob"}
+		}).done(function(fileContent){
+			// ケースのリストサイズが0でない
+			if(res.caseList.length != 0){
+				// ファイルの紐付け有無
+				let fileAttached = false;
+				// ケースをループ
+				for(let i = 0; i < res.caseList.length; i++){
+					// コンタクトボード明細を取得
+					const cbdFileList = res.caseList[i].cbdFileList;
+					// コンタクトボード明細をループ
+					for(let j = 0; j < cbdFileList.length; j++){
+						// 添付ファイルをループ
+						for(let k = 0; k < cbdFileList[j].contentVersions.length; k++){
+							// 要素をインスタンス化
+							const cv = cbdFileList[j].contentVersions[k];
+							
+							if(cv.Id == fileIdList[index]){
+								// IDを条件に添付ファイルのBlobデータを取得
+								res.caseList[i].cbdFileList[j].contentVersions[k]["versionData"] = fileContent;
+								// 紐付け済にする
+								fileAttached = true;
+								// 以後処理不要
+								break;
+							}
+						}
+						// 紐付け済の場合
+						if(fileAttached){
+							// 以後処理不要
+							break;
+						}
+					}
+					// 紐付け済の場合
+					if(fileAttached){
+						// 以後処理不要
+						break;
+					}
+				}
+			}
+			// 全て紐付け終わったら
+			if(fileIdList.length - 1 == index){
+				// 次の処理を呼ぶ
+				resolve();
+			// まだ終わってない場合
+			}else{
+				// 再帰実行する
+				getContentVersion(accToken, fileIdList, resolve, index + 1);
+			}
+		}).fail(function (data, errorThrown, status) {
+			dispRegisComErrModal();
+		});
+	}
+	
     /**
-	 * 初期表示時データ取得
+	 * 新規投稿
 	 * @args:なし
 	 * @return:なし
 	 */
@@ -759,77 +838,6 @@
 	}
 	
 	/**
-	 * コンテンツバージョン（添付ファイル）取得処理
-	 * @args:
-	 * accToken…アクセストークン
-	 * fileIdList…添付ファイルのIDリスト
-	 * resolve…処理完了時に実行される関数
-	 * index…処理番号
-	 * @return:なし
-	 * @remakrs:全てのファイルの紐付けが完了するとresolveが実行される
-	 * 添付ファイルの取得は非同期で行われるため、resolveを使うことで処理の同期化を図れる
-	 */
-	function getContentVersion(accToken, fileIdList, resolve, index){
-		$.ajax({
-			type:"GET",
-			crossOrigin:true,
-			url:REQUEST_DOMAIN + "/services/data/v54.0/sobjects/ContentVersion/" + fileIdList[index] + "/VersionData",
-			cache:false,
-			headers:{"Authorization":accToken},
-			xhrFields:{responseType:"blob"}
-		}).done(function(fileContent){
-			// ケースのリストサイズが0でない
-			if(res.caseList.length != 0){
-				// ファイルの紐付け有無
-				let fileAttached = false;
-				// ケースをループ
-				for(let i = 0; i < res.caseList.length; i++){
-					// コンタクトボード明細を取得
-					const cbdFileList = res.caseList[i].cbdFileList;
-					// コンタクトボード明細をループ
-					for(let j = 0; j < cbdFileList.length; j++){
-						// 添付ファイルをループ
-						for(let k = 0; k < cbdFileList[j].contentVersions.length; k++){
-							// 要素をインスタンス化
-							const cv = cbdFileList[j].contentVersions[k];
-							
-							if(cv.Id == fileIdList[index]){
-								// IDを条件に添付ファイルのBlobデータを取得
-								res.caseList[i].cbdFileList[j].contentVersions[k]["versionData"] = fileContent;
-								// 紐付け済にする
-								fileAttached = true;
-								// 以後処理不要
-								break;
-							}
-						}
-						// 紐付け済の場合
-						if(fileAttached){
-							// 以後処理不要
-							break;
-						}
-					}
-					// 紐付け済の場合
-					if(fileAttached){
-						// 以後処理不要
-						break;
-					}
-				}
-			}
-			// 全て紐付け終わったら
-			if(fileIdList.length - 1 == index){
-				// 次の処理を呼ぶ
-				resolve();
-			// まだ終わってない場合
-			}else{
-				// 再帰実行する
-				getContentVersion(accToken, fileIdList, resolve, index + 1);
-			}
-		}).fail(function (data, errorThrown, status) {
-			dispRegisComErrModal();
-		});
-	}
-	
-	/**
 	 * 初期表示処理（コンタクトボード明細）
 	 * @args:
 	 * selectedCaseId:選択されたケースID
@@ -842,7 +850,6 @@
 		$("#replyButton").get(0).dataset.cId = selectedCaseId;
 		// Cookie取得処理を呼び出す
 		const cookieList = getCookie();
-		console.log(cookieList);
 		// NEW付与対象のIDを格納する配列
 		let newTargetList = [];
 		// 添付ファイルのリスト
@@ -1059,9 +1066,9 @@
 				resultCbdIdList.push(cbdIdList[i]);
 			}
 		}
+		// Cookieに書き込む（保持期限は30日）
 		const d = new Date();
 		d.setMonth(d.getMonth() + 1);
-		// Cookieに書き込む（保持期限は30日）
 		document.cookie = "IMFCookie=" + JSON.stringify(resultCbdIdList) + "; expires=" + d.toUTCString();
 	}
 	
