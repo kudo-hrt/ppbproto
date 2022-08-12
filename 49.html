@@ -132,11 +132,11 @@
 	];
 	// 各種手続きダイヤル設定対象
 	const procedureDialList = [
-		"登録情報の変更", 
-		"キャッシュカード・トークン", 
-		"振込", 
-		"口座自動振替", 
-		"各種証明書（取引明細・残高証明など）"
+		"①登録情報の変更", 
+		"②キャッシュカード・トークン", 
+		"③振込", 
+		"④口座自動振替", 
+		"⑤各種証明書（取引明細・残高証明など）"
 	];
 	// 拡張子のリスト
 	const extensionList = ["heic", "xls", "xlsx", "doc", "docx", "png", "jpg", "jpeg", "pdf"];
@@ -1581,6 +1581,9 @@
 
 <!-- InquiryForm -->
 <div id="inquiryForm" class="contents" style="display:none;">
+	<div id="title">
+		<div class="titleL"><h1>お問い合わせフォーム</h1></div>
+	</div>
 	<div class="blk">
 		<div class="blkCont bdrT0">
 			<div class="note">
@@ -1601,6 +1604,9 @@
 						
 <!-- InquiryFormNoInq -->
 <div id="noInq" class="contents contbrd-pt-cont" style="display:none;">
+	<div id="title">
+		<div class="titleL"><h1>お問い合わせフォーム</h1></div>
+	</div>
 	<div class="blk">
 		<div class="blkCont bdrT0">
 			<p class="contbrd-formBtn">
@@ -1701,79 +1707,79 @@
 								<li id="dialPrivRegistrationChange" name="inqType">
 									<label class="label-radio" for="inqTypePrivRegistrationChange">
 										<input type="radio" name="inqType" value="PrivRegistrationChange" id="inqTypePrivRegistrationChange" class="x-data-inqType">
-										<span>登録情報の変更</span>
+										<span>①登録情報の変更</span>
 									</label>
 								</li>
 								<li id="dialPrivToken" name="inqType">
 									<label class="label-radio" for="inqTypePrivToken">
 										<input type="radio" name="inqType" value="PrivateToken" id="inqTypePrivToken" class="x-data-inqType">
-										<span>キャッシュカード・トークン</span>
+										<span>②キャッシュカード・トークン</span>
 									</label>
 								</li>
 								<li id="dialPrivTransfer" name="inqType">
 									<label class="label-radio" for="inqTypePrivTransfer">
 										<input type="radio" name="inqType" value="PrivTransfer" id="inqTypePrivTransfer" class="x-data-inqType">
-										<span>振込</span>
+										<span>③振込</span>
 									</label>
 								</li>
 								<li id="dialPrivAutomaticBankTransfer" name="inqType">
 									<label class="label-radio" for="inqTypePrivAutomaticBankTransfer">
 										<input type="radio" name="inqType" value="PrivAutomaticBankTransfer" id="inqTypePrivAutomaticBankTransfer" class="x-data-inqType">
-										<span>口座自動振替</span>
+										<span>④口座自動振替</span>
 									</label>
 								</li>
 								<li id="dialPrivCertificates" name="inqType">
 									<label class="label-radio" for="inqTypePrivCertificates">
 										<input type="radio" name="inqType" value="PrivCertificates" id="inqTypePrivCertificates" class="x-data-inqType">
-										<span>各種証明書（取引明細・残高証明など）</span>
+										<span>⑤各種証明書（取引明細・残高証明など）</span>
 									</label>
 								</li>
 								<li id="dialPrivOther" name="inqType">
 									<label class="label-radio" for="inqTypePrivOther">
 										<input type="radio" name="inqType" value="PrivOther" id="inqTypePrivOther" class="x-data-inqType">
-										<span>その他</span>
+										<span>⑥その他</span>
 									</label>
 								</li>
 								<li id="dialCorpRegistrationChange" name="inqType">
 									<label class="label-radio" for="inqTypeCorpRegistrationChange">
 										<input type="radio" name="inqType" value="CorpRegistrationChange" id="inqTypeCorpRegistrationChange" class="x-data-inqType">
-										<span>登録情報の変更</span>
+										<span>①登録情報の変更</span>
 									</label>
 								</li>
 								<li id="dialCorpToken" name="inqType">
 									<label class="label-radio" for="inqTypeCorpToken">
 										<input type="radio" name="inqType" value="CorpToken" id="inqTypeCorpToken" class="x-data-inqType">
-										<span>キャッシュカード・トークン</span>
+										<span>②キャッシュカード・トークン</span>
 									</label>
 								</li>
 								<li id="dialCorpTransfer" name="inqType">
 									<label class="label-radio" for="inqTypeCorpTransfer">
 										<input type="radio" name="inqType" value="CorpTransfer" id="inqTypeCorpTransfer" class="x-data-inqType">
-										<span>振込</span>
+										<span>③振込</span>
 									</label>
 								</li>
 								<li id="dialCorpAutomaticBankTransfer" name="inqType">
 									<label class="label-radio" for="inqTypeCorpAutomaticBankTransfer">
 										<input type="radio" name="inqType" value="CorpAutomaticBankTransfer" id="inqTypeCorpAutomaticBankTransfer" class="x-data-inqType">
-										<span>口座自動振替</span>
+										<span>④口座自動振替</span>
 									</label>
 								</li>
 								<li id="dialCorpCertificates" name="inqType">
 									<label class="label-radio" for="inqTypeCorpCertificates">
 										<input type="radio" name="inqType" value="CorpCertificates" id="inqTypeCorpCertificates" class="x-data-inqType">
-										<span>各種証明書（取引明細・残高証明など）</span>
+										<span>⑤各種証明書（取引明細・残高証明など）</span>
 									</label>
 								</li>
 								<li id="dialCorpBA-PLUS" name="inqType">
 									<label class="label-radio" for="inqTypeCorpBA-PLUS">
 										<input type="radio" name="inqType" value="CorpBA-PLUS" id="inqTypeCorpBA-PLUS" class="x-data-inqType">
-										<span>BA-PLUS</span>
+										<span>⑥BA-PLUS</span>
 									</label>
 								</li>
 								<li id="dialCorpOther" name="inqType">
 									<label class="label-radio" for="inqTypeCorpOther">
 										<input type="radio" name="inqType" value="CorpOther" id="inqTypeCorpOther" class="x-data-inqType">
-										<span>その他</span>
+										<span>⑦その他</span>
 									</label>
 								</li>
 							</ul>
