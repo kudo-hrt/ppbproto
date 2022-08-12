@@ -433,7 +433,7 @@
 					// 日付用変数に現在日を取得
 					let nowDateTime = new Date();
 					// 1ヶ月前にする
-					nowDateTIme.setMonth(nowDateTIme.getMonth() - 1);
+					nowDateTime.setMonth(nowDateTime.getMonth() - 1);
 					// コンタクトボード明細の時間
 					let cbdDateTime = new Date(cbdFileList[i].cbd.CreatedDate);
 					// 以下のいずれかの条件でnew表示を付与
@@ -441,7 +441,7 @@
 					// ・（お客様からの）問い合わせ以外
 					// ・（Cookieにて）未参照
 					if(
-						cbdDateTime >= nowDateTIme &&
+						cbdDateTime >= nowDateTime &&
 						cbdFileList[i].cbd.Classification__c != "問い合わせ" &&
 						cookieList.indexOf(cbdFileList[i].cbd.Id) < 0
 					){
