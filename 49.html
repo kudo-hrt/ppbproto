@@ -1059,8 +1059,10 @@
 				resultCbdIdList.push(cbdIdList[i]);
 			}
 		}
+		const d = new Date();
+		d.addMonth(d.getMonth() + 1);
 		// Cookieに書き込む（保持期限は30日）
-		document.cookie = "IMFCookie=" + JSON.stringify(resultCbdIdList) + "; max-age=30";
+		document.cookie = "IMFCookie=" + JSON.stringify(resultCbdIdList) + "; expires=" + d.toUTCString();
 	}
 	
 	/**
