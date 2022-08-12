@@ -1,15 +1,4 @@
-<link rel="stylesheet" type="text/css" href="/commontpl/css/reset.css" media="screen, print">
-<link rel="stylesheet" type="text/css" href="/commontpl/css/component_smt.css" media="screen, print">
-<link rel="stylesheet" type="text/css" href="/commontpl/css/category/contact_smt.css" media="screen, print">
-<link rel="stylesheet" type="text/css" href="/commontpl/css/component_pc.css" media="screen, print">
-<link rel="stylesheet" type="text/css" href="/commontpl/css/category/contact_pc.css" media="screen, print">
-<script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="/commontpl/js/category/modal_accountopen.js"></script>
-<script type="text/javascript" src="/commontpl/js/common.js"></script>
-<script type="text/javascript" src="/commontpl/js/cookie.js"></script>
-<script type="text/javascript" src="/js/javalib.js"></script>
-<script type="text/javascript" src="/js/check.js"></script>
-<script type="text/javascript" src="/js/nb_error.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <!--### template ###-->
 <!-- InquiryForm -->
 <template id="caseTemplate">
@@ -68,16 +57,16 @@
 <script type="text/javascript">
 <!--
 	// 通信先URL　※環境に併せて変更する必要あり！
-	/* 開発環境
+	// 開発環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt49.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG99S6MzYiT5k.KkcZzmtcXubr_J8l8N8473VR.oFizQeVyWXFV5ARIiXmwhmXqjuNU.K6Pk9mc9M3btLBQ";
 	const REFLESH_TOKEN = "5Aep861hjC52juQoBcsFRsbEALR2k2PEkuCJTzezJjsxYDFcfM3Xu_8fN.OBDlZ6BJFv9GwwXc8hH5doNmlIiVu";
-	*/
-	// IT環境
+	
+	/* IT環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt52.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG9Po2PmyYruunauqSmSe1tO_B3XTZIsmbyWG9BxfOXr_UKDN7GA2xyv1J2b24N7OjXdjgf7wAQ6Fc94AGS";
 	const REFLESH_TOKEN = "5Aep861sY.Bl4bMk9ncKxoBVfALQO4xgWbT1fgtPWYc4OPxUGXMzTGo34qQxOYv9jkYyD4lzx7h0uekBz9LDZ89";
-	
+	*/
 	// 通信処理結果を退避するための変数
 	let res;
 	// 連携用文字列
@@ -157,7 +146,9 @@
 	 */
 	$(function(){
 		// 連携文字列取得
-		linkedStr = $("input[name='SFConnectParam']").val();
+		//linkedStr = $("input[name='SFConnectParam']").val();
+		linkedStr = 'd5b8d90ceb5ff5f3505dd311e1e74f6ee058829898eb84215abbd5fcb495d002';
+		//linkedStr = '5e037e3b273d43372a158103c503ce94a42e786826c4373010ed3d9af2a1368b'; 0件
 		// ホーム画面を表示
 		changeDisp("inquiryForm");
 		// モーダル開閉
@@ -284,7 +275,8 @@
 			$("body").css({position:"",top:0 * CurrentScrollY});
 		});
 		// 人格コードの取得
-		const jinkakuCode = $("input[name='JinkakuCode']").val();
+		//const jinkakuCode = $("input[name='JinkakuCode']").val();
+		const jinkakuCode = '個人';
 		// 人格コードが取得できた場合
 		if(jinkakuCode){
 			// 人格コードが個人または非居住者の場合
@@ -1127,7 +1119,8 @@
 		$("#inqConfTypeText").html(inqRegistData.Subject);
 		$("#inqConfDtailsText").html(inqRegistData.Content.replace(/\n/g, "<br>"));
 		// 選択値を取得
-		const jinkakuCode = $("input[name='JinkakuCode']").val();
+		//const jinkakuCode = $("input[name='JinkakuCode']").val();
+		const jinkakuCode = '個人';
 		let selectedItem = $("#Modal-inqType").html();
 		// 人格コードが個人、もしくは非居住者の場合
 		if(jinkakuCode == "個人" || jinkakuCode == "非居住者"){
