@@ -1625,6 +1625,15 @@
 		$("." + modalClassName).css("display", "block");
 		$("body").css({position:"fixed",top:-1 * CurrentScrollY});
 	}
+	
+	/**
+	 * スクロールトップ共通
+	 * @args:なし
+	 * @return:なし
+	 */
+	function dispScrollTop(){
+		$("html,body").scrollTop(0);
+	}
 //-->
 </script>
 
@@ -1731,7 +1740,7 @@
 			<div class="blk">
 				<div class="blkCont bdrT0 contbrd-btnArea-box">
 					<p>
-						<a id="replyButton" href="javascript:void(0)" onclick="changeDisp('replyInputScreen');" title="投稿する" class="btn btn01 btnL">投稿する</a>
+						<a id="replyButton" href="javascript:void(0)" onclick="changeDisp('replyInputScreen'); dispScrollTop();" title="投稿する" class="btn btn01 btnL">投稿する</a>
 					</p>
 					<p class="mt-16">
 						<a href="javascript:void(0)" onclick="init(); changeDisp('inquiryForm');" title="戻る" class="btn btn03 btnL">戻る</a>
