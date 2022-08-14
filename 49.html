@@ -79,6 +79,8 @@
 	let selectFileIndex;
 	// アップロードファイル操作用：アップロード済ファイルサイズ
 	let uploadedFileSize = 0;
+	// ファイルアップロード個別ファイルサイズ
+	let inputFilesSize = new Array();
 	// エラーメッセージ（モーダル）
 	let errorMessageText;
 	// エラー格納用
@@ -1350,6 +1352,16 @@
 		$("#inqFileList").children()[selectFileIndex].remove();
 		// 裏で持っているデータの削除
 		inputFiles.splice(selectFileIndex, 1);
+		console.log('合計ファイルサイズ');
+		console.log(uploadedFileSize);
+		console.log(inputFilesSize);
+		console.log(inputFilesSize[selectFileIndex]);
+		// 合計ファイルサイズから減算
+		uploadedFileSize = uploadedFileSize - inputFilesSize[selectFileIndex];
+		inputFilesSize.splice(selectFileIndex, 1);
+		console.log('削除後');
+		console.log(uploadedFileSize);
+		console.log(inputFilesSize);
 	}
 	
 	/**
@@ -1485,6 +1497,8 @@
 			}
 			// ファイルサイズを加算
 			fileSize = files[i].size;
+			// 個別ファイルサイズを退避
+			inputFilesSize.push(files[i].size;)
 		}
 		// アップロード済のファイルサイズとファイルサイズの合計が24MBを超える場合
 		if(uploadedFileSize + fileSize > 24 * 1024 * 1024){
