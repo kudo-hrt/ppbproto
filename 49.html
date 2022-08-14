@@ -1352,16 +1352,10 @@
 		$("#inqFileList").children()[selectFileIndex].remove();
 		// 裏で持っているデータの削除
 		inputFiles.splice(selectFileIndex, 1);
-		console.log('合計ファイルサイズ');
-		console.log(uploadedFileSize);
-		console.log(inputFilesSize);
-		console.log(inputFilesSize[selectFileIndex]);
 		// 合計ファイルサイズから減算
 		uploadedFileSize = uploadedFileSize - inputFilesSize[selectFileIndex];
+		// 個別ファイルサイズリストから削除
 		inputFilesSize.splice(selectFileIndex, 1);
-		console.log('削除後');
-		console.log(uploadedFileSize);
-		console.log(inputFilesSize);
 	}
 	
 	/**
@@ -1374,6 +1368,17 @@
 		$("#cbdFileList").children()[selectFileIndex].remove();
 		// 裏で持っているデータの削除
 		inputFiles.splice(selectFileIndex, 1);
+		console.log('合計ファイルサイズ');
+		console.log(uploadedFileSize);
+		console.log(inputFilesSize);
+		console.log(inputFilesSize[selectFileIndex]);
+		// 合計ファイルサイズから減算
+		uploadedFileSize = uploadedFileSize - inputFilesSize[selectFileIndex];
+		// 個別ファイルサイズリストから削除
+		inputFilesSize.splice(selectFileIndex, 1);
+		console.log('削除後');
+		console.log(uploadedFileSize);
+		console.log(inputFilesSize);
 	}
 	
 	/**
