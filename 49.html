@@ -1590,8 +1590,7 @@
 	 * @return:なし
 	 */
 	function dispNoaccErrModal(){
-		console.log('ここ');
-		console.log(res.result);
+		console.log(res);
 		if(res.result == "NO_ACCOUNT"){
 			if(errorMessageText){
 				$(".eMessage-error-noaccError").html(errorMessageText);
