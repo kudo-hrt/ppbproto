@@ -578,6 +578,7 @@
 					dispTimeoutErrModal();
 				// 取引先0件
 				}else if(response.result == "NO_ACCOUNT"){
+					res = response;
 					changeDisp("noInq");
 				// 異常終了
 				}else{
