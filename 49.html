@@ -143,12 +143,11 @@
 	// 拡張子のリスト
 	const extensionList = ["heic", "xls", "xlsx", "doc", "docx", "png", "jpg", "jpeg", "pdf"];
 	
-	history.replaceState(null,null,null);
-	window.addEventListener('popstate', function(e){
+	history.pushState(null,null,null);
+	window.onpopstate = function(e){
 		console.log('addEventListener');
 		changeDisp("inquiryForm");
-		event.preventDefault();
-	});
+	}
 	
 	/**
 	 * 初期表示処理
