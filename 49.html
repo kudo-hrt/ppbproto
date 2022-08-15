@@ -691,6 +691,8 @@
 				if(response.result == "SUCCESS"){
 					if(cbdId){
 						changeDisp("compScreen");
+						// スクロールをトップにする
+						dispScrollTop();
 					}
 				// メールアドレス不正
 				}else if(response.result == "INVALID_EMAIL_ADDRESS"){
@@ -740,6 +742,8 @@
 				if(response.result == "SUCCESS"){
 					if(cbdId){
 						changeDisp("compScreen");
+						// スクロールをトップにする
+						dispScrollTop();
 					}
 				// 時限チェック
 				}else if(response.result == "TIMED_CHECK"){
@@ -1151,6 +1155,8 @@
 		}
 		// 確認画面へ遷移する
         changeDisp("inqConfirmScreen");
+		// スクロールをトップにする
+		dispScrollTop();
 	}
 	
 	/**
@@ -1187,6 +1193,8 @@
 		}
 		// 確認画面へ遷移する
 		changeDisp("replyConfirmScreen");
+		// スクロールをトップにする
+		dispScrollTop();
 	}
 	
 	/**
@@ -1252,9 +1260,13 @@
 			if(!res.caseList || res.caseList.length <= 0){
 				// ホーム画面（履歴なし）を表示
 				changeDisp("noInq");
+				// スクロールをトップにする
+				dispScrollTop();
 			}else{
 				// ホーム画面に遷移
 				changeDisp("inquiryForm");
+				// スクロールをトップにする
+				dispScrollTop();
 			}
 		}
 	}
@@ -1292,9 +1304,13 @@
 		if(!res.caseList || res.caseList.length <= 0){
 			// ホーム画面（履歴なし）を表示
 			changeDisp("noInq");
+			// スクロールをトップにする
+			dispScrollTop();
 		}else{
 			// ホーム画面に遷移
 			changeDisp("inquiryForm");
+			// スクロールをトップにする
+			dispScrollTop();
 		}
 	}
 	
@@ -1309,6 +1325,8 @@
 			 cbdClearInput();
 			// 詳細画面に遷移
 			changeDisp("detailsScreen");
+			// スクロールをトップにする
+			dispScrollTop();
 		// 入力されている
 		}else{
 			// 確認ダイアログを表示
@@ -1341,6 +1359,8 @@
 		$(".modalOverlay,.confirm-back").fadeOut();
 		// 詳細画面に遷移
 		changeDisp("detailsScreen");
+		// スクロールをトップにする
+		dispScrollTop();
 	}
 	
 	/**
@@ -1965,7 +1985,7 @@
 					<input type="button" id="inqPost" onclick="registInquery();" class="btn btn01 btnL" value="投稿する">
 				</p>
 				<p class="mt-16">
-					<a href="javascript:void(0);" onclick="changeDisp('inqInputScreen')" class="btn btn03 btnL">戻る</a>
+					<a href="javascript:void(0);" onclick="changeDisp('inqInputScreen'); dispScrollTop();" class="btn btn03 btnL">戻る</a>
 				</p>
 			</div>
 		</div>
@@ -2064,7 +2084,7 @@
 					<input type="button" id="cbdPost" onclick="registContactBoard();" class="btn btn01 btnL" value="投稿する">
 				</p>
 				<p class="mt-16">
-					<a href="javascript:void(0);" onclick="changeDisp('replyInputScreen')" class="btn btn03 btnL">戻る</a>
+					<a href="javascript:void(0);" onclick="changeDisp('replyInputScreen'); dispScrollTop();" class="btn btn03 btnL">戻る</a>
 				</p>
 			</div>
 		</div>
