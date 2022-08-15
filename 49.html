@@ -143,9 +143,9 @@
 	// 拡張子のリスト
 	const extensionList = ["heic", "xls", "xlsx", "doc", "docx", "png", "jpg", "jpeg", "pdf"];
 	
-	history.pushState(null,null,null);
+	history.pushState({name:'inquiryForm'},null,null);
 	window.onpopstate = function(e){
-		console.log('addEventListener');
+		console.log(history.state);
 		changeDisp("inquiryForm");
 	}
 	
