@@ -176,11 +176,9 @@
 		// お問い合わせ内容：入力クリア
 		$(".textinput-box .inputClear").on("click", function(){
 			console.log($("body").find(".data-on").length);
-			if($("body").find(".data-on").length){
-				var CurrentScrollY = $(window).scrollTop();
-				$(".modalOverlay,.modalWrap_error.confirm-clear").fadeIn();
-				$("body").css({position:"fixed",top:-1 * CurrentScrollY});
-			}
+			var CurrentScrollY = $(window).scrollTop();
+			$(".modalOverlay,.modalWrap_error.confirm-clear").fadeIn();
+			$("body").css({position:"fixed",top:-1 * CurrentScrollY});
 		});
 		// 各種モーダル：戻る時のデフォルト動作
 		$(".modal__close").on("click", function(){
@@ -188,6 +186,7 @@
 			$(".modalOverlay,.modalWrap_error").fadeOut();
 			$("body").css({position:"",top:0 * CurrentScrollY});
 		});
+		/*
 		// 入力値クリア
 		$(".inputClear").on("click", function(){
 			console.log($("body").find(".data-on").length);
@@ -197,6 +196,7 @@
 				$("body").css({position:"fixed",top:-1 * CurrentScrollY});
 			}
 		});
+		*/
 		// 削除確認時に削除するボタン押下
 		$("#inqDelBtn").on({
 			"click":function(){
