@@ -79,8 +79,6 @@
 	let selectFileIndex;
 	// アップロードファイル操作用：アップロード済ファイルサイズ
 	let uploadedFileSize = 0;
-	// ファイルアップロード個別ファイルサイズ
-	let inputFilesSize = new Array();
 	// エラーメッセージ（モーダル）
 	let errorMessageText;
 	// エラー格納用
@@ -1378,12 +1376,10 @@
 	function inqDeleteFile(){
 		// 選択された画面要素の削除
 		$("#inqFileList").children()[selectFileIndex].remove();
+		// 合計ファイルサイズから減算
+		uploadedFileSize = uploadedFileSize - inputFilesSize[selectFileIndex].size;
 		// 裏で持っているデータの削除
 		inputFiles.splice(selectFileIndex, 1);
-		// 合計ファイルサイズから減算
-		uploadedFileSize = uploadedFileSize - inputFilesSize[selectFileIndex];
-		// 個別ファイルサイズリストから削除
-		inputFilesSize.splice(selectFileIndex, 1);
 	}
 	
 	/**
@@ -1394,12 +1390,10 @@
 	function cbdDeleteFile(){
 		// 選択された画面要素の削除
 		$("#cbdFileList").children()[selectFileIndex].remove();
+		// 合計ファイルサイズから減算
+		uploadedFileSize = uploadedFileSize - inputFilesSize[selectFileIndex].size;
 		// 裏で持っているデータの削除
 		inputFiles.splice(selectFileIndex, 1);
-		// 合計ファイルサイズから減算
-		uploadedFileSize = uploadedFileSize - inputFilesSize[selectFileIndex];
-		// 個別ファイルサイズリストから削除
-		inputFilesSize.splice(selectFileIndex, 1);
 	}
 	
 	/**
@@ -1419,7 +1413,8 @@
 		// アップロード用のファイル情報
 		const inputFileData = {
 			name:files[index].name,
-			versionData:null
+			versionData:null,
+			size:files[index].size
 		};
 		// ファイル読込時
 		reader.onload = function(){
@@ -1523,8 +1518,6 @@
 			}
 			// ファイルサイズを加算
 			fileSize = files[i].size;
-			// 個別ファイルサイズを退避
-			inputFilesSize.push(files[i].size);
 		}
 		// アップロード済のファイルサイズとファイルサイズの合計が24MBを超える場合
 		if(uploadedFileSize + fileSize > 24 * 1024 * 1024){
