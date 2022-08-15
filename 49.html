@@ -144,8 +144,8 @@
 	const extensionList = ["heic", "xls", "xlsx", "doc", "docx", "png", "jpg", "jpeg", "pdf"];
 	
 	history.pushState({name:'inquiryForm'},null,null);
+	console.log(history.state);
 	window.onpopstate = function(e){
-		console.log(history.state);
 		changeDisp("inquiryForm");
 	}
 	
