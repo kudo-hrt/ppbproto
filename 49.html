@@ -145,6 +145,7 @@
 	
 	history.replaceState(null,null,null);
 	window.addEventListener('popstate', function(e){
+		console.log('addEventListener');
 		changeDisp("inquiryForm");
 	});
 	
