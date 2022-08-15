@@ -520,6 +520,11 @@
 				$("#" + screenNameList[i]).hide();
 			}
 		}
+		if("inquiryForm" == nextScreen || "noInq" == nextScreen){
+			$(#title).show();
+		} else {
+			$(#title).hide();
+		}
 	}
 	
 	/**
@@ -1654,10 +1659,12 @@
 	}
 //-->
 </script>
+
 <!--title-->
-<div id="inquiryForm" style="display:none;">
+<div id="title"  style="display:none;">
 	<div class="titleL"><h1>お問い合わせフォーム</h1></div>
 </div>
+
 <!-- InquiryForm -->
 <div id="inquiryForm" class="contents" style="display:none;">
 	<!--/title-->
@@ -1678,10 +1685,7 @@
 		</div>
 	</div>
 </div>
-<!--title-->
-<div id="noInq" style="display:none;">
-	<div class="titleL"><h1>お問い合わせフォーム</h1></div>
-</div>
+
 <!-- InquiryFormNoInq -->
 <div id="noInq" class="contents contbrd-pt-cont" style="display:none;">
 	<div class="blk">
