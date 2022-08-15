@@ -147,6 +147,7 @@
 	window.addEventListener('popstate', function(e){
 		console.log('addEventListener');
 		changeDisp("inquiryForm");
+		event.preventDefault();
 	});
 	
 	/**
