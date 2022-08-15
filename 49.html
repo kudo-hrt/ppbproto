@@ -172,6 +172,7 @@
 		// お問い合わせ内容：入力クリア
 		$(".textinput-box .inputClear").on("click", function(){
 			console.log('textinput-boxinputClear');
+			console.log($("body").find(".data-on").length);
 			if($("body").find(".data-on").length){
 				var CurrentScrollY = $(window).scrollTop();
 				$(".modalOverlay,.modalWrap_error.confirm-clear").fadeIn();
@@ -187,6 +188,7 @@
 		// 入力値クリア
 		$(".inputClear").on("click", function(){
 			console.log('inputClear');
+			console.log($("body").find(".data-on").length);
 			if($("body").find(".data-on").length){
 				var CurrentScrollY = $(window).scrollTop();
 				$(".modalOverlay,.modalWrap_error.confirm-clear").fadeIn();
