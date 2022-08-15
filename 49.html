@@ -186,17 +186,6 @@
 			$(".modalOverlay,.modalWrap_error").fadeOut();
 			$("body").css({position:"",top:0 * CurrentScrollY});
 		});
-		/*
-		// 入力値クリア
-		$(".inputClear").on("click", function(){
-			console.log($("body").find(".data-on").length);
-			if($("body").find(".data-on").length){
-				var CurrentScrollY = $(window).scrollTop();
-				$(".modalOverlay,.modalWrap_error.confirm-clear").fadeIn();
-				$("body").css({position:"fixed",top:-1 * CurrentScrollY});
-			}
-		});
-		*/
 		// 削除確認時に削除するボタン押下
 		$("#inqDelBtn").on({
 			"click":function(){
@@ -383,6 +372,10 @@
         $("#inqPost").prop("disabled", false);
         // 投稿ボタンを活性化
         $("#cbdPost").prop("disabled", false);
+		// ☓ボタンを非表示
+		$("#inqContentDel").css("opacity", 0);
+		// ☓ボタンを非表示
+		$("#cbdContentDel").css("opacity", 0);
 		// 入力画面出力用
 		eMail = res.accMail;
 		// 新規入力画面に反映
@@ -1295,6 +1288,8 @@
 		$("#inqTextInput").css("background", "#ffffcc");
 		// 確認するボタンを非活性にする
 		$("#inqConfButton").prop("disabled", true);
+		// ☓ボタンを非表示
+		$("#inqContentDel").css("opacity", 0);
 		// ファイルアップロード用ファイルをリセット
 		inputFiles = new Array();
 		// アップロード済ファイルサイズをリセット
@@ -1352,6 +1347,8 @@
 		$("#cbdTextInput").css("background", "#ffffcc");
 		// 確認するボタンを非活性にする
 		$("#cbdConfButton").prop("disabled", true);
+		// ☓ボタンを非表示
+		$("#cbdContentDel").css("opacity", 0);
 		// ファイルアップロード用ファイルをリセット
 		inputFiles = new Array();
 		// アップロード済ファイルサイズをリセット
