@@ -175,7 +175,6 @@
 		});
 		// お問い合わせ内容：入力クリア
 		$(".textinput-box .inputClear").on("click", function(){
-			console.log($("body").find(".data-on").length);
 			var CurrentScrollY = $(window).scrollTop();
 			$(".modalOverlay,.modalWrap_error.confirm-clear").fadeIn();
 			$("body").css({position:"fixed",top:-1 * CurrentScrollY});
@@ -1661,7 +1660,7 @@
 </script>
 
 <!--title-->
-<div id="title"  style="display:none;">
+<div id="title" style="display:none;">
 	<div class="titleL"><h1>お問い合わせフォーム</h1></div>
 </div>
 
