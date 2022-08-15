@@ -1377,7 +1377,7 @@
 		// 選択された画面要素の削除
 		$("#inqFileList").children()[selectFileIndex].remove();
 		// 合計ファイルサイズから減算
-		uploadedFileSize = uploadedFileSize - inputFilesSize[selectFileIndex].size;
+		uploadedFileSize = uploadedFileSize - inputFiles[selectFileIndex].size;
 		// 裏で持っているデータの削除
 		inputFiles.splice(selectFileIndex, 1);
 	}
@@ -1391,7 +1391,7 @@
 		// 選択された画面要素の削除
 		$("#cbdFileList").children()[selectFileIndex].remove();
 		// 合計ファイルサイズから減算
-		uploadedFileSize = uploadedFileSize - inputFilesSize[selectFileIndex].size;
+		uploadedFileSize = uploadedFileSize - inputFiles[selectFileIndex].size;
 		// 裏で持っているデータの削除
 		inputFiles.splice(selectFileIndex, 1);
 	}
