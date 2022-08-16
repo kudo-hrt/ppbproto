@@ -141,12 +141,6 @@
 	// 拡張子のリスト
 	const extensionList = ["heic", "xls", "xlsx", "doc", "docx", "png", "jpg", "jpeg", "pdf"];
 	
-	history.pushState({name:'inquiryForm'},null,null);
-	console.log(history.state);
-	window.onpopstate = function(e){
-		changeDisp("inquiryForm");
-	}
-	
 	/**
 	 * 初期表示処理
 	 */
@@ -154,7 +148,6 @@
 		// 連携文字列取得
 		//linkedStr = $("input[name='SFConnectParam']").val();
 		linkedStr = 'd5b8d90ceb5ff5f3505dd311e1e74f6ee058829898eb84215abbd5fcb495d002';
-		//linkedStr = '5e037e3b273d43372a158103c503ce94a42e786826c4373010ed3d9af2a1368b'; 0件
 		// ホーム画面を表示
 		changeDisp("inquiryForm");
 		// モーダル開閉
@@ -371,9 +364,9 @@
         $("#inqPost").prop("disabled", false);
         // 投稿ボタンを活性化
         $("#cbdPost").prop("disabled", false);
-		// ☓ボタンを非表示
+        // Xボタンを非表示
 		$("#inqContentDel").css("opacity", 0);
-		// ☓ボタンを非表示
+		// Xボタンを非表示
 		$("#cbdContentDel").css("opacity", 0);
 		// 入力画面出力用
 		eMail = res.accMail;
@@ -918,13 +911,15 @@
 				clone.querySelector(".contbrd-head").classList.add("answer");
 				// アクター名を「PayPay銀行」に設定
 				clone.querySelector(".actor-text").textContent = "PayPay銀行";
+				// CSRF対策のため、タグ変換
+				let content = cbd.Content__c.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 				// コンタクトボード明細の投稿内容を引数にURLリンク化処理を呼び出し
-				let content = AutoLink(cbd.Content__c);
+				content = AutoLink(content__c);
 				// 値が入力されている場合
 				if(content){
 					// リンク化した投稿内容を設定
 					// textContentに入れるとHTMLエンティティに変換されるため、innerHTMLに入れる
-					clone.querySelector(".contbrd-content").innerHTML = content.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replace(/\n/g, "<br>");
+					clone.querySelector(".contbrd-content").innerHTML = content.replace(/\n/g, "<br>");
 				}
 			}
 			// コンタクトボード明細の作成日を日付をJSTに変換する処理を呼び出して、設定する
@@ -1157,7 +1152,7 @@
 		}
 		// 確認画面へ遷移する
         changeDisp("inqConfirmScreen");
-		// スクロールをトップにする
+        // スクロールをトップにする
 		dispScrollTop();
 	}
 	
@@ -1292,7 +1287,7 @@
 		$("#inqTextInput").css("background", "#ffffcc");
 		// 確認するボタンを非活性にする
 		$("#inqConfButton").prop("disabled", true);
-		// ☓ボタンを非表示
+		// Xボタンを非表示
 		$("#inqContentDel").css("opacity", 0);
 		// ファイルアップロード用ファイルをリセット
 		inputFiles = new Array();
@@ -1351,7 +1346,7 @@
 		$("#cbdTextInput").css("background", "#ffffcc");
 		// 確認するボタンを非活性にする
 		$("#cbdConfButton").prop("disabled", true);
-		// ☓ボタンを非表示
+		// Xボタンを非表示
 		$("#cbdContentDel").css("opacity", 0);
 		// ファイルアップロード用ファイルをリセット
 		inputFiles = new Array();
@@ -1520,7 +1515,6 @@
 			// ファイルサイズを加算
 			fileSize = files[i].size;
 		}
-		console.log(uploadedFileSize);
 		// アップロード済のファイルサイズとファイルサイズの合計が24MBを超える場合
 		if(uploadedFileSize + fileSize > 24 * 1024 * 1024){
 			// 警告表示
@@ -1666,7 +1660,6 @@
 
 <!-- InquiryForm -->
 <div id="inquiryForm" class="contents" style="display:none;">
-	<!--/title-->
 	<div class="blk">
 		<div class="blkCont bdrT0">
 			<div class="note">
