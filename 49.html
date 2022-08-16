@@ -915,7 +915,7 @@
 				let content = cbd.Content__c.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 				console.log('1:' + content);
 				// コンタクトボード明細の投稿内容を引数にURLリンク化処理を呼び出し
-				content = AutoLink(cbd.content__c);
+				content = AutoLink(content);
 				console.log('2:' + content);
 				// 値が入力されている場合
 				if(content){
