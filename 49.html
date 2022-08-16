@@ -913,8 +913,10 @@
 				clone.querySelector(".actor-text").textContent = "PayPay銀行";
 				// CSRF対策のため、タグ変換
 				let content = cbd.Content__c.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+				console.log('1:' + content);
 				// コンタクトボード明細の投稿内容を引数にURLリンク化処理を呼び出し
 				content = AutoLink(cbd.content__c);
+				console.log('2:' + content);
 				// 値が入力されている場合
 				if(content){
 					// リンク化した投稿内容を設定
