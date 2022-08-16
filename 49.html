@@ -914,7 +914,7 @@
 				// CSRF対策のため、タグ変換
 				let content = cbd.Content__c.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 				// コンタクトボード明細の投稿内容を引数にURLリンク化処理を呼び出し
-				content = AutoLink(content__c);
+				content = AutoLink(cbd.content__c);
 				// 値が入力されている場合
 				if(content){
 					// リンク化した投稿内容を設定
