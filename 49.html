@@ -675,7 +675,6 @@
 				data:{inquiry:linkedStr},
 				headers: {"Authorization":accToken}
 			}).done(function(response){
-				console.log('done');
 				if(response.errorMessage){
 					errorMessageText = response.errorMessage.replace(/\n/g, "<br>");
 				}
@@ -695,7 +694,6 @@
 					dispAbnormalErrModal();
 				}
 			}).fail(function(data, errorThrown, status){
-				console.log('fail');
 				dispComErrModal();
 			});
 		}, dispComErrModal);
