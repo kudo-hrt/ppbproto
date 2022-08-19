@@ -618,9 +618,9 @@
 		// 確認ダイアログのオーバレイをクリア
 		$(".modalOverlay,.confirm-historyBack").fadeOut();
 		// （入力がある場合）新規お問い合わせ（入力画面）のクリア
-		inqInputClear();
+		inqClearInput();
 		// （入力がある場合）追加お問い合わせ返信（入力画面）のクリア
-		cbdInputClear();
+		cbdClearInput();
 		// お問い合わせ0件(null)の場合
 		if(!res.caseList || res.caseList.length <= 0){
 			// ホーム画面（履歴なし）を表示
