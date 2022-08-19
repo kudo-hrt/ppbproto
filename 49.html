@@ -57,21 +57,21 @@
 <script type="text/javascript">
 <!--
 	// 通信先URL　※環境に併せて変更する必要あり！
-	/* 開発環境
+	// 開発環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt49.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG99S6MzYiT5k.KkcZzmtcXubr_J8l8N8473VR.oFizQeVyWXFV5ARIiXmwhmXqjuNU.K6Pk9mc9M3btLBQ";
 	const REFLESH_TOKEN = "5Aep861hjC52juQoBcsFRsbEALR2k2PEkuCJTzezJjsxYDFcfM3Xu_8fN.OBDlZ6BJFv9GwwXc8hH5doNmlIiVu";
-	*/
+	
 	/* IT環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt52.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG9Po2PmyYruunauqSmSe1tO_B3XTZIsmbyWG9BxfOXr_UKDN7GA2xyv1J2b24N7OjXdjgf7wAQ6Fc94AGS";
 	const REFLESH_TOKEN = "5Aep861sY.Bl4bMk9ncKxoBVfALQO4xgWbT1fgtPWYc4OPxUGXMzTGo34qQxOYv9jkYyD4lzx7h0uekBz9LDZ89";
 	*/
-	// ST環境
+	/* ST環境
 	const REQUEST_DOMAIN = "https://paypay-bank--int1.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG9rnryk9FxFMWYw6B7a3vS76.rmtm9OK7HwR46afmPIHnzp5NBdd9c6Q5wHD0gbY_J6PrHxS_uZY94OZR7";
 	const REFLESH_TOKEN = "5Aep8616TQxcUXMN._rsxWE0Vp.qZUlq4a2S21KK7q4ghDyI1kYdTAvaq9uv54f67JoCucSXBPLOYjfaY6IVBdD";
-	
+	*/
 	// 通信処理結果を退避するための変数
 	let res;
 	// 連携用文字列
@@ -105,6 +105,8 @@
 		CaseId:null,	
 		Content:null
 	};
+	// 現在表示している画面ID
+	let displayId = null;
 	// 画面ID
 	const screenNameList = [
 		"inquiryForm",
@@ -310,6 +312,8 @@
 	 * @return:なし
 	 */
 	function init(){
+		// （処理中表示がされていない場合）処理中表示を出す
+		
 		// ファイルアップロード用ファイルをリセット
 		inputFiles = new Array();
 		// アップロード済ファイルサイズをリセット
@@ -377,6 +381,73 @@
 		eMail = res.accMail;
 		// 新規入力画面に反映
 		$("#newInqMail").html(eMail);
+		// 履歴更新時のイベント処理（ブラウザバックに対応）
+		window.onpopstate = function(e){
+			// 現在表示している画面に応じた制御を実施
+			switch(displayId){
+				// ホーム画面（履歴あり）、ホーム画面（履歴なし）
+				case "inquiryForm":
+				case "noInq":
+					// 通常のブラウザバックの挙動
+					history.back();
+					break;
+				// 個別お問い合わせ 詳細画面
+				case "detailsScreen":
+					// ホーム画面（履歴あり）へ遷移　※履歴なしの状態でこの画面に遷移することはあり得ない
+					changeDisp("inquiryForm");
+					break;
+				// 新規お問い合わせ（入力画面）
+				case "inqInputScreen":
+					// 問い合わせ種別の選択状態の取得
+					const itype_flg = ( $("#Modal-inqType").html() == "選択してください" ) ? false : true;
+					// 問い合わせ内容の入力状態の取得
+					const idtail_flg = ($("#inqTextInput").val() == "") ? false : true;
+					// いずれかが入力されている場合（ファイルアップロードを含む）
+					if(itype_flg || idtail_flg || inputFiles.length > 0){
+						// 確認ダイアログを表示
+						$(".modalOverlay,.confirm-historyBack").fadeIn();
+						$("body").css({position:"fixed",top:-1});
+					// 未入力の場合
+					}else{
+						// ホーム画面に遷移
+						sendHome();
+					}
+					break;
+				// 新規お問い合わせ（確認画面）
+				case "inqConfirmScreen":
+					// 新規お問い合わせ（入力画面）に遷移する
+					changeDisp("inqInputScreen");
+					break;
+				// 個別お問い合わせ返信（入力画面）
+				case "replyInputScreen":
+					// 問い合わせ内容が入力されている場合（ファイルアップロードを含む）
+					if($("#cbdTextInput").val() != "" || inputFiles.length > 0){
+						// 確認ダイアログを表示
+						$(".modalOverlay,.confirm-historyBack").fadeIn();
+						$("body").css({position:"fixed",top:-1});
+					// 未入力の場合
+					}else{
+						// ホーム画面に遷移
+						sendHome();
+					}
+					break;
+				// 個別お問い合わせ返信（確認画面）
+				case "replyConfirmScreen":
+					// 個別お問い合わせ返信（入力画面）に遷移する
+					changeDisp("replyInputScreen");
+					break;
+				// 完了画面
+				case "compScreen":
+					// サーバーから投稿した情報を再取得し、ホーム画面に遷移
+					getAllCase();
+					break;
+				// 上記以外
+				default:
+					// 通常のブラウザバックの挙動
+					history.back();
+					break;
+			}
+		}
 		// コンテンツバーション取得のためのPromise生成
 		const fileGetPromise = new Promise((resolve) => {
 			// ファイルIDのリスト
@@ -495,6 +566,8 @@
 				// caseを画面に出力
 				$("#listQa").append(clone);
 			}
+			// 処理中表示を隠す
+			
 		});
 	}
 	
@@ -517,10 +590,41 @@
 				$("#" + screenNameList[i]).hide();
 			}
 		}
+		// ホーム画面（履歴あり）、もしくはホーム画面（履歴なし）
 		if("inquiryForm" == nextScreen || "noInq" == nextScreen){
 			$("#title").show();
 		} else {
 			$("#title").hide();
+		}
+		// 遷移先画面IDを退避
+		displayId = nextScreen;
+		// 履歴が設定されていない場合
+		if(!history.state){
+			// 画面履歴の追加
+			history.pushState({displayId:nextScreen}, null, null);
+		// 履歴が設定されている場合
+		}else{
+			// 画面履歴の更新
+			history.replaceState({displayId:nextScreen}, null, null);
+		}
+	}
+	/**
+	 *
+	 */
+	function sendHome(){
+		// 確認ダイアログのオーバレイをクリア
+		$(".modalOverlay,.confirm-historyBack").fadeOut();
+		// お問い合わせ0件(null)の場合
+		if(!res.caseList || res.caseList.length <= 0){
+			// ホーム画面（履歴なし）を表示
+			changeDisp("noInq");
+			// スクロールをトップにする
+			dispScrollTop();
+		}else{
+			// ホーム画面に遷移
+			changeDisp("inquiryForm");
+			// スクロールをトップにする
+			dispScrollTop();
 		}
 	}
 	
@@ -559,6 +663,8 @@
 	 * @return:なし
 	 */
 	function getAllCase(){
+		// 処理中表示を出す
+		
 		restAuthorize(function(accToken){
 			$.ajax({
 				type:"GET",
@@ -1260,18 +1366,8 @@
 		}else{
 			// 入力内容のクリア
 			inqClearInput();
-			// お問い合わせ0件(null)の場合
-			if(!res.caseList || res.caseList.length <= 0){
-				// ホーム画面（履歴なし）を表示
-				changeDisp("noInq");
-				// スクロールをトップにする
-				dispScrollTop();
-			}else{
-				// ホーム画面に遷移
-				changeDisp("inquiryForm");
-				// スクロールをトップにする
-				dispScrollTop();
-			}
+			// ホーム画面に遷移
+			sendHome();
 		}
 	}
 	
@@ -1306,18 +1402,8 @@
 		$("#inqFileList").html(null);
 		// オーバレイをクリア（残すと前画面でオーバレイが残るため）
 		$(".modalOverlay,.confirm-back").fadeOut();
-		// お問い合わせ0件(null)の場合
-		if(!res.caseList || res.caseList.length <= 0){
-			// ホーム画面（履歴なし）を表示
-			changeDisp("noInq");
-			// スクロールをトップにする
-			dispScrollTop();
-		}else{
-			// ホーム画面に遷移
-			changeDisp("inquiryForm");
-			// スクロールをトップにする
-			dispScrollTop();
-		}
+		// ホーム画面に遷移
+		sendHome();
 	}
 	
 	/**
@@ -2194,4 +2280,25 @@
             <p><a href="javascript:void(0);" class="btn btn03 btnL mClose" onclick="changeDisp('noInq')">閉じる</a></p>
         </div>
     </div>
+</div>
+<!-- 確認ダイアログ（ブラウザバック用） -->
+<div class="modalWrap_error confirm-historyBack">
+	<div class="modalOuter_error">
+		<div class="modal__headArea"><img src="/commontpl/images/category/contact_error.png" alt="" width="128" height="64"></div>
+		<div class="modal__bodyArea">
+			<p class="fBold">入力された内容が失われます。<br>それでも問題ない場合は戻るを選択して下さい。</p>
+		</div>
+		<div class="modal_error_btnArea">
+			<p><a href="javascript:void(0);" class="btn btn01 btnL modal__close" onclick="sendHome();">戻る</a></p>
+			<p><a href="javascript:void(0);" class="btn btn03 btnL modal__close">閉じる</a></p>
+		</div>
+	</div>
+</div>
+<!-- 読み込み中 -->
+<div class="modalWrap_error progress">
+	<div class="modalOuter_error">
+		<div class="modal__bodyArea">
+			<p class="fBold">ただいま読み込み中</p>
+		</div>
+	</div>
 </div>
