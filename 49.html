@@ -313,7 +313,8 @@
 	 */
 	function init(){
 		// （処理中表示がされていない場合）処理中表示を出す
-		
+		$(".modalWrap_error,.progress").fadeIn();
+		$("body").css({position:"fixed",top:-1});
 		// ファイルアップロード用ファイルをリセット
 		inputFiles = new Array();
 		// アップロード済ファイルサイズをリセット
@@ -440,7 +441,7 @@
 				case "compScreen":
 					// ホーム画面（履歴あり）へ遷移　※履歴なしの状態でこの画面に遷移することはあり得ない
 					changeDisp("inquiryForm");
-					// サーバーから投稿した情報を再取得し、ホーム画面に遷移
+					// サーバーから投稿した情報を再取得
 					getAllCase();
 					break;
 				// 上記以外
@@ -569,7 +570,7 @@
 				$("#listQa").append(clone);
 			}
 			// 処理中表示を隠す
-			
+			$(".modalWrap_error,.progress").fadeOut();
 		});
 	}
 	
@@ -611,11 +612,15 @@
 		}
 	}
 	/**
-	 *
+	 * ホーム画面へ遷移
 	 */
 	function sendHome(){
 		// 確認ダイアログのオーバレイをクリア
 		$(".modalOverlay,.confirm-historyBack").fadeOut();
+		// （入力がある場合）新規お問い合わせ（入力画面）のクリア
+		inqInputClear();
+		// （入力がある場合）追加お問い合わせ返信（入力画面）のクリア
+		cbdInputClear();
 		// お問い合わせ0件(null)の場合
 		if(!res.caseList || res.caseList.length <= 0){
 			// ホーム画面（履歴なし）を表示
@@ -629,7 +634,16 @@
 			dispScrollTop();
 		}
 	}
-	
+	/**
+	 * 確認ダイアログで閉じるを押した際に履歴を復旧する
+	 */
+	function pushHistory(){
+		history.pushState({displayId:displayId}, null, null);
+		var CurrentScrollY = $(window).scrollTop();
+		$(".modalOverlay,.modalWrap_error").fadeOut();
+		$(".modalWrap_error").css("display", "none");
+		$("body").css({position:"",top:0 * CurrentScrollY});
+	}
 	/**
 	 * REST認証
 	 * @args:
@@ -666,7 +680,8 @@
 	 */
 	function getAllCase(){
 		// 処理中表示を出す
-		
+		$(".modalWrap_error,.progress").fadeIn();
+		$("body").css({position:"fixed",top:-1});
 		restAuthorize(function(accToken){
 			$.ajax({
 				type:"GET",
@@ -2292,7 +2307,7 @@
 		</div>
 		<div class="modal_error_btnArea">
 			<p><a href="javascript:void(0);" class="btn btn01 btnL modal__close" onclick="sendHome();">戻る</a></p>
-			<p><a href="javascript:void(0);" class="btn btn03 btnL modal__close">閉じる</a></p>
+			<p><a href="javascript:void(0);" class="btn btn03 btnL modal__close" onclick="pushHistory();">閉じる</a></p>
 		</div>
 	</div>
 </div>
