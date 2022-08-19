@@ -438,6 +438,8 @@
 					break;
 				// 完了画面
 				case "compScreen":
+					// ホーム画面（履歴あり）へ遷移　※履歴なしの状態でこの画面に遷移することはあり得ない
+					changeDisp("inquiryForm");
 					// サーバーから投稿した情報を再取得し、ホーム画面に遷移
 					getAllCase();
 					break;
