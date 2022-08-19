@@ -383,6 +383,7 @@
 		$("#newInqMail").html(eMail);
 		// 履歴更新時のイベント処理（ブラウザバックに対応）
 		window.onpopstate = function(e){
+			console.log(displayId);
 			// 現在表示している画面に応じた制御を実施
 			switch(displayId){
 				// ホーム画面（履歴あり）、ホーム画面（履歴なし）
