@@ -616,16 +616,12 @@
 	 * ホーム画面へ遷移
 	 */
 	function sendHome(){
-		console.log('1');
 		// 確認ダイアログのオーバレイをクリア
 		$(".modalOverlay,.confirm-historyBack").fadeOut();
-		console.log('2');
 		// （入力がある場合）新規お問い合わせ（入力画面）のクリア
 		inqClearInput();
-		console.log('3');
 		// （入力がある場合）追加お問い合わせ返信（入力画面）のクリア
 		cbdClearInput();
-		console.log('4');
 		// お問い合わせ0件(null)の場合
 		if(!res.caseList || res.caseList.length <= 0){
 			// ホーム画面（履歴なし）を表示
@@ -1424,8 +1420,7 @@
 		$("#inqFileList").html(null);
 		// オーバレイをクリア（残すと前画面でオーバレイが残るため）
 		$(".modalOverlay,.confirm-back").fadeOut();
-		// ホーム画面に遷移
-		sendHome();
+
 	}
 	
 	/**
@@ -2018,7 +2013,7 @@
 					<p class="fBold">入力された内容が失われます。<br>それでも問題ない場合は戻るを選択して下さい。</p>
 				</div>
 				<div class="modal_error_btnArea">
-					<p><a href="javascript:void(0);" class="btn btn01 btnL modal__close" onclick="inqClearInput();">戻る</a></p>
+					<p><a href="javascript:void(0);" class="btn btn01 btnL modal__close" onclick="inqClearInput(); sendHome();">戻る</a></p>
 					<p><a href="javascript:void(0);" class="btn btn03 btnL modal__close">閉じる</a></p>
 				</div>
 			</div>
