@@ -309,8 +309,8 @@
 				// ホーム画面（履歴あり）、ホーム画面（履歴なし） ※このパターンに入ることはあり得ない
 				case "inquiryForm":
 				case "noInq":
-					// 通常のブラウザバックの挙動
-					history.back();
+					// ログイン画面に戻す
+					location.href = "https://" + location.hostname + "/wctx/LoginAction.do?screen=Contactboard"
 					break;
 				// 個別お問い合わせ 詳細画面
 				case "detailsScreen":
