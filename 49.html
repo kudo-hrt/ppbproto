@@ -703,7 +703,13 @@
 					// 時限チェック
 				}else if(response.result == "TIMED_CHECK"){
 					// 0829工藤追加
-					console.log(response.accMail);
+					
+					if(!response.accMail){
+						console.log('kita1');
+					}
+					if(!response.acMail){
+						console.log('kita2');
+					}
 					// 0829工藤追加
 					dispTimeoutErrModal();
 				// 取引先0件
