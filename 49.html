@@ -698,13 +698,13 @@
 				}
 				// 成功
 				if(response.result == "SUCCESS"){
-					// 0829工藤追加
-					console.log(response.accMail);
-					// 0829工藤追加
 					res = response;
 					init();
 					// 時限チェック
 				}else if(response.result == "TIMED_CHECK"){
+					// 0829工藤追加
+					console.log(response.accMail);
+					// 0829工藤追加
 					dispTimeoutErrModal();
 				// 取引先0件
 				}else if(response.result == "NO_ACCOUNT"){
