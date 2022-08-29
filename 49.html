@@ -604,15 +604,8 @@
 		} else {
 			$("#title").hide();
 		}
-		// 履歴が設定されていない場合、且つ初回の画面遷移でない（＝遷移先画面IDが退避されていない）場合
-		if(!history.state){
-			// 画面履歴の追加
-			history.pushState({displayId:nextScreen}, null, "https://" + location.hostname + "/wctx/TransitAction.do?submitID=010&screen=Contactboard");
-		// 履歴が設定されている場合
-		}else{
-			// 画面履歴の更新
-			history.replaceState({displayId:nextScreen}, null, "https://" + location.hostname + "/wctx/TransitAction.do?submitID=010&screen=Contactboard");
-		}
+		// 画面履歴の追加
+		history.pushState({displayId:nextScreen}, null, "https://" + location.hostname + "/wctx/TransitAction.do?submitID=010&screen=Contactboard");
 		// 遷移先画面IDを退避
 		displayId = nextScreen;
 	}
