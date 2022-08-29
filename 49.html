@@ -57,21 +57,21 @@
 <script type="text/javascript">
 <!--
 	// 通信先URL　※環境に併せて変更する必要あり！
-	// 開発環境
+	/* 開発環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt49.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG99S6MzYiT5k.KkcZzmtcXubr_J8l8N8473VR.oFizQeVyWXFV5ARIiXmwhmXqjuNU.K6Pk9mc9M3btLBQ";
 	const REFLESH_TOKEN = "5Aep861hjC52juQoBcsFRsbEALR2k2PEkuCJTzezJjsxYDFcfM3Xu_8fN.OBDlZ6BJFv9GwwXc8hH5doNmlIiVu";
-	
+	*/
 	/* IT環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt52.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG9Po2PmyYruunauqSmSe1tO_B3XTZIsmbyWG9BxfOXr_UKDN7GA2xyv1J2b24N7OjXdjgf7wAQ6Fc94AGS";
 	const REFLESH_TOKEN = "5Aep861sY.Bl4bMk9ncKxoBVfALQO4xgWbT1fgtPWYc4OPxUGXMzTGo34qQxOYv9jkYyD4lzx7h0uekBz9LDZ89";
 	*/
-	/* ST環境
+	// ST環境
 	const REQUEST_DOMAIN = "https://paypay-bank--int1.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG9rnryk9FxFMWYw6B7a3vS76.rmtm9OK7HwR46afmPIHnzp5NBdd9c6Q5wHD0gbY_J6PrHxS_uZY94OZR7";
 	const REFLESH_TOKEN = "5Aep8616TQxcUXMN._rsxWE0Vp.qZUlq4a2S21KK7q4ghDyI1kYdTAvaq9uv54f67JoCucSXBPLOYjfaY6IVBdD";
-	*/
+	
 	// 通信処理結果を退避するための変数
 	let res;
 	// 連携用文字列
@@ -156,8 +156,6 @@
 		//linkedStr = $("input[name='SFConnectParam']").val();
 		//linkedStr = 'd5b8d90ceb5ff5f3505dd311e1e74f6ee058829898eb84215abbd5fcb495d002'; // PPB 太郎
 		linkedStr = 'bd1fcec2a09397bdac42bdba68beca74546c0915901f80214ccf7f0f1b0158d9';
-		// ホーム画面を表示
-		changeDisp("inquiryForm");
 		// モーダル開閉
 		$(".ModalBtn").on("click", function(){
 			$(".modalOverlay,.modalWrap").fadeIn();
@@ -303,91 +301,12 @@
 			// ファイルアップロード共通処理の実行
 			uploadCommon("cbdFileName", "cbdFileList", "cbdFileAlert");
 		});
-		// Ajaxによりケースを取得
-		getAllCase();
-	});
-	
-	/**
-	 * 初期処理
-	 * @args:なし
-	 * @return:なし
-	 */
-	function init(){
-		// （処理中表示がされていない場合）処理中表示を出す
-		$(".modalWrap_error,.progress").fadeIn();
-		$("body").css({position:"fixed",top:-1});
-		// ファイルアップロード用ファイルをリセット
-		inputFiles = new Array();
-		// アップロード済ファイルサイズをリセット
-		uploadedFileSize = 0;
-		// RestApexとの通信時erorrだった場合にエラーのモーダルを表示する処理に変更する
-		if(res.result == "SUCCESS"){
-			// お問い合わせ0件(null含む)の場合
-			if(!res.caseList || res.caseList.length <= 0){
-				// 入力画面出力用
-				eMail = res.accMail;
-				// 新規入力画面に反映
-				$("#newInqMail").html(eMail);
-				// ホーム画面（履歴なし）を表示
-				changeDisp("noInq");
-				// 処理を中断
-				return;
-			}
-		// 時限チェックエラー
-		}else if(res.result == "TIMED_CHECK"){
-			// ホーム画面（履歴なし）を表示
-			changeDisp("noInq");
-			// モーダルを表示
-			return;
-		// システムエラー 
-		}else{
-			// ホーム画面（履歴なし）を表示
-			changeDisp("noInq");
-			// 処理を中断
-			return;
-		}
-		// お問い合わせ詳細
-		$("#inqTextInput").val(null);
-		// 背景色を黄色にする
-		$("#inqTextInput").css("background", "#ffffcc");
-		// お問い合わせ種類の入力欄の取得
-		let inqTypeElem = $("#Modal-inqType");
-		// お問い合わせ種類が入力されている場合
-		if(!inqTypeElem.hasClass("reqEntry")){
-			// 未選択状態にする
-			inqTypeElem.removeClass("inputSelectItem-on");
-			inqTypeElem.removeClass("data-on");
-			inqTypeElem.addClass("reqEntry");
-			inqTypeElem.html("選択してください");
-			$("input[name='inqType']").prop("checked", false);
-		}
-		// 新規のファイル出力先に子要素があれば削除
-        $("#inqFileList").empty();
-		// 個別の投稿内容をクリア
-		$("#cbdTextInput").val(null);
-		// 背景色を黄色にする
-		$("#cbdTextInput").css("background", "#ffffcc");
-		// 個別のファイル出力先に子要素があれば削除
-        $("#cbdFileList").empty();
-		// 出力先要素に子要素があれば削除
-        $("#listQa").empty();
-        // 投稿ボタンを活性化
-        $("#inqPost").prop("disabled", false);
-        // 投稿ボタンを活性化
-        $("#cbdPost").prop("disabled", false);
-        // Xボタンを非表示
-		$("#inqContentDel").css("opacity", 0);
-		// Xボタンを非表示
-		$("#cbdContentDel").css("opacity", 0);
-		// 入力画面出力用
-		eMail = res.accMail;
-		// 新規入力画面に反映
-		$("#newInqMail").html(eMail);
 		// 履歴更新時のイベント処理（ブラウザバックに対応）
 		window.onpopstate = function(e){
+			console.log("onpopstate called");
 			// 現在表示している画面に応じた制御を実施
 			switch(displayId){
-				// ホーム画面（履歴あり）、ホーム画面（履歴なし）
+				// ホーム画面（履歴あり）、ホーム画面（履歴なし） ※このパターンに入ることはあり得ない
 				case "inquiryForm":
 				case "noInq":
 					// 通常のブラウザバックの挙動
@@ -452,6 +371,89 @@
 					break;
 			}
 		}
+		// Ajaxによりケースを取得
+		getAllCase();
+	});
+	
+	/**
+	 * 初期処理
+	 * @args:なし
+	 * @return:なし
+	 */
+	function init(){
+		// ファイルアップロード用ファイルをリセット
+		inputFiles = new Array();
+		// アップロード済ファイルサイズをリセット
+		uploadedFileSize = 0;
+		// RestApexとの通信時erorrだった場合にエラーのモーダルを表示する処理に変更する
+		if(res.result == "SUCCESS"){
+			// お問い合わせ0件(null含む)の場合
+			if(!res.caseList || res.caseList.length <= 0){
+				// 入力画面出力用
+				eMail = res.accMail;
+				// 新規入力画面に反映
+				$("#newInqMail").html(eMail);
+				// ホーム画面（履歴なし）を表示
+				changeDisp("noInq");
+				// 処理中表示を隠す
+				hideProgress();
+				// 処理を中断
+				return;
+			}
+		// 時限チェックエラー
+		}else if(res.result == "TIMED_CHECK"){
+			// ホーム画面（履歴なし）を表示
+			changeDisp("noInq");
+			// 処理中表示を隠す
+			hideProgress();
+			// モーダルを表示
+			return;
+		// システムエラー 
+		}else{
+			// ホーム画面（履歴なし）を表示
+			changeDisp("noInq");
+			// 処理中表示を隠す
+			hideProgress();
+			// 処理を中断
+			return;
+		}
+		// お問い合わせ詳細
+		$("#inqTextInput").val(null);
+		// 背景色を黄色にする
+		$("#inqTextInput").css("background", "#ffffcc");
+		// お問い合わせ種類の入力欄の取得
+		let inqTypeElem = $("#Modal-inqType");
+		// お問い合わせ種類が入力されている場合
+		if(!inqTypeElem.hasClass("reqEntry")){
+			// 未選択状態にする
+			inqTypeElem.removeClass("inputSelectItem-on");
+			inqTypeElem.removeClass("data-on");
+			inqTypeElem.addClass("reqEntry");
+			inqTypeElem.html("選択してください");
+			$("input[name='inqType']").prop("checked", false);
+		}
+		// 新規のファイル出力先に子要素があれば削除
+        $("#inqFileList").empty();
+		// 個別の投稿内容をクリア
+		$("#cbdTextInput").val(null);
+		// 背景色を黄色にする
+		$("#cbdTextInput").css("background", "#ffffcc");
+		// 個別のファイル出力先に子要素があれば削除
+        $("#cbdFileList").empty();
+		// 出力先要素に子要素があれば削除
+        $("#listQa").empty();
+        // 投稿ボタンを活性化
+        $("#inqPost").prop("disabled", false);
+        // 投稿ボタンを活性化
+        $("#cbdPost").prop("disabled", false);
+        // Xボタンを非表示
+		$("#inqContentDel").css("opacity", 0);
+		// Xボタンを非表示
+		$("#cbdContentDel").css("opacity", 0);
+		// 入力画面出力用
+		eMail = res.accMail;
+		// 新規入力画面に反映
+		$("#newInqMail").html(eMail);
 		// コンテンツバーション取得のためのPromise生成
 		const fileGetPromise = new Promise((resolve) => {
 			// ファイルIDのリスト
@@ -571,7 +573,9 @@
 				$("#listQa").append(clone);
 			}
 			// 処理中表示を隠す
-			$(".modalWrap_error,.progress").fadeOut();
+			hideProgress();
+			// ホーム画面を表示
+			changeDisp("inquiryForm");
 		});
 	}
 	
@@ -600,17 +604,17 @@
 		} else {
 			$("#title").hide();
 		}
-		// 遷移先画面IDを退避
-		displayId = nextScreen;
-		// 履歴が設定されていない場合
-		if(!history.state){
+		// 履歴が設定されていない場合、且つ初回の画面遷移でない（＝遷移先画面IDが退避されていない）場合
+		if(!history.state && displayId){
 			// 画面履歴の追加
-			history.pushState({displayId:nextScreen}, null, null);
+			history.pushState({displayId:nextScreen}, null, location.hostname + "/wctx/TransitAction.do?submitID=010&screen=Contactboard");
 		// 履歴が設定されている場合
 		}else{
 			// 画面履歴の更新
-			history.replaceState({displayId:nextScreen}, null, null);
+			history.replaceState({displayId:nextScreen}, null, location.hostname + "/wctx/TransitAction.do?submitID=010&screen=Contactboard");
 		}
+		// 遷移先画面IDを退避
+		displayId = nextScreen;
 	}
 	/**
 	 * ホーム画面へ遷移
@@ -681,8 +685,7 @@
 	 */
 	function getAllCase(){
 		// 処理中表示を出す
-		$(".modalWrap_error,.progress").fadeIn();
-		$("body").css({position:"fixed",top:-1});
+		dispProgress();
 		restAuthorize(function(accToken){
 			$.ajax({
 				type:"GET",
@@ -698,29 +701,28 @@
 				}
 				// 成功
 				if(response.result == "SUCCESS"){
+					// 処理結果を退避する
 					res = response;
+					// 画面初期表示処理（SFのケース読み込み）
 					init();
-					// 時限チェック
+				// 時限チェック
 				}else if(response.result == "TIMED_CHECK"){
-					// 0829工藤追加
-					
-					if(!response.accMail){
-						console.log('kita1');
-					}
-					if(!response.acMail){
-						console.log('kita2');
-					}
-					// 0829工藤追加
 					dispTimeoutErrModal();
 				// 取引先0件
 				}else if(response.result == "NO_ACCOUNT"){
+					// 処理結果を退避する
 					res = response;
+					// ホーム画面（履歴なし）を表示
 					changeDisp("noInq");
+					// 処理中表示を隠す
+					hideProgress();
 				// 異常終了
 				}else{
+					// エラーダイアログを表示
 					dispAbnormalErrModal();
 				}
 			}).fail(function(data, errorThrown, status){
+				// エラーダイアログを表示
 				dispComErrModal();
 			});
 		}, dispComErrModal);
@@ -1070,7 +1072,10 @@
 			}else{
 				// クリック時の開閉を入れる
 				$(clone.querySelector(".contbrd-cont")).click(function(){
-					$(this).toggleClass("open");
+					// アンカー＝ダウンロードリンクを押された場合、挙動しないよう制御
+					if(event.target.tagName != "A"){
+						$(this).toggleClass("open");
+					}
 				});
 			}
 			// NEW表示しない場合
@@ -1429,7 +1434,6 @@
 		$("#inqFileList").html(null);
 		// オーバレイをクリア（残すと前画面でオーバレイが残るため）
 		$(".modalOverlay,.confirm-back").fadeOut();
-
 	}
 	
 	/**
@@ -1755,10 +1759,26 @@
 	 * @return:なし
 	 */
 	function dispErrorModal(modalClassName){
+		// 処理中表示を隠す
+		hideProgress();
 		const CurrentScrollY = $(window).scrollTop();
 		$(".modalOverlay,." + modalClassName).fadeIn();
 		$("." + modalClassName).css("display", "block");
 		$("body").css({position:"fixed",top:-1 * CurrentScrollY});
+	}
+	/**
+	 * 処理中表示を出す
+	 */
+	function dispProgress(){
+		$(".progress").fadeIn();
+		$("body").css({position:"fixed", top:-1});
+	}
+	/**
+	 * 処理中表示を隠す
+	 */
+	function hideProgress(){
+		$(".progress").fadeOut();
+		$("body").css({position:"", top:0});
 	}
 	
 	/**
@@ -1874,7 +1894,7 @@
 						<a id="replyButton" href="javascript:void(0)" onclick="changeDisp('replyInputScreen'); dispScrollTop();" title="投稿する" class="btn btn01 btnL">投稿する</a>
 					</p>
 					<p class="mt-16">
-						<a href="javascript:void(0)" onclick="init(); changeDisp('inquiryForm');" title="戻る" class="btn btn03 btnL">戻る</a>
+						<a href="javascript:void(0)" onclick="init();" title="戻る" class="btn btn03 btnL">戻る</a>
 					</p>
 				</div>
 			</div>
@@ -2022,7 +2042,7 @@
 					<p class="fBold">入力された内容が失われます。<br>それでも問題ない場合は戻るを選択して下さい。</p>
 				</div>
 				<div class="modal_error_btnArea">
-					<p><a href="javascript:void(0);" class="btn btn01 btnL modal__close" onclick="inqClearInput(); sendHome();">戻る</a></p>
+					<p><a href="javascript:void(0);" class="btn btn01 btnL modal__close" onclick="inqClearInput();sendHome();">戻る</a></p>
 					<p><a href="javascript:void(0);" class="btn btn03 btnL modal__close">閉じる</a></p>
 				</div>
 			</div>
@@ -2321,10 +2341,8 @@
 	</div>
 </div>
 <!-- 読み込み中 -->
-<div class="modalWrap_error progress">
-	<div class="modalOuter_error">
-		<div class="modal__bodyArea">
-			<p class="fBold">ただいま読み込み中</p>
-		</div>
+<div class="modalWrap_error progress" style="background-color:rgba(0,0,0,0);">
+	<div class="modalOuter_error" style="background-color:rgba(0,0,0,0);">
+		<div class="modal__headArea" style="background-color:rgba(0,0,0,0);"><img src="/commontpl/images/category/account_opening_loading001.gif" alt=""></div>
 	</div>
 </div>
