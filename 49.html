@@ -154,7 +154,6 @@
 	$(function(){
 		// 連携文字列取得
 		//linkedStr = $("input[name='SFConnectParam']").val();
-		//linkedStr = 'd5b8d90ceb5ff5f3505dd311e1e74f6ee058829898eb84215abbd5fcb495d002'; // PPB 太郎
 		linkedStr = 'bd1fcec2a09397bdac42bdba68beca74546c0915901f80214ccf7f0f1b0158d9';
 		// モーダル開閉
 		$(".ModalBtn").on("click", function(){
@@ -303,10 +302,9 @@
 		});
 		// 履歴更新時のイベント処理（ブラウザバックに対応）
 		window.onpopstate = function(e){
-			console.log("onpopstate called");
 			// 現在表示している画面に応じた制御を実施
 			switch(displayId){
-				// ホーム画面（履歴あり）、ホーム画面（履歴なし） ※このパターンに入ることはあり得ない
+				// ホーム画面（履歴あり）、ホーム画面（履歴なし）
 				case "inquiryForm":
 				case "noInq":
 					// ログイン画面に戻す
@@ -636,7 +634,7 @@
 	 * 確認ダイアログで閉じるを押した際に履歴を復旧する
 	 */
 	function pushHistory(){
-		history.pushState({displayId:displayId}, null, null);
+		history.pushState({displayId:displayId}, null, "https://" + location.hostname + "/wctx/TransitAction.do?submitID=010&screen=Contactboard");
 		var CurrentScrollY = $(window).scrollTop();
 		$(".modalOverlay,.modalWrap_error").fadeOut();
 		$(".modalWrap_error").css("display", "none");
@@ -1153,7 +1151,7 @@
 				// 値を "=" で分割
 				const data = tempIdList[i].split("=");
 				// キーが本処理で扱うCookieの場合
-				if((data[0] == "IMFCookie") && data[1]){
+				if((data[0].trim() == "IMFCookie") && data[1]){
 					// 結果返却用配列に追加
 					return JSON.parse(data[1]);
 				}
