@@ -686,7 +686,7 @@
 				cache:false,
 				data:{inquiry:linkedStr},
 				headers: {"Authorization":accToken},
-				timeout: 1
+				timeout: 1000
 			}).done(function(response){
 				if(response.errorMessage){
 					errorMessageText = response.errorMessage.replace(/\n/g, "<br>");
