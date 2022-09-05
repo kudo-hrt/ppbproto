@@ -649,6 +649,10 @@
 	 * @remakrs:doneMethodの引数には
 	 */
 	function restAuthorize(doneMethod, faliMethod){
+		let timeoutSecond = "140000";
+		if(doneMethod == "registInquery" || doneMethod == "registContactBoard"){
+			timeoutSecond = "10000";
+		}
 		$.ajax({
 			type:"POST",
 			crossOrigin:true,
@@ -659,7 +663,8 @@
 				"grant_type":"refresh_token",
 				"client_id":CLIENT_ID, 
 				"refresh_token":REFLESH_TOKEN
-			}
+			},
+			timeout: timeoutSecond
 		}).done(function(response){
 			var accToken = "Bearer " + response.access_token;
 			doneMethod(accToken);
@@ -686,7 +691,7 @@
 				cache:false,
 				data:{inquiry:linkedStr},
 				headers: {"Authorization":accToken},
-				timeout: 1
+				timeout: 140000
 			}).done(function(response){
 				if(response.errorMessage){
 					errorMessageText = response.errorMessage.replace(/\n/g, "<br>");
@@ -739,7 +744,8 @@
 			url:REQUEST_DOMAIN + "/services/data/v54.0/sobjects/ContentVersion/" + fileIdList[index] + "/VersionData",
 			cache:false,
 			headers:{"Authorization":accToken},
-			xhrFields:{responseType:"blob"}
+			xhrFields:{responseType:"blob"},
+			timeout: 140000
 		}).done(function(fileContent){
 			// ケースのリストサイズが0でない
 			if(res.caseList.length != 0){
@@ -807,7 +813,8 @@
 				cache:false,
 				headers:{"Authorization":accToken, "Content-Type":"application/json"},
 				dataType:"json",
-				data:JSON.stringify(inqRegistData)
+				data:JSON.stringify(inqRegistData),
+				timeout: 10000
 			}).done(function(response){
 				// 登録したコンタクトボード明細のIDを取得
 				const cbdId = response.cbdId;
@@ -858,7 +865,8 @@
 				cache:false,
 				headers: {"Authorization":accToken, "Content-Type":"application/json"},
 				dataType:"json",
-				data:JSON.stringify(cbdRegistData)
+				data:JSON.stringify(cbdRegistData),
+				timeout: 10000
 			}).done(function(response){
 				// 登録したコンタクトボード明細のIDを取得
 				const cbdId = response.cbdId;
@@ -915,7 +923,8 @@
 				cache:false,
 				headers:{"Authorization":accToken, "Content-Type":"application/json"},
 				dataType:"json",
-				data:JSON.stringify(cvJson)
+				data:JSON.stringify(cvJson),
+				timeout: 10000
 			}).done(function(cv){
 				// 処理結果からContentVersionレコードのIDを取得
 				const cvId = cv.id;
@@ -927,7 +936,8 @@
 					crossOrigin:true,
 					url:REQUEST_DOMAIN + "/services/data/v54.0/query/?q=" + query,
 					cache:false,
-					headers: {"Authorization":accToken}
+					headers: {"Authorization":accToken},
+					timeout: 10000
 				}).done(function(res){
 					// 処理結果レコードの取得
 					const records = res.records;
@@ -947,7 +957,8 @@
 						cache:false,
 						headers:{"Authorization":accToken, "Content-Type":"application/json"},
 						dataType:"json",
-						data:JSON.stringify(linkJson)
+						data:JSON.stringify(linkJson),
+						timeout: 10000
 					}).done(function(res){
 						// Do Nothing
 					}).fail(function(data, errorThrown, status) {
