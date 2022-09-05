@@ -685,7 +685,8 @@
 				dataType:"json",
 				cache:false,
 				data:{inquiry:linkedStr},
-				headers: {"Authorization":accToken}
+				headers: {"Authorization":accToken},
+				timeout: 1
 			}).done(function(response){
 				if(response.errorMessage){
 					errorMessageText = response.errorMessage.replace(/\n/g, "<br>");
