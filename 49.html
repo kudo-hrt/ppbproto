@@ -513,7 +513,7 @@
 					// コンタクトボード明細の時間
 					let cbdDateTime;
 					// レコード種別が、お客さまの場合
-					if(cbd.Classification__c == "問い合わせ"){
+					if(cbdFileList[i].cbd.Classification__c == "問い合わせ"){
 						cbdDateTime = new Date(cbdFileList[i].cbd.CreatedDate);
 					// PayPay銀行の場合
 					}else{
