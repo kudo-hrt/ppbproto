@@ -290,22 +290,28 @@
 				}
 			}
 		}
-		// ファイルアップロード時（新規投稿）
-		$("#inqFileName").change(function(){
-			// 投稿するボタン、及び戻るボタンを非活性にする
-			$("#inqConfButton").prop("disabled", true);
-			$("#inqPrevButton").prop("disabled", true);
-			// ファイルアップロード共通処理の実行
-			uploadCommon("inqFileName", "inqFileList", "inqFileAlert", inqReqCheck);
-		});
-		// ファイルアップロード時（追加投稿）
-		$("#cbdFileName").change(function(){
-			// 投稿するボタン、及び戻るボタンを非活性にする
-			$("#cbdConfButton").prop("disabled", true);
-			$("#cbdPrevButton").prop("disabled", true);
-			// ファイルアップロード共通処理の実行
-			uploadCommon("cbdFileName", "cbdFileList", "cbdFileAlert", cbdReqCheck);
-		});
+        // ファイルアップロード時（新規投稿）
+        $("#inqFileName").change(function(){
+            // 投稿するボタン、及び戻るボタンを非活性にする
+            $("#inqConfButton").prop("disabled", true);
+            $("#inqPrevButton").prop("disabled", true);
+            // ファイルアップロード共通処理の実行
+            uploadCommon("inqFileName", "inqFileList", "inqFileAlert", function(){
+                $("#inqPrevButton").prop("disabled", false);
+                inqReqCheck();
+            });
+        });
+        // ファイルアップロード時（追加投稿）
+        $("#cbdFileName").change(function(){
+            // 投稿するボタン、及び戻るボタンを非活性にする
+            $("#cbdConfButton").prop("disabled", true);
+            $("#cbdPrevButton").prop("disabled", true);
+            // ファイルアップロード共通処理の実行
+            uploadCommon("cbdFileName", "cbdFileList", "cbdFileAlert", function(){
+                $("#cbdPrevButton").prop("disabled", false);
+                cbdReqCheck();
+            });
+        });
 		// 履歴更新時のイベント処理（ブラウザバックに対応）
 		window.onpopstate = function(e){
 			// 現在表示している画面に応じた制御を実施
