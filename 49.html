@@ -292,13 +292,19 @@
 		}
 		// ファイルアップロード時（新規投稿）
 		$("#inqFileName").change(function(){
+			// 投稿するボタン、及び戻るボタンを非活性にする
+			$("#inqConfButton").prop("disabled", true);
+			$("#inqPrevButton").prop("disabled", true);
 			// ファイルアップロード共通処理の実行
-			uploadCommon("inqFileName", "inqFileList", "inqFileAlert");
+			uploadCommon("inqFileName", "inqFileList", "inqFileAlert", inqReqCheck);
 		});
 		// ファイルアップロード時（追加投稿）
 		$("#cbdFileName").change(function(){
+			// 投稿するボタン、及び戻るボタンを非活性にする
+			$("#cbdConfButton").prop("disabled", true);
+			$("#cbdPrevButton").prop("disabled", true);
 			// ファイルアップロード共通処理の実行
-			uploadCommon("cbdFileName", "cbdFileList", "cbdFileAlert");
+			uploadCommon("cbdFileName", "cbdFileList", "cbdFileAlert", cbdReqCheck);
 		});
 		// 履歴更新時のイベント処理（ブラウザバックに対応）
 		window.onpopstate = function(e){
@@ -505,7 +511,14 @@
 					// 1ヶ月前にする
 					nowDateTime.setMonth(nowDateTime.getMonth() - 1);
 					// コンタクトボード明細の時間
-					let cbdDateTime = new Date(cbdFileList[i].cbd.CreatedDate);
+					let cbdDateTime;
+					// レコード種別が、お客さまの場合
+					if(cbd.Classification__c == "問い合わせ"){
+						cbdDateTime = new Date(cbdFileList[i].cbd.CreatedDate);
+					// PayPay銀行の場合
+					}else{
+						cbdDateTime = new Date(cbdFileList[i].cbd.LastModifiedDate);
+					}
 					// 以下のいずれかの条件でnew表示を付与
 					// ・コンタクトボード明細の最終更新日が現在日時 - 1ヶ月以後（同値を含む）
 					// ・（お客様からの）問い合わせ以外
@@ -649,10 +662,6 @@
 	 * @remakrs:doneMethodの引数には
 	 */
 	function restAuthorize(doneMethod, faliMethod){
-		let timeoutSecond = "140000";
-		if(doneMethod == "registInquery" || doneMethod == "registContactBoard"){
-			timeoutSecond = "10000";
-		}
 		$.ajax({
 			type:"POST",
 			crossOrigin:true,
@@ -663,8 +672,7 @@
 				"grant_type":"refresh_token",
 				"client_id":CLIENT_ID, 
 				"refresh_token":REFLESH_TOKEN
-			},
-			timeout: timeoutSecond
+			}
 		}).done(function(response){
 			var accToken = "Bearer " + response.access_token;
 			doneMethod(accToken);
@@ -721,7 +729,6 @@
 			}).fail(function(data, errorThrown, status){
 				// エラーダイアログを表示
 				dispComErrModal();
-				console.log('タイムアウト');
 			});
 		}, dispComErrModal);
 	}
@@ -1011,7 +1018,16 @@
 					//  1ヶ月前にする
 					nowDateTime.setMonth(nowDateTime.getMonth() - 1);
 					// コンタクトボード明細の時間
-					let cbdDateTime = new Date(cbdFileList[j].cbd.CreatedDate);
+					let cbdDateTime;
+					// レコード種別がお客さまの場合
+					if(cbdFileList[j].cbd.Classification__c == "問い合わせ"){
+						// 作成日を用いる
+						cdbDateTime = new Date(cbdFileList[j].cbd.CreatedDate);
+					// PayPay銀行の場合
+					}else{
+						// 更新日を用いる
+						cdbDateTime = new Date(cbdFileList[j].cbd.LastModifiedDate);
+					}
 					// 以下のいずれかの条件でnew表示を付与
 					// ・コンタクトボード明細の最終更新日が現在日時 - 1ヶ月以後（同値を含む）
 					// ・（お客様からの）問い合わせ以外
@@ -1049,6 +1065,8 @@
 				clone.querySelector(".actor-text").textContent = "お客さま";
 				// コンタクトボード明細の投稿内容を改行をタグ変換して設定
 				clone.querySelector(".contbrd-content").innerHTML = cbd.Content__c.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replace(/\n/g, "<br>");
+				// コンタクトボード明細の作成日を日付をJSTに変換する処理を呼び出して、設定する
+				clone.querySelector(".createddate").textContent = changeSlashDate(cbd.CreatedDate);
 			// PayPay銀行の場合
 			}else{
 				// 回答クラスを付与
@@ -1065,9 +1083,9 @@
 					// textContentに入れるとHTMLエンティティに変換されるため、innerHTMLに入れる
 					clone.querySelector(".contbrd-content").innerHTML = content.replace(/\n/g, "<br>");
 				}
+				// コンタクトボード明細の最終更新日を日付をJSTに変換する処理を呼び出して、設定する
+				clone.querySelector(".createddate").textContent = changeSlashDate(cbd.LastModifiedDate);
 			}
-			// コンタクトボード明細の作成日を日付をJSTに変換する処理を呼び出して、設定する
-			clone.querySelector(".createddate").textContent = changeSlashDate(cbd.CreatedDate);
 			clone.querySelector(".contbrd-txt").id = "file" + cbd.Id;
 			// 繰り返し初回の場合
 			if(i == 0){
@@ -1126,6 +1144,17 @@
 			// 表示したため、Cookieの情報を書き換える
 			setCookie(newTargetList);
 		}
+		// 戻るボタンを活性化する
+		$("#detailPrevButton").prop("disabled", false);
+	}
+	/**
+	 * コンタクトボード明細から戻る処理
+	 */
+	function prevDetail(){
+		// 戻るボタンを非活性にする
+		$("#detailPrevButton").prop("disabled", true);
+		// 初期表示処理
+		init();
 	}
 	/**
 	 * URLの記載があった場合、リンク化する
@@ -1255,6 +1284,9 @@
 	 * @return:なし
 	 */
 	function outputValueInqConf(){
+		// 投稿するボタン、及び戻るボタンを非活性にする
+		$("#inqConfButton").prop("disabled", true);
+		$("#inqPrevButton").prop("disabled", true);
 		// 2000文字以下チェック
 		if(checkLength($("#inqTextInput").val(), 2000)){
 			// エラーメッセージの表示
@@ -1301,6 +1333,9 @@
 		}
 		// 確認画面へ遷移する
         changeDisp("inqConfirmScreen");
+        // 投稿するボタン、及び戻るボタンを活性に戻す
+		$("#inqConfButton").prop("disabled", false);
+		$("#inqPrevButton").prop("disabled", false);
         // スクロールをトップにする
 		dispScrollTop();
 	}
@@ -1311,6 +1346,9 @@
 	 * @return:なし
 	 */
 	function outputValueCbdConf(){
+		// 投稿するボタン、及び戻るボタンを非活性にする
+		$("#cbdConfButton").prop("disabled", true);
+		$("#cbdPrevButton").prop("disabled", true);
 		// 2000文字チェック
 		if(checkLength($("#cbdTextInput").val(), 2000)){
 			// エラーメッセージの表示
@@ -1339,6 +1377,9 @@
 		}
 		// 確認画面へ遷移する
 		changeDisp("replyConfirmScreen");
+		// 投稿するボタン、及び戻るボタンを活性に戻す
+		$("#cbdConfButton").prop("disabled", false);
+		$("#cbdPrevButton").prop("disabled", false);
 		// スクロールをトップにする
 		dispScrollTop();
 	}
@@ -1366,7 +1407,7 @@
 		// 問い合わせ種別の選択状態の取得
 		const itype_flg = ( $("#Modal-inqType").html() == "選択してください" ) ? false : true;
 		// 問い合わせ内容の入力状態の取得
-		const idtail_flg = ($("#inqTextInput").val() == "") ? false : true;
+		const idtail_flg = ($("#inqTextInput").val().trim() == "") ? false : true;
 		// 入力状態によってボタンの活性／非活性の切り替え
 		$("#inqConfButton").prop("disabled", !(itype_flg && idtail_flg));
 	}
@@ -1378,7 +1419,7 @@
 	 */	
 	function cbdReqCheck(){
 		// 問い合わせ内容の入力状態の取得
-		const cdtail_flg = ($("#cbdTextInput").val() == "") ? false : true;
+		const cdtail_flg = ($("#cbdTextInput").val().trim() == "") ? false : true;
 		// 入力状態によってボタンの活性／非活性の切り替え
 		$("#cbdConfButton").prop("disabled", !cdtail_flg);
 	}
@@ -1525,12 +1566,13 @@
 	 * elemFile…ファイルアップロード用のElement(input type="file"の要素)
 	 * files…アップロード対象のファイルリスト(input type="files"要素の.files)
 	 * index…処理番号
+	 * finishMethod…完了時に実行される処理
 	 * @return:なし
 	 * @remakrs:本処理は非同期処理を順序立てて呼び出す必要があるため、本処理内部で自身を再帰的にコールしている
 	 * 実装者はindexに最初の番号=0を付与してあげれば後のファイル読み込みを再帰的に行ってくれるため、ループ呼び出し
 	 * 等をしないこと
 	 */
-	function recursiveFileRead(elemFile, files, index){
+	function recursiveFileRead(elemFile, files, index, finishMethod){
 		// FileReader生成
 		const reader = new FileReader();
 		// アップロード用のファイル情報
@@ -1552,11 +1594,13 @@
 			// 処理対象がある場合
 			if(files.length - 1 > index){
 				// 再帰実行
-				recursiveFileRead(elemFile, files, index + 1);
+				recursiveFileRead(elemFile, files, index + 1, finishMethod);
 			// 処理対象が無い場合
 			}else{
 				// 入力されたファイル情報をリセット
 				elemFile.value = null;
+				// 完了時の処理を呼び出す
+				finishMethod();
 			}
 		}
 		// ファイル読込の開始
@@ -1604,9 +1648,10 @@
 	 * uploadElemId…アップロード用の要素(input type="file"の要素）
 	 * uploadDispAreaId…アップロードされたファイルを表示するための要素のID
 	 * alertAreaId…アップロード時の警告を表示する要素のID
+	 * finishMethod…完了時に呼び出される処理
 	 * @return:なし
 	 */
-	function uploadCommon(uploadElemId, uploadDispAreaId, alertAreaId){
+	function uploadCommon(uploadElemId, uploadDispAreaId, alertAreaId, finishMethod){
 		// 警告表示のクリア
 		$("#" + alertAreaId).html(null);
 		// ファイルアップロード用のInputを取得
@@ -1621,6 +1666,8 @@
 		if(selectFiles + existFiles > 5){
 			// 警告表示
 			$("#" + alertAreaId).text("ファイル数は5ファイル以内でアップロードしてください。");
+			// 完了時の処理を呼び出す
+			finishMethod();
 			// 以後処理しない
 			return;
 		}
@@ -1636,6 +1683,8 @@
 			if(extensionList.indexOf(extension) < 0){
 				// 警告表示
 				$("#" + alertAreaId).html("以下のファイル形式のみアップロード可能です。<BR>画像（.jpg/.jpeg/.png/.heic）書類（.xls/.xlsx/.doc/.docx）、またはPDF形式");
+				// 完了時の処理を呼び出す
+				finishMethod();
 				// 以後処理しない
 				return;
 			}
@@ -1646,6 +1695,8 @@
 		if(uploadedFileSize + fileSize > 24 * 1024 * 1024){
 			// 警告表示
 			$("#" + alertAreaId).text("ファイルサイズは合計24MB以内でアップロードしてください。");
+			// 完了時の処理を呼び出す
+			finishMethod();
 			// 以後処理しない
 			return;
 		}
@@ -1679,7 +1730,7 @@
 			$("#" + uploadDispAreaId).append(clone);
 		}
 		// 再帰呼び出しによるファイル読み取り
-		recursiveFileRead(elemFile, files, 0);
+		recursiveFileRead(elemFile, files, 0, finishMethod);
 	}
 	
 	/**
@@ -1909,10 +1960,10 @@
 			<div class="blk">
 				<div class="blkCont bdrT0 contbrd-btnArea-box">
 					<p>
-						<a id="replyButton" href="javascript:void(0)" onclick="changeDisp('replyInputScreen'); dispScrollTop();" title="投稿する" class="btn btn01 btnL">投稿する</a>
+						<a id="replyButton" href="javascript:void(0);" onclick="changeDisp('replyInputScreen'); dispScrollTop();" title="投稿する" class="btn btn01 btnL">投稿する</a>
 					</p>
 					<p class="mt-16">
-						<a href="javascript:void(0)" onclick="init();" title="戻る" class="btn btn03 btnL">戻る</a>
+						<input type="button" id="detailPrevButton" onclick="prevDetail();" class="btn btn03 btnL" value="戻る">
 					</p>
 				</div>
 			</div>
@@ -2094,8 +2145,12 @@
 			</div>
 		</div>
 		<div class="blkCont contbrd-btnArea-box">
-			<p><input id="inqConfButton" type="button" onclick="outputValueInqConf();" class="btn btn01 btnL" value="確認する"></p>
-			<p class="mt-16"><a href="javascript:void(0);" onclick="inqPrevAction();" class="btn btn03 btnL prevBtn">戻る</a></p>
+			<p>
+				<input type="button" id="inqConfButton" onclick="outputValueInqConf();" class="btn btn01 btnL" value="確認する" disabled>
+			</p>
+			<p class="mt-16">
+				<input type="button" id="inqPrevButton" onclick="inqPrevAction();" class="btn btn03 btnL prevBtn" value="戻る">
+			</p>
 		</div>
 	</div>
 </div>
@@ -2208,10 +2263,10 @@
 				</div>
 				<div class="contbrd-btnArea-box">
 					<p class="mt-24">
-						<input type="submit" id='cbdConfButton' onclick="outputValueCbdConf();" class="btn btn01 btnL" value="確認する" disabled>
+						<input type="button" id='cbdConfButton' onclick="outputValueCbdConf();" class="btn btn01 btnL" value="確認する" disabled>
 					</p>
 					<p class="mt-16">
-						<a href="javascript:void(0);" onclick="cbdPrevAction();" class="btn btn03 btnL prevBtn">戻る</a>
+						<input type="button" id='cbdPrevButton' onclick="cbdPrevAction();" class="btn btn03 btnL PrevBtn" value="戻る">
 					</p>
 				</div>
 			</div>
