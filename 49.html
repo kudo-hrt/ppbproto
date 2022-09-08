@@ -57,21 +57,21 @@
 <script type="text/javascript">
 <!--
 	// 通信先URL　※環境に併せて変更する必要あり！
-	// 開発環境
+	/* 開発環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt49.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG99S6MzYiT5k.KkcZzmtcXubr_J8l8N8473VR.oFizQeVyWXFV5ARIiXmwhmXqjuNU.K6Pk9mc9M3btLBQ";
 	const REFLESH_TOKEN = "5Aep861hjC52juQoBcsFRsbEALR2k2PEkuCJTzezJjsxYDFcfM3Xu_8fN.OBDlZ6BJFv9GwwXc8hH5doNmlIiVu";
-	
+	*/
 	/* IT環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt52.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG9Po2PmyYruunauqSmSe1tO_B3XTZIsmbyWG9BxfOXr_UKDN7GA2xyv1J2b24N7OjXdjgf7wAQ6Fc94AGS";
 	const REFLESH_TOKEN = "5Aep861sY.Bl4bMk9ncKxoBVfALQO4xgWbT1fgtPWYc4OPxUGXMzTGo34qQxOYv9jkYyD4lzx7h0uekBz9LDZ89";
 	*/
-	/* ST環境
+	// ST環境
 	const REQUEST_DOMAIN = "https://paypay-bank--int1.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG9rnryk9FxFMWYw6B7a3vS76.rmtm9OK7HwR46afmPIHnzp5NBdd9c6Q5wHD0gbY_J6PrHxS_uZY94OZR7";
 	const REFLESH_TOKEN = "5Aep8616TQxcUXMN._rsxWE0Vp.qZUlq4a2S21KK7q4ghDyI1kYdTAvaq9uv54f67JoCucSXBPLOYjfaY6IVBdD";
-	*/
+	
 	// 通信処理結果を退避するための変数
 	let res;
 	// 連携用文字列
@@ -291,28 +291,28 @@
 				}
 			}
 		}
-        // ファイルアップロード時（新規投稿）
-        $("#inqFileName").change(function(){
-            // 投稿するボタン、及び戻るボタンを非活性にする
-            $("#inqConfButton").prop("disabled", true);
-            $("#inqPrevButton").prop("disabled", true);
-            // ファイルアップロード共通処理の実行
-            uploadCommon("inqFileName", "inqFileList", "inqFileAlert", function(){
-                $("#inqPrevButton").prop("disabled", false);
-                inqReqCheck();
-            });
-        });
-        // ファイルアップロード時（追加投稿）
-        $("#cbdFileName").change(function(){
-            // 投稿するボタン、及び戻るボタンを非活性にする
-            $("#cbdConfButton").prop("disabled", true);
-            $("#cbdPrevButton").prop("disabled", true);
-            // ファイルアップロード共通処理の実行
-            uploadCommon("cbdFileName", "cbdFileList", "cbdFileAlert", function(){
-                $("#cbdPrevButton").prop("disabled", false);
-                cbdReqCheck();
-            });
-        });
+		// ファイルアップロード時（新規投稿）
+		$("#inqFileName").change(function(){
+			// 投稿するボタン、及び戻るボタンを非活性にする
+			$("#inqConfButton").prop("disabled", true);
+			$("#inqPrevButton").prop("disabled", true);
+			// ファイルアップロード共通処理の実行
+			uploadCommon("inqFileName", "inqFileList", "inqFileAlert", function(){
+				$("#inqPrevButton").prop("disabled", false);
+				inqReqCheck();
+			});
+		});
+		// ファイルアップロード時（追加投稿）
+		$("#cbdFileName").change(function(){
+			// 投稿するボタン、及び戻るボタンを非活性にする
+			$("#cbdConfButton").prop("disabled", true);
+			$("#cbdPrevButton").prop("disabled", true);
+			// ファイルアップロード共通処理の実行
+			uploadCommon("cbdFileName", "cbdFileList", "cbdFileAlert", function(){
+				$("#cbdPrevButton").prop("disabled", false);
+				cbdReqCheck();
+			});
+		});
 		// 履歴更新時のイベント処理（ブラウザバックに対応）
 		window.onpopstate = function(e){
 			// 現在表示している画面に応じた制御を実施
@@ -455,8 +455,12 @@
         $("#listQa").empty();
         // 投稿ボタンを活性化
         $("#inqPost").prop("disabled", false);
+        // 確認画面戻るボタンを活性化
+        $("#inqPostPrev").prop("disabled", false);
         // 投稿ボタンを活性化
         $("#cbdPost").prop("disabled", false);
+        // 確認画面戻るボタンを活性化
+        $("#cbdPostPrev").prop("disabled", false);
         // Xボタンを非表示
 		$("#inqContentDel").css("opacity", 0);
 		// Xボタンを非表示
@@ -819,6 +823,7 @@
 	 */
 	function registInquery(){
 		$("#inqPost").prop("disabled", true);
+		$("#inqPostPrev").prop("disabled", true);
 		restAuthorize(function(accToken){
 			$.ajax({
 				type:"POST",
@@ -871,6 +876,7 @@
 	 */
 	function registContactBoard(){
 		$("#cbdPost").prop("disabled", true);
+		$("#cbdPostPrev").prop("disabled", true);
 		restAuthorize(function(accToken){
 			$.ajax({
 				type:"POST",
@@ -2195,7 +2201,7 @@
 					<input type="button" id="inqPost" onclick="registInquery();" class="btn btn01 btnL" value="投稿する">
 				</p>
 				<p class="mt-16">
-					<a href="javascript:void(0);" onclick="changeDisp('inqInputScreen'); dispScrollTop();" class="btn btn03 btnL">戻る</a>
+					<input type="button" id="inqPostPrev" onclick="changeDisp('inqInputScreen'); dispScrollTop();" class="btn btn03 btnL" value="戻る">
 				</p>
 			</div>
 		</div>
@@ -2294,7 +2300,7 @@
 					<input type="button" id="cbdPost" onclick="registContactBoard();" class="btn btn01 btnL" value="投稿する">
 				</p>
 				<p class="mt-16">
-					<a href="javascript:void(0);" onclick="changeDisp('replyInputScreen'); dispScrollTop();" class="btn btn03 btnL">戻る</a>
+					<input type="button" id="cbdPostPrev" onclick="changeDisp('replyInputScreen'); dispScrollTop();" class="btn btn03 btnL" value="戻る">
 				</p>
 			</div>
 		</div>
