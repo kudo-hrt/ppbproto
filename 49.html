@@ -1137,6 +1137,7 @@
 				for(j = 0; j < cvList.length; j++){
 					// file template要素の内容を複製
 					let fileClone = fileTemplate.get(0).content.cloneNode(true);
+					console.log(cvList[j].versionData);
 					// ファイルの中身からダウンロード用リンクを生成
 					let fileUrl = URL.createObjectURL(new Blob(
 						[cvList[j].versionData],
