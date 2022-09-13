@@ -720,7 +720,7 @@
 	 * @remakrs:全てのファイルの紐付けが完了するとresolveが実行される
 	 * 添付ファイルの取得は非同期で行われるため、resolveを使うことで処理の同期化を図れる
 	 */
-	function getContentVersion(fileId, doneMethod){
+	function getContentVersion(fileId, resolve){
 		$.ajax({
 			type:"GET",
 			crossOrigin:true,
@@ -731,7 +731,7 @@
 			timeout: 140000
 		}).done(function(fileContent){
 			// 取得した内容を返却
-			doneMethod(fileId, fileContent);
+			resolve(fileId, fileContent);
 		}).fail(function (data, errorThrown, status) {
 			dispRegisComErrModal();
 		});
@@ -1067,8 +1067,11 @@
 					fileClone.querySelector('.fileLink').href = "#";
 					// クリック時の動作定義
 					fileClone.querySelector('.fileLink').onclick = function(){
-						// SFから添付ファイルを取得
-						getContentVersion(this.id, function(fileId, fileContent){
+						new Promise(
+							function(resolve, reject){
+								getContentVersion(this.id, resolve);
+							}
+						).then(function(fileId, fileContent){
 							// URL変換する
 							const fileUrl = URL.createObjectURL(new Blob(
 								[fileContent],
