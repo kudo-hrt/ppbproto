@@ -1067,7 +1067,8 @@
 					fileClone.querySelector('.fileLink').href = "#";
 					// クリック時の動作定義
 					fileClone.querySelector('.fileLink').onclick = new Promise(function(resolve, reject){
-						getContentVersion(this.id, resolve);
+						console.log(event.target);
+						getContentVersion(event.target.id, resolve);
 					}).then(function(fileId, fileContent){
 						// URL変換する
 						const fileUrl = URL.createObjectURL(new Blob(
