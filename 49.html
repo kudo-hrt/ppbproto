@@ -535,12 +535,15 @@
 					// ・コンタクトボード明細の最終更新日が現在日時 - 1ヶ月以後（同値を含む）
 					// ・（お客様からの）問い合わせ以外
 					// ・（Cookieにて）未参照
+					console.log('newDisplayFlag');
+					console.log(cbdDateTime >= nowDateTime);
+					console.log(cbdFileList[i].cbd.Classification__c != "問い合わせ");
+					console.log(cookieList.indexOf(cbdFileList[i].cbd.Id) < 0);
 					if(
 						cbdDateTime >= nowDateTime &&
 						cbdFileList[i].cbd.Classification__c != "問い合わせ" &&
 						cookieList.indexOf(cbdFileList[i].cbd.Id) < 0
 					){
-						console.log('newDisplayFlagtrue');
 						// NEW表示フラグをfalseに設定
 						newDisplayFlag = true;
 						// 以後処理不要
