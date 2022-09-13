@@ -1090,9 +1090,10 @@
 					fileClone.querySelector('.fileLink').href = "#";
 					// クリック時の動作定義
 					fileClone.querySelector('.fileLink').onclick = function(){
+						console.log(this.name);
 						// SFから添付ファイルを取得
 						const fileContent = getContentVersion(this.name);
-						console.log(fileContent);
+						
 						// URL変換する
 						const fileUrl = URL.createObjectURL(new Blob(
 							[fileContent],
