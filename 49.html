@@ -540,6 +540,7 @@
 						cbdFileList[i].cbd.Classification__c != "問い合わせ" &&
 						cookieList.indexOf(cbdFileList[i].cbd.Id) < 0
 					){
+						console.log('newDisplayFlagtrue');
 						// NEW表示フラグをfalseに設定
 						newDisplayFlag = true;
 						// 以後処理不要
