@@ -1041,11 +1041,11 @@
 					// レコード種別がお客さまの場合
 					if(cbdFileList[j].cbd.Classification__c == "問い合わせ"){
 						// 作成日を用いる
-						cdbDateTime = new Date(cbdFileList[j].cbd.CreatedDate);
+						cbdDateTime = new Date(cbdFileList[j].cbd.CreatedDate);
 					// PayPay銀行の場合
 					}else{
 						// 更新日を用いる
-						cdbDateTime = new Date(cbdFileList[j].cbd.LastModifiedDate);
+						cbdDateTime = new Date(cbdFileList[j].cbd.LastModifiedDate);
 					}
 					// 以下のいずれかの条件でnew表示を付与
 					// ・コンタクトボード明細の最終更新日が現在日時 - 1ヶ月以後（同値を含む）
@@ -1148,7 +1148,6 @@
 				for(j = 0; j < cvList.length; j++){
 					// file template要素の内容を複製
 					let fileClone = fileTemplate.get(0).content.cloneNode(true);
-					console.log(cvList[j].versionData);
 					// ファイルの中身からダウンロード用リンクを生成
 					let fileUrl = URL.createObjectURL(new Blob(
 						[cvList[j].versionData],
