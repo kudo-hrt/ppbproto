@@ -1067,10 +1067,11 @@
 					fileClone.querySelector('.fileLink').href = "#";
 					// クリック時の動作定義
 					fileClone.querySelector('.fileLink').onclick = new Promise(function(resolve, reject){
-						console.log(cvList[j].Id);
 						getContentVersion(cvList[j].Id, resolve);
 					}).then(function(fileId, fileContent){
 						// URL変換する
+						console.log(fileId);
+						console.log(fileContent);
 						const fileUrl = URL.createObjectURL(new Blob(
 							[fileContent],
 							{type: "application/octet-stream"}
