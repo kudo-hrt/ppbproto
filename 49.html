@@ -1051,6 +1051,8 @@
 					// ・（お客様からの）問い合わせ以外
 					// ・（Cookieにて）未参照
 					console.log('newTargetListにプッシュされるか');
+					console.log(cbdDateTime);
+					console.log(nowDateTime);
 					console.log(cbdDateTime >= nowDateTime);
 					console.log(cbdFileList[j].cbd.Classification__c != "問い合わせ");
 					console.log(cookieList.indexOf(cbdFileList[j].cbd.Id) < 0);
