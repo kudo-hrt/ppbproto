@@ -1047,6 +1047,10 @@
 					// ・コンタクトボード明細の最終更新日が現在日時 - 1ヶ月以後（同値を含む）
 					// ・（お客様からの）問い合わせ以外
 					// ・（Cookieにて）未参照
+					console.log('newTargetListにプッシュされるか');
+					console.log(cbdDateTime);
+					console.log(cbdFileList[j].cbd.Classification__c);
+					console.log(cbdFileList[j].cbd.Id);
 					if(
 						cbdDateTime >= nowDateTime &&
 						cbdFileList[j].cbd.Classification__c != "問い合わせ" &&
