@@ -1066,20 +1066,16 @@
 					// リンクアクションをダミー化（onclickで書き換える）
 					fileClone.querySelector('.fileLink').href = "#";
 					// クリック時の動作定義
-					fileClone.querySelector('.fileLink').onclick = function(){
-						new Promise(
-							function(resolve, reject){
-								getContentVersion(this.id, resolve);
-							}
-						).then(function(fileId, fileContent){
-							// URL変換する
-							const fileUrl = URL.createObjectURL(new Blob(
-								[fileContent],
-								{type: "application/octet-stream"}
-							));
-							// 遷移先を書き換える
-							document.getElementById(fileId).href = fileUrl;
-						});
+					fileClone.querySelector('.fileLink').onclick = new Promise(function(resolve, reject){
+						getContentVersion(this.id, resolve);
+					}).then(function(fileId, fileContent){
+						// URL変換する
+						const fileUrl = URL.createObjectURL(new Blob(
+							[fileContent],
+							{type: "application/octet-stream"}
+						));
+						// 遷移先を書き換える
+						document.getElementById(fileId).href = fileUrl;
 					}
 					// ファイルを画面に出力
 					$("#file" + cbd.Id).append(fileClone);
