@@ -536,6 +536,7 @@
 					// ・（お客様からの）問い合わせ以外
 					// ・（Cookieにて）未参照
 					console.log(res.caseList[c].record.CaseNumber);
+					console.log(cbdDateTime);
 					console.log(cbdDateTime >= nowDateTime);
 					console.log(cbdFileList[i].cbd.Classification__c != "問い合わせ");
 					console.log(cookieList.indexOf(cbdFileList[i].cbd.Id) < 0);
