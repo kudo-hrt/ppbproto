@@ -1068,7 +1068,7 @@
 					// クリック時の動作定義
 					fileClone.querySelector('.fileLink').onclick = function(){
 						// SFから添付ファイルを取得
-						const fileContent = getContentVersion(this.id, function(fileId, fileContent){
+						getContentVersion(this.id, function(fileId, fileContent){
 							// URL変換する
 							const fileUrl = URL.createObjectURL(new Blob(
 								[fileContent],
