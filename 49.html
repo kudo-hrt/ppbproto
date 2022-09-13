@@ -1,15 +1,4 @@
-<link rel="stylesheet" type="text/css" href="/commontpl/css/reset.css" media="screen, print">
-<link rel="stylesheet" type="text/css" href="/commontpl/css/component_smt.css" media="screen, print">
-<link rel="stylesheet" type="text/css" href="/commontpl/css/category/contact_smt.css" media="screen, print">
-<link rel="stylesheet" type="text/css" href="/commontpl/css/component_pc.css" media="screen, print">
-<link rel="stylesheet" type="text/css" href="/commontpl/css/category/contact_pc.css" media="screen, print">
-<script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="/commontpl/js/category/modal_accountopen.js"></script>
-<script type="text/javascript" src="/commontpl/js/common.js"></script>
-<script type="text/javascript" src="/commontpl/js/cookie.js"></script>
-<script type="text/javascript" src="/js/javalib.js"></script>
-<script type="text/javascript" src="/js/check.js"></script>
-<script type="text/javascript" src="/js/nb_error.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <body id="contact">
 <!--### template ###-->
 <!-- InquiryForm -->
@@ -69,21 +58,21 @@
 <script type="text/javascript">
 <!--
 	// 通信先URL　※環境に併せて変更する必要あり！
-	/* 開発環境
+	// 開発環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt49.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG99S6MzYiT5k.KkcZzmtcXubr_J8l8N8473VR.oFizQeVyWXFV5ARIiXmwhmXqjuNU.K6Pk9mc9M3btLBQ";
 	const REFLESH_TOKEN = "5Aep861hjC52juQoBcsFRsbEALR2k2PEkuCJTzezJjsxYDFcfM3Xu_8fN.OBDlZ6BJFv9GwwXc8hH5doNmlIiVu";
-	*/
+	
 	/* IT環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt52.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG9Po2PmyYruunauqSmSe1tO_B3XTZIsmbyWG9BxfOXr_UKDN7GA2xyv1J2b24N7OjXdjgf7wAQ6Fc94AGS";
 	const REFLESH_TOKEN = "5Aep861sY.Bl4bMk9ncKxoBVfALQO4xgWbT1fgtPWYc4OPxUGXMzTGo34qQxOYv9jkYyD4lzx7h0uekBz9LDZ89";
 	*/
-	// ST環境
+	/* ST環境
 	const REQUEST_DOMAIN = "https://paypay-bank--int1.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG9rnryk9FxFMWYw6B7a3vS76.rmtm9OK7HwR46afmPIHnzp5NBdd9c6Q5wHD0gbY_J6PrHxS_uZY94OZR7";
 	const REFLESH_TOKEN = "5Aep8616TQxcUXMN._rsxWE0Vp.qZUlq4a2S21KK7q4ghDyI1kYdTAvaq9uv54f67JoCucSXBPLOYjfaY6IVBdD";
-	
+	*/
 	// 通信処理結果を退避するための変数
 	let res;
 	// 連携用文字列
@@ -165,7 +154,10 @@
 	 */
 	$(function(){
 		// 連携文字列取得
-		linkedStr = $("input[name='SFConnectParam']").val();
+		//linkedStr = $("input[name='SFConnectParam']").val();
+		//linkedStr = 'e460124c9a160f6864033b0f95ded4e3659a3f76ff22eb1598bf2ccec0171854'; //
+		linkedStr = '772af88c2e0474b7f42cb1dfe9dd251c5634f228f2205ccb1db61c180bfcecfd';
+		//linkedStr = '98ce205b9f5422d635c9fd35ca80e7e7c121041d386415976ea80a62149b4f7c'; //IT
 		// モーダル開閉
 		$(".ModalBtn").on("click", function(){
 			$(".modalOverlay,.modalWrap").fadeIn();
@@ -219,7 +211,7 @@
 			}
 		});
 		// 入力時の下線制御
-		setReqCls("#Modal-inqType, #cbdTextInput");
+		//setReqCls("#Modal-inqType, #cbdTextInput");
 		// 確認するボタンを非活性にする
 		$("#inqConfButton").prop("disabled", true);
 		// 問い合わせ種別変更時に確認するボタンを活性化させる
@@ -276,7 +268,8 @@
 			$("body").css({position:"",top:0 * CurrentScrollY});
 		});
 		// 人格コードの取得
-		const jinkakuCode = $("input[name='JinkakuCode']").val();
+		//const jinkakuCode = $("input[name='JinkakuCode']").val();
+		const jinkakuCode = '個人';
 		// 人格コードが取得できた場合
 		if(jinkakuCode){
 			// 人格コードが個人または非居住者の場合
@@ -1276,7 +1269,8 @@
 		$("#inqConfTypeText").html(inqRegistData.Subject);
 		$("#inqConfDtailsText").html(inqRegistData.Content.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replace(/\n/g, "<br>"));
 		// 選択値を取得
-		const jinkakuCode = $("input[name='JinkakuCode']").val();
+		//const jinkakuCode = $("input[name='JinkakuCode']").val();
+		const jinkakuCode = '個人';
 		let selectedItem = $("#Modal-inqType").html();
 		// 人格コードが個人、もしくは非居住者の場合
 		if(jinkakuCode == "個人" || jinkakuCode == "非居住者"){
