@@ -1155,7 +1155,9 @@
 			}
 		}
 		// NEW表示対象がある場合
+		console.log('setcookie1');
 		if(newTargetList.length > 0){
+			console.log('setcookie2');
 			// 表示したため、Cookieの情報を書き換える
 			setCookie(newTargetList);
 		}
@@ -1225,6 +1227,7 @@
 	 * @return:なし
 	 */
 	function setCookie(cbdIdList){
+		console.log('setcookie3');
 		// Cookieを分割して格納する配列
 		let tempIdList = [];
 		// 結果返却用配列
@@ -1252,7 +1255,7 @@
 				resultCbdIdList.push(cbdIdList[i]);
 			}
 		}
-		console.log('setcookie');
+		console.log('setcookie4');
 		// Cookieに書き込む（保持期限は30日）
 		const d = new Date();
 		d.setMonth(d.getMonth() + 1);
