@@ -46,7 +46,7 @@
 
 <!-- fileTemplate -->
 <template id="fileTemplate">
-	<p><a class="fileLink"></a></p>
+	<p><a class="fileLink" href="javascript:void(0)"></a></p>
 </template>
 
 <!-- uploadFileTemplate -->
@@ -1066,10 +1066,6 @@
 					fileClone.querySelector('.fileLink').id = cvList[j].Id;
 					// 表示内容にファイル名を設定
 					fileClone.querySelector('.fileLink').textContent = cvList[j].Name;
-					// ダウンロード時のファイル名を設定
-					//fileClone.querySelector('.fileLink').download = cvList[j].Name;
-					// リンクアクションをダミー化（onclickで書き換える）
-					fileClone.querySelector('.fileLink').href = "javascript:void(0)";
 					// クリック時の動作定義
 					fileClone.querySelector('.fileLink').onclick = function(){
 						getContentVersion(this.id, this.textContent);
