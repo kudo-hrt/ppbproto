@@ -1,5 +1,4 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<body id="contact">
 <!--### template ###-->
 <!-- InquiryForm -->
 <template id="caseTemplate">
@@ -47,7 +46,7 @@
 
 <!-- fileTemplate -->
 <template id="fileTemplate">
-	<p><a class="fileLink"></a></p>
+	<p><a class="fileLink" target="_blank"></a></p>
 </template>
 
 <!-- uploadFileTemplate -->
@@ -471,97 +470,136 @@
 		eMail = res.accMail;
 		// 新規入力画面に反映
 		$("#newInqMail").html(eMail);
-		// Cookie取得処理を呼び出す
-		const cookieList = getCookie();
-		// ケースをループ
-		for(let c = 0; c < res.caseList.length; c++){
-			// NEW表示フラグをfalseで初期化
-			let newDisplayFlag = false;
-			// コンタクトボード明細を取得
-			const cbdFileList = res.caseList[c].cbdFileList;
-			// コンタクトボード明細をループ
-			for(let i = 0; i < cbdFileList.length; i++){
-				// 日付用変数に現在日を取得
-				let nowDateTime = new Date();
-				// 1ヶ月前にする
-				nowDateTime.setMonth(nowDateTime.getMonth() - 1);
-				// コンタクトボード明細の時間
-				let cbdDateTime;
-				// レコード種別が、お客さまの場合
-				if(cbdFileList[i].cbd.Classification__c == "問い合わせ"){
-					cbdDateTime = new Date(cbdFileList[i].cbd.CreatedDate);
-				// PayPay銀行の場合
-				}else{
-					cbdDateTime = new Date(cbdFileList[i].cbd.LastModifiedDate);
-				}
-				// 以下のいずれかの条件でnew表示を付与
-				// ・コンタクトボード明細の最終更新日が現在日時 - 1ヶ月以後（同値を含む）
-				// ・（お客様からの）問い合わせ以外
-				// ・（Cookieにて）未参照
-				if(
-					cbdDateTime >= nowDateTime &&
-					cbdFileList[i].cbd.Classification__c != "問い合わせ" &&
-					cookieList.indexOf(cbdFileList[i].cbd.Id) < 0
-				){
-					// NEW表示フラグをfalseに設定
-					newDisplayFlag = true;
-					// 以後処理不要
-					break;
+		// コンテンツバーション取得のためのPromise生成
+		const fileGetPromise = new Promise((resolve) => {
+			// ファイルIDのリスト
+			const fileIdList = new Array();
+			// ケースのリストサイズが0でない
+			if(res.caseList.length != 0){
+				// ケースをループ
+				for(i = 0; i < res.caseList.length; i++){
+					// コンタクトボード明細を取得
+					const cbdFileList = res.caseList[i].cbdFileList;
+					// コンタクトボード明細をループ
+					for(j = 0; j < cbdFileList.length; j++){
+						// 添付ファイルをループ
+						for(k = 0; k < cbdFileList[j].contentVersions.length; k++){
+							// 要素をインスタンス化
+							const cv = cbdFileList[j].contentVersions[k];
+							// 取得できている場合
+							if(cv){
+								// IDをリストに退避
+								fileIdList.push(cv.Id);
+							}
+						}
+					}
 				}
 			}
-			// NEW表示フラグを反映
-			res.caseList[c]["isNew"] = newDisplayFlag;
-		}
-		// Case template要素を取得
-		let caseTemplate = $("#caseTemplate");
-		// ケースのリストの件数分
-		for(let i = 0; i < res.caseList.length; i++){
-			// 要素を取得
-			const c = res.caseList[i];
-			// case template要素の内容を複製
-			let clone = caseTemplate.get(0).content.cloneNode(true);
-			// お問い合わせ内容を取得
-			let content = c.content;
-			// お問い合わせ詳細がnullでない
-			if(content != null){
-				// 12文字を超える場合
-				if(content.length > 30){
-					// 省略する
-					content = content.substring(0, 30) + "...";
+			// 添付ファイルがある場合
+			if(fileIdList.length > 0){
+				// 添付ファイルを取得
+				restAuthorize(function(accToken){
+					getContentVersion(accToken, fileIdList, resolve, 0);
+				}, dispRegisComErrModal);
+			// 添付ファイルなし
+			}else{
+				// 次の処理を呼び出す
+				resolve();
+			}
+		// Promise処理がすべて完了してから実行　※添付ファイルがある場合、resolveのコールはgetContentVersion内で行う
+		}).then(() => {
+			// Cookie取得処理を呼び出す
+			const cookieList = getCookie();
+			// ケースをループ
+			for(let c = 0; c < res.caseList.length; c++){
+				// NEW表示フラグをfalseで初期化
+				let newDisplayFlag = false;
+				// コンタクトボード明細を取得
+				const cbdFileList = res.caseList[c].cbdFileList;
+				// コンタクトボード明細をループ
+				for(let i = 0; i < cbdFileList.length; i++){
+					// 日付用変数に現在日を取得
+					let nowDateTime = new Date();
+					// 1ヶ月前にする
+					nowDateTime.setMonth(nowDateTime.getMonth() - 1);
+					// コンタクトボード明細の時間
+					let cbdDateTime;
+					// レコード種別が、お客さまの場合
+					if(cbdFileList[i].cbd.Classification__c == "問い合わせ"){
+						cbdDateTime = new Date(cbdFileList[i].cbd.CreatedDate);
+					// PayPay銀行の場合
+					}else{
+						cbdDateTime = new Date(cbdFileList[i].cbd.LastModifiedDate);
+					}
+					// 以下のいずれかの条件でnew表示を付与
+					// ・コンタクトボード明細の最終更新日が現在日時 - 1ヶ月以後（同値を含む）
+					// ・（お客様からの）問い合わせ以外
+					// ・（Cookieにて）未参照
+					if(
+						cbdDateTime >= nowDateTime &&
+						cbdFileList[i].cbd.Classification__c != "問い合わせ" &&
+						cookieList.indexOf(cbdFileList[i].cbd.Id) < 0
+					){
+						// NEW表示フラグをfalseに設定
+						newDisplayFlag = true;
+						// 以後処理不要
+						break;
+					}
 				}
+				// NEW表示フラグを反映
+				res.caseList[c]["isNew"] = newDisplayFlag;
 			}
-			// 複製したtemplate要素にデータを挿入
-			// ケースのIdを設定
-			clone.querySelector(".inq-id").dataset.cId = c.record.Id;
-			// ケース番号を設定する
-			clone.querySelector(".inq-title").textContent = "No.T" + c.record.CaseNumber;
-			// お問い合わせ内容を設定する
-			clone.querySelector(".cbd-content").textContent = content;
-			// ケースの作成日をJST日付かつスラッシュに変換して、設定
-			clone.querySelector(".inq-createdate").textContent = changeSlashDate(c.record.CreatedDate);
-			// お問い合わせ種類を設定する
-			clone.querySelector(".inq-type").textContent = c.record.SubjectIMF__c;
-			// ケースのステータスを設定する
-			clone.querySelector(".inq-status").textContent = c.record.StatusClient__c;
-			// 「回答完了」、「回答に少しお時間をいただいております。」の場合
-			if(c.record.StatusClient__c == "回答完了" || c.record.StatusClient__c == "回答に少しお時間をいただいております。"){
-				// CSSクラスを削除（グレー）
-				clone.querySelector(".inq-status").classList.remove("txt-not-fin");
-				// CSSクラスを追加（グリーン）
-				clone.querySelector('.inq-status').classList.add("txt-fin");
+			// Case template要素を取得
+			let caseTemplate = $("#caseTemplate");
+			// ケースのリストの件数分
+			for(let i = 0; i < res.caseList.length; i++){
+				// 要素を取得
+				const c = res.caseList[i];
+				// case template要素の内容を複製
+				let clone = caseTemplate.get(0).content.cloneNode(true);
+				// お問い合わせ内容を取得
+				let content = c.content;
+				// お問い合わせ詳細がnullでない
+				if(content != null){
+					// 12文字を超える場合
+					if(content.length > 30){
+						// 省略する
+						content = content.substring(0, 30) + "...";
+					}
+				}
+				// 複製したtemplate要素にデータを挿入
+				// ケースのIdを設定
+				clone.querySelector(".inq-id").dataset.cId = c.record.Id;
+				// ケース番号を設定する
+				clone.querySelector(".inq-title").textContent = "No.T" + c.record.CaseNumber;
+				// お問い合わせ内容を設定する
+				clone.querySelector(".cbd-content").textContent = content;
+				// ケースの作成日をJST日付かつスラッシュに変換して、設定
+				clone.querySelector(".inq-createdate").textContent = changeSlashDate(c.record.CreatedDate);
+				// お問い合わせ種類を設定する
+				clone.querySelector(".inq-type").textContent = c.record.SubjectIMF__c;
+				// ケースのステータスを設定する
+				clone.querySelector(".inq-status").textContent = c.record.StatusClient__c;
+				// 「回答完了」、「回答に少しお時間をいただいております。」の場合
+				if(c.record.StatusClient__c == "回答完了" || c.record.StatusClient__c == "回答に少しお時間をいただいております。"){
+					// CSSクラスを削除（グレー）
+					clone.querySelector(".inq-status").classList.remove("txt-not-fin");
+					// CSSクラスを追加（グリーン）
+					clone.querySelector('.inq-status').classList.add("txt-fin");
+				}
+				// NEW表示しない場合
+				if(!c.isNew){
+					// newを非表示にする
+					clone.querySelector(".list-qa-ic").style.display = "none";
+				}
+				// caseを画面に出力
+				$("#listQa").append(clone);
 			}
-			// NEW表示しない場合
-			if(!c.isNew){
-				// newを非表示にする
-				clone.querySelector(".list-qa-ic").style.display = "none";
-			}
-			// caseを画面に出力
-			$("#listQa").append(clone);
-		}
-		// 処理中表示を隠す
-		hideProgress();
-		// ホーム画面を表示
-		changeDisp("inquiryForm");
+			// 処理中表示を隠す
+			hideProgress();
+			// ホーム画面を表示
+			changeDisp("inquiryForm");
+		});
 	}
 	
 	/**
@@ -633,10 +671,8 @@
 	 * doneMethod…正常終了時に実行される関数
 	 * failMethod…異常終了時に実行される関数
 	 * @return:なし
-	 * @remakrs:doneMethodの引数にはトークンが割り当てられる
-	 *          また、ファイルダウンロードで使いまわすため、フィールド変数として保持する
+	 * @remakrs:doneMethodの引数には
 	 */
-	var accToken;
 	function restAuthorize(doneMethod, faliMethod){
 		$.ajax({
 			type:"POST",
@@ -650,7 +686,7 @@
 				"refresh_token":REFLESH_TOKEN
 			}
 		}).done(function(response){
-			accToken = "Bearer " + response.access_token;
+			var accToken = "Bearer " + response.access_token;
 			doneMethod(accToken);
 		}).fail(function (data, errorThrown, status){
 			faliMethod();
@@ -720,18 +756,62 @@
 	 * @remakrs:全てのファイルの紐付けが完了するとresolveが実行される
 	 * 添付ファイルの取得は非同期で行われるため、resolveを使うことで処理の同期化を図れる
 	 */
-	function getContentVersion(fileId, resolve){
+	function getContentVersion(accToken, fileIdList, resolve, index){
 		$.ajax({
 			type:"GET",
 			crossOrigin:true,
-			url:REQUEST_DOMAIN + "/services/data/v54.0/sobjects/ContentVersion/" + fileId + "/VersionData",
+			url:REQUEST_DOMAIN + "/services/data/v54.0/sobjects/ContentVersion/" + fileIdList[index] + "/VersionData",
 			cache:false,
 			headers:{"Authorization":accToken},
 			xhrFields:{responseType:"blob"},
 			timeout: 140000
 		}).done(function(fileContent){
-			// 取得した内容を返却
-			resolve({fileId:fileId, fileContent:fileContent});
+			// ケースのリストサイズが0でない
+			if(res.caseList.length != 0){
+				// ファイルの紐付け有無
+				let fileAttached = false;
+				// ケースをループ
+				for(let i = 0; i < res.caseList.length; i++){
+					// コンタクトボード明細を取得
+					const cbdFileList = res.caseList[i].cbdFileList;
+					// コンタクトボード明細をループ
+					for(let j = 0; j < cbdFileList.length; j++){
+						// 添付ファイルをループ
+						for(let k = 0; k < cbdFileList[j].contentVersions.length; k++){
+							// 要素をインスタンス化
+							const cv = cbdFileList[j].contentVersions[k];
+							
+							if(cv.Id == fileIdList[index]){
+								// IDを条件に添付ファイルのBlobデータを取得
+								res.caseList[i].cbdFileList[j].contentVersions[k]["versionData"] = fileContent;
+								// 紐付け済にする
+								fileAttached = true;
+								// 以後処理不要
+								break;
+							}
+						}
+						// 紐付け済の場合
+						if(fileAttached){
+							// 以後処理不要
+							break;
+						}
+					}
+					// 紐付け済の場合
+					if(fileAttached){
+						// 以後処理不要
+						break;
+					}
+				}
+			}
+			// 全て紐付け終わったら
+			if(fileIdList.length - 1 == index){
+				// 次の処理を呼ぶ
+				resolve();
+			// まだ終わってない場合
+			}else{
+				// 再帰実行する
+				getContentVersion(accToken, fileIdList, resolve, index + 1);
+			}
 		}).fail(function (data, errorThrown, status) {
 			dispRegisComErrModal();
 		});
@@ -956,11 +1036,11 @@
 					// レコード種別がお客さまの場合
 					if(cbdFileList[j].cbd.Classification__c == "問い合わせ"){
 						// 作成日を用いる
-						cbdDateTime = new Date(cbdFileList[j].cbd.CreatedDate);
+						cdbDateTime = new Date(cbdFileList[j].cbd.CreatedDate);
 					// PayPay銀行の場合
 					}else{
 						// 更新日を用いる
-						cbdDateTime = new Date(cbdFileList[j].cbd.LastModifiedDate);
+						cdbDateTime = new Date(cbdFileList[j].cbd.LastModifiedDate);
 					}
 					// 以下のいずれかの条件でnew表示を付与
 					// ・コンタクトボード明細の最終更新日が現在日時 - 1ヶ月以後（同値を含む）
@@ -1057,26 +1137,17 @@
 				for(j = 0; j < cvList.length; j++){
 					// file template要素の内容を複製
 					let fileClone = fileTemplate.get(0).content.cloneNode(true);
-					// ダウンロード用にIDをname属性に退避
-					fileClone.querySelector('.fileLink').id = cvList[j].Id;
-					// 表示内容にファイル名を設定
+					// ファイルの中身からダウンロード用リンクを生成
+					let fileUrl = URL.createObjectURL(new Blob(
+						[cvList[j].versionData],
+						{type: "application/octet-stream"}
+					));
+					// 画面出力するファイル名を設定する
 					fileClone.querySelector('.fileLink').textContent = cvList[j].Name;
-					// ダウンロード時のファイル名を設定
+					// ダウンロードされる際のファイル名を設定する
 					fileClone.querySelector('.fileLink').download = cvList[j].Name;
-					// リンクアクションをダミー化（onclickで書き換える）
-					fileClone.querySelector('.fileLink').href = "#";
-					// クリック時の動作定義
-					fileClone.querySelector('.fileLink').onclick = new Promise(function(resolve, reject){
-						getContentVersion(cvList[j].Id, resolve);
-					}).then(function(data){
-						// URL変換する
-						const fileUrl = URL.createObjectURL(new Blob(
-							[data.fileContent],
-							{type: "application/octet-stream"}
-						));
-						// 遷移先を書き換える
-						document.getElementById(data.fileId).href = fileUrl;
-					});
+					// ダウンロード用リンクを設定する
+					fileClone.querySelector('.fileLink').href = fileUrl;
 					// ファイルを画面に出力
 					$("#file" + cbd.Id).append(fileClone);
 				}
@@ -1116,6 +1187,7 @@
 		// URLをタグ変換して返却
 		return str.replace(regexp_url, regexp_makeLink);
 	}
+
 	/**
 	 * Cookie取得
 	 * @args:なし
@@ -1167,7 +1239,7 @@
 				// 値を "=" で分割
 				data = data.split("=");
 				// キーが本処理で扱うCookieの場合
-				if(data[0].trim() == "IMFCookie" && data[1]){
+				if(data[0] == "IMFCookie"){
 					// 結果返却用配列に追加
 					resultCbdIdList = JSON.parse(data[1]);
 				}
