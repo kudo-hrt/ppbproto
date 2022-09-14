@@ -727,6 +727,7 @@
 			xhrFields:{responseType:"blob"},
 			timeout: 140000
 		}).done(function(fileContent){
+			console.log('2');
 			// 取得した内容を返却
 			resolve({
 				fileId:fileId,
@@ -1067,13 +1068,16 @@
 					fileClone.querySelector('.fileLink').href = "#";
 					// クリック時の動作定義
 					fileClone.querySelector('.fileLink').onclick = new Promise(function(resolve, reject){
+						console.log('1');
 						getContentVersion(cvList[j].Id, resolve);
 					}).then(function(data){
+						console.log('3');
 						// URL変換する
 						const fileUrl = URL.createObjectURL(new Blob(
 							[data.fileContent],
 							{type: "application/octet-stream"}
 						));
+						console.log('4');
 						// 遷移先を書き換える
 						document.getElementById(data.fileId).href = fileUrl;
 					});
