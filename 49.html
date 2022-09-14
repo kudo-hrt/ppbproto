@@ -1056,33 +1056,32 @@
 				const cvList = cbdFileList[i].contentVersions;
 				// ファイルの件数分
 				for(j = 0; j < cvList.length; j++){
-					// file template要素の内容を複製
-					let fileClone = fileTemplate.get(0).content.cloneNode(true);
-					// ダウンロード用にIDを退避
-					fileClone.querySelector('.fileLink').id = cvList[j].Id;
-					// 表示内容にファイル名を設定
-					fileClone.querySelector('.fileLink').textContent = cvList[j].Name;
-					// ダウンロード時のファイル名を設定
-					fileClone.querySelector('.fileLink').download = cvList[j].Name;
-					// リンクアクションをダミー化（onclickで書き換える）
-					fileClone.querySelector('.fileLink').href = "#";
+					
 					// クリック時の動作定義
-					fileClone.querySelector('.fileLink').onclick = new Promise(function(resolve, reject){
+					new Promise(function(resolve, reject){
 						console.log('1');
 						getContentVersion(cvList[j].Id, resolve);
 					}).then(function(data){
+						// file template要素の内容を複製
+						let fileClone = fileTemplate.get(0).content.cloneNode(true);
+						// ダウンロード用にIDを退避
+						fileClone.querySelector('.fileLink').id = cvList[j].Id;
+						// 表示内容にファイル名を設定
+						fileClone.querySelector('.fileLink').textContent = cvList[j].Name;
+						// ダウンロード時のファイル名を設定
+						fileClone.querySelector('.fileLink').download = cvList[j].Name;
 						console.log('3');
 						// URL変換する
 						const fileUrl = URL.createObjectURL(new Blob(
 							[data.fileContent],
 							{type: "application/octet-stream"}
 						));
+						// リンクアクションをダミー化（onclickで書き換える）
+						fileClone.querySelector('.fileLink').href = fileUrl;
 						console.log('4');
-						// 遷移先を書き換える
-						document.getElementById(data.fileId).href = fileUrl;
+						// ファイルを画面に出力
+					    $("#file" + cbd.Id).append(fileClone);
 					});
-					// ファイルを画面に出力
-					$("#file" + cbd.Id).append(fileClone);
 				}
 			}
 		}
