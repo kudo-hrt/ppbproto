@@ -717,7 +717,7 @@
 	 * @remakrs:全てのファイルの紐付けが完了するとresolveが実行される
 	 * 添付ファイルの取得は非同期で行われるため、resolveを使うことで処理の同期化を図れる
 	 */
-	function getContentVersion(fileId, resolve){
+	function getContentVersion(cbdId, fileId, fileName, resolve){
 		$.ajax({
 			type:"GET",
 			crossOrigin:true,
@@ -730,7 +730,9 @@
 			console.log('2');
 			// 取得した内容を返却
 			resolve({
+				cbdId:cbdId,
 				fileId:fileId,
+				fileName:fileName,
 				fileContent:fileContent
 			});
 		}).fail(function (data, errorThrown, status) {
@@ -1060,16 +1062,14 @@
 					// クリック時の動作定義
 					new Promise(function(resolve, reject){
 						console.log('1');
-						getContentVersion(cvList[j].Id, resolve);
+						getContentVersion(cbd.Id, cvList[j].Id, cvList[j].Name, resolve);
 					}).then(function(data){
 						// file template要素の内容を複製
-						let fileClone = fileTemplate.get(0).content.cloneNode(true);
-						// ダウンロード用にIDを退避
-						fileClone.querySelector('.fileLink').id = cvList[j].Id;
+						let fileClone = $("#fileTemplate").get(0).content.cloneNode(true);
 						// 表示内容にファイル名を設定
-						fileClone.querySelector('.fileLink').textContent = cvList[j].Name;
+						fileClone.querySelector('.fileLink').textContent = data.fileName;
 						// ダウンロード時のファイル名を設定
-						fileClone.querySelector('.fileLink').download = cvList[j].Name;
+						fileClone.querySelector('.fileLink').download = data.fileName;
 						console.log('3');
 						// URL変換する
 						const fileUrl = URL.createObjectURL(new Blob(
@@ -1080,7 +1080,7 @@
 						fileClone.querySelector('.fileLink').href = fileUrl;
 						console.log('4');
 						// ファイルを画面に出力
-					    $("#file" + cbd.Id).append(fileClone);
+						$("#file" + data.cbdId).append(fileClone);
 					});
 				}
 			}
