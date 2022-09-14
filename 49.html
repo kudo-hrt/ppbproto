@@ -1,5 +1,4 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<body id="contact">
 <!--### template ###-->
 <!-- InquiryForm -->
 <template id="caseTemplate">
@@ -58,7 +57,7 @@
 <script type="text/javascript">
 <!--
 	// 通信先URL　※環境に併せて変更する必要あり！
-	/* 開発環境
+	// 開発環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt49.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG99S6MzYiT5k.KkcZzmtcXubr_J8l8N8473VR.oFizQeVyWXFV5ARIiXmwhmXqjuNU.K6Pk9mc9M3btLBQ";
 	const REFLESH_TOKEN = "5Aep861hjC52juQoBcsFRsbEALR2k2PEkuCJTzezJjsxYDFcfM3Xu_8fN.OBDlZ6BJFv9GwwXc8hH5doNmlIiVu";
@@ -712,10 +711,8 @@
 	/**
 	 * コンテンツバージョン（添付ファイル）取得処理
 	 * @args:
-	 * accToken…アクセストークン
-	 * fileIdList…添付ファイルのIDリスト
+	 * fileId…添付ファイルのID
 	 * resolve…処理完了時に実行される関数
-	 * index…処理番号
 	 * @return:なし
 	 * @remakrs:全てのファイルの紐付けが完了するとresolveが実行される
 	 * 添付ファイルの取得は非同期で行われるため、resolveを使うことで処理の同期化を図れる
@@ -731,7 +728,10 @@
 			timeout: 140000
 		}).done(function(fileContent){
 			// 取得した内容を返却
-			resolve({fileId:fileId, fileContent:fileContent});
+			resolve({
+				fileId:fileId,
+				fileContent:fileContent
+			});
 		}).fail(function (data, errorThrown, status) {
 			dispRegisComErrModal();
 		});
@@ -1057,7 +1057,7 @@
 				for(j = 0; j < cvList.length; j++){
 					// file template要素の内容を複製
 					let fileClone = fileTemplate.get(0).content.cloneNode(true);
-					// ダウンロード用にIDをname属性に退避
+					// ダウンロード用にIDを退避
 					fileClone.querySelector('.fileLink').id = cvList[j].Id;
 					// 表示内容にファイル名を設定
 					fileClone.querySelector('.fileLink').textContent = cvList[j].Name;
@@ -1116,6 +1116,7 @@
 		// URLをタグ変換して返却
 		return str.replace(regexp_url, regexp_makeLink);
 	}
+	
 	/**
 	 * Cookie取得
 	 * @args:なし
