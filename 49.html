@@ -717,7 +717,7 @@
 	 * @remakrs:全てのファイルの紐付けが完了するとresolveが実行される
 	 * 添付ファイルの取得は非同期で行われるため、resolveを使うことで処理の同期化を図れる
 	 */
-	function getContentVersion(cbdId, fileId, fileName, resolve){
+	function getContentVersion(fileId, fileName){
 		$.ajax({
 			type:"GET",
 			crossOrigin:true,
@@ -728,13 +728,15 @@
 			timeout: 140000
 		}).done(function(fileContent){
 			console.log('2');
-			// 取得した内容を返却
-			resolve({
-				cbdId:cbdId,
-				fileId:fileId,
-				fileName:fileName,
-				fileContent:fileContent
-			});
+			// URL変換する
+			const alink = document.createElement("a");
+			alink.download = fileName;
+			const fileUrl = URL.createObjectURL(new Blob(
+				[fileContent],
+				{type: "application/octet-stream"}
+			));
+			alink.href = fileUrl;
+			alink.click();
 		}).fail(function (data, errorThrown, status) {
 			dispRegisComErrModal();
 		});
@@ -1058,30 +1060,20 @@
 				const cvList = cbdFileList[i].contentVersions;
 				// ファイルの件数分
 				for(j = 0; j < cvList.length; j++){
-					
+					// file template要素の内容を複製
+					let fileClone = fileTemplate.get(0).content.cloneNode(true);
+					// ダウンロード用にIDを退避
+					fileClone.querySelector('.fileLink').id = cvList[j].Id;
+					// 表示内容にファイル名を設定
+					fileClone.querySelector('.fileLink').textContent = cvList[j].Name;
+					// ダウンロード時のファイル名を設定
+					//fileClone.querySelector('.fileLink').download = cvList[j].Name;
+					// リンクアクションをダミー化（onclickで書き換える）
+					fileClone.querySelector('.fileLink').href = "javascript:void(0)";
 					// クリック時の動作定義
-					new Promise(function(resolve, reject){
-						console.log('1');
-						getContentVersion(cbd.Id, cvList[j].Id, cvList[j].Name, resolve);
-					}).then(function(data){
-						// file template要素の内容を複製
-						let fileClone = $("#fileTemplate").get(0).content.cloneNode(true);
-						// 表示内容にファイル名を設定
-						fileClone.querySelector('.fileLink').textContent = data.fileName;
-						// ダウンロード時のファイル名を設定
-						fileClone.querySelector('.fileLink').download = data.fileName;
-						console.log('3');
-						// URL変換する
-						const fileUrl = URL.createObjectURL(new Blob(
-							[data.fileContent],
-							{type: "application/octet-stream"}
-						));
-						// リンクアクションをダミー化（onclickで書き換える）
-						fileClone.querySelector('.fileLink').href = fileUrl;
-						console.log('4');
-						// ファイルを画面に出力
-						$("#file" + data.cbdId).append(fileClone);
-					});
+					fileClone.querySelector('.fileLink').onclick = getContentVersion(cvList[j].Id, cvList[j].Name);
+					// ファイルを画面に出力
+					$("#file" + cbd.Id).append(fileClone);
 				}
 			}
 		}
