@@ -750,7 +750,9 @@
 	function registInquery(){
 		$("#inqPost").prop("disabled", true);
 		$("#inqPostPrev").prop("disabled", true);
+/*
 		restAuthorize(function(accToken){
+*/
 			$.ajax({
 				type:"POST",
 				crossOrigin:true,
@@ -792,7 +794,9 @@
 			}).fail(function (data, errorThrown, status) {
 				dispRegisComErrModal();
 			});
+/*
 		}, dispRegisComErrModal);
+*/
 	}
 	
 	/**
@@ -803,7 +807,9 @@
 	function registContactBoard(){
 		$("#cbdPost").prop("disabled", true);
 		$("#cbdPostPrev").prop("disabled", true);
+/*
 		restAuthorize(function(accToken){
+*/
 			$.ajax({
 				type:"POST",
 				crossOrigin:true,
@@ -842,7 +848,9 @@
 			}).fail(function (data, errorThrown, status) {
 				dispRegisComErrModal();
 			});
+/*
 		}, dispRegisComErrModal);
+*/
 	}
 	
 	/**
@@ -1343,8 +1351,7 @@
 		// 問い合わせ種別の選択状態の取得
 		const itype_flg = ( $("#Modal-inqType").html() == "選択してください" ) ? false : true;
 		// 問い合わせ内容の入力状態の取得
-		const idtail_flg = ($("#inqTextInput").val().trim() == "") ? false : true;
-		console.log($("#inqTextInput").val().charCodeAt(1));
+		const idtail_flg = checkInput($("#inqTextInput").val());
 		// 入力状態によってボタンの活性／非活性の切り替え
 		$("#inqConfButton").prop("disabled", !(itype_flg && idtail_flg));
 	}
@@ -1356,11 +1363,34 @@
 	 */	
 	function cbdReqCheck(){
 		// 問い合わせ内容の入力状態の取得
-		const cdtail_flg = ($("#cbdTextInput").val().trim() == "") ? false : true;
+		const cdtail_flg = checkInput($("#cbdTextInput").val());
 		// 入力状態によってボタンの活性／非活性の切り替え
 		$("#cbdConfButton").prop("disabled", !cdtail_flg);
 	}
 	
+	/**
+	 * 入力チェック ※SalesforceはU0020以下の文字が切り捨てられるため、そのチェック
+	 * @args:val…チェック対象の値
+	 * @return:true/チェックOK false/チェックNG
+	 */
+	function checkInput(val){
+		// 値未入力ならNG
+		if(val == "")return false;
+		// 登録可能な文字があるか
+		let hasValue = false;
+		// 文字数分ループ
+		for(let i = 0; i < val.length; i++){
+			// 該当の文字のUnicode値(10進数)を取得。32(16進数の20)より値の高い文字がある場合
+			if(val.codePointAt(i) > 32){
+				// 登録可能な文字あり
+				hasValue = true;
+				// 以後処理しない
+				break;
+			}
+		}
+		// 登録可能な文字があるかを返却
+		return hasValue;
+	}
 	/**
 	 * 戻るボタン処理（新規投稿）
 	 * @args:なし
