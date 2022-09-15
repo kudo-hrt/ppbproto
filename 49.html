@@ -1344,6 +1344,7 @@
 		const itype_flg = ( $("#Modal-inqType").html() == "選択してください" ) ? false : true;
 		// 問い合わせ内容の入力状態の取得
 		const idtail_flg = ($("#inqTextInput").val().trim() == "") ? false : true;
+		console.log($("#inqTextInput").val().charCodeAt(1));
 		// 入力状態によってボタンの活性／非活性の切り替え
 		$("#inqConfButton").prop("disabled", !(itype_flg && idtail_flg));
 	}
