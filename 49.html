@@ -750,53 +750,47 @@
 	function registInquery(){
 		$("#inqPost").prop("disabled", true);
 		$("#inqPostPrev").prop("disabled", true);
-/*
-		restAuthorize(function(accToken){
-*/
-			$.ajax({
-				type:"POST",
-				crossOrigin:true,
-				url:REQUEST_DOMAIN + "/services/apexrest/IMF_Case",
-				cache:false,
-				headers:{"Authorization":accToken, "Content-Type":"application/json"},
-				dataType:"json",
-				data:JSON.stringify(inqRegistData),
-				timeout: 10000
-			}).done(function(response){
-				// 登録したコンタクトボード明細のIDを取得
-				const cbdId = response.cbdId;
-				// エラーメッセージの退避
-				if(response.errorMessage){
-					errorMessageText = response.errorMessage.replace(/\n/g, "<br>");
+		$.ajax({
+			type:"POST",
+			crossOrigin:true,
+			url:REQUEST_DOMAIN + "/services/apexrest/IMF_Case",
+			cache:false,
+			headers:{"Authorization":accToken, "Content-Type":"application/json"},
+			dataType:"json",
+			data:JSON.stringify(inqRegistData),
+			timeout: 10000
+		}).done(function(response){
+			// 登録したコンタクトボード明細のIDを取得
+			const cbdId = response.cbdId;
+			// エラーメッセージの退避
+			if(response.errorMessage){
+				errorMessageText = response.errorMessage.replace(/\n/g, "<br>");
+			}
+			// 正常終了時
+			if(response.result == "SUCCESS"){
+				if(cbdId){
+					changeDisp("compScreen");
+					// スクロールをトップにする
+					dispScrollTop();
 				}
-				// 正常終了時
-				if(response.result == "SUCCESS"){
-					if(cbdId){
-						changeDisp("compScreen");
-						// スクロールをトップにする
-						dispScrollTop();
-					}
-				// メールアドレス不正
-				}else if(response.result == "INVALID_EMAIL_ADDRESS"){
-					dispInvmailErrModal();
-				// 時限チェック
-				}else if(response.result == "TIMED_CHECK"){
-					dispTimeoutErrModal();
-				// 異常終了
-				}else{
-					dispAbnormalErrModal();
-				}
-				// 添付ファイルがある場合
-				if(inputFiles.length > 0){
-					// 添付ファイルの登録
-					uploadFileRegist(cbdId, accToken, inputFiles);
-				}
-			}).fail(function (data, errorThrown, status) {
-				dispRegisComErrModal();
-			});
-/*
-		}, dispRegisComErrModal);
-*/
+			// メールアドレス不正
+			}else if(response.result == "INVALID_EMAIL_ADDRESS"){
+				dispInvmailErrModal();
+			// 時限チェック
+			}else if(response.result == "TIMED_CHECK"){
+				dispTimeoutErrModal();
+			// 異常終了
+			}else{
+				dispAbnormalErrModal();
+			}
+			// 添付ファイルがある場合
+			if(inputFiles.length > 0){
+				// 添付ファイルの登録
+				uploadFileRegist(cbdId, accToken, inputFiles);
+			}
+		}).fail(function (data, errorThrown, status) {
+			dispRegisComErrModal();
+		});
 	}
 	
 	/**
@@ -807,50 +801,44 @@
 	function registContactBoard(){
 		$("#cbdPost").prop("disabled", true);
 		$("#cbdPostPrev").prop("disabled", true);
-/*
-		restAuthorize(function(accToken){
-*/
-			$.ajax({
-				type:"POST",
-				crossOrigin:true,
-				url:REQUEST_DOMAIN + "/services/apexrest/IMF_ContactBoardDetail",
-				cache:false,
-				headers: {"Authorization":accToken, "Content-Type":"application/json"},
-				dataType:"json",
-				data:JSON.stringify(cbdRegistData),
-				timeout: 10000
-			}).done(function(response){
-				// 登録したコンタクトボード明細のIDを取得
-				const cbdId = response.cbdId;
-				// エラーメッセージを退避
-				if(response.errorMessage){
-					errorMessageText = response.errorMessage.replace(/\n/g, "<br>");
+		$.ajax({
+			type:"POST",
+			crossOrigin:true,
+			url:REQUEST_DOMAIN + "/services/apexrest/IMF_ContactBoardDetail",
+			cache:false,
+			headers: {"Authorization":accToken, "Content-Type":"application/json"},
+			dataType:"json",
+			data:JSON.stringify(cbdRegistData),
+			timeout: 10000
+		}).done(function(response){
+			// 登録したコンタクトボード明細のIDを取得
+			const cbdId = response.cbdId;
+			// エラーメッセージを退避
+			if(response.errorMessage){
+				errorMessageText = response.errorMessage.replace(/\n/g, "<br>");
+			}
+			// 正常終了時
+			if(response.result == "SUCCESS"){
+				if(cbdId){
+					changeDisp("compScreen");
+					// スクロールをトップにする
+					dispScrollTop();
 				}
-				// 正常終了時
-				if(response.result == "SUCCESS"){
-					if(cbdId){
-						changeDisp("compScreen");
-						// スクロールをトップにする
-						dispScrollTop();
-					}
-				// 時限チェック
-				}else if(response.result == "TIMED_CHECK"){
-					dispTimeoutErrModal();
-				// 異常終了
-				}else{
-					dispAbnormalErrModal();
-				}
-				// 添付ファイルがある場合
-				if(inputFiles.length){
-					// 添付ファイルを登録
-					uploadFileRegist(cbdId,accToken, inputFiles);
-				}
-			}).fail(function (data, errorThrown, status) {
-				dispRegisComErrModal();
-			});
-/*
-		}, dispRegisComErrModal);
-*/
+			// 時限チェック
+			}else if(response.result == "TIMED_CHECK"){
+				dispTimeoutErrModal();
+			// 異常終了
+			}else{
+				dispAbnormalErrModal();
+			}
+			// 添付ファイルがある場合
+			if(inputFiles.length){
+				// 添付ファイルを登録
+				uploadFileRegist(cbdId,accToken, inputFiles);
+			}
+		}).fail(function (data, errorThrown, status) {
+			dispRegisComErrModal();
+		});
 	}
 	
 	/**
