@@ -1651,6 +1651,7 @@
 			// ファイルサイズを加算
 			fileSize = files[i].size;
 		}
+		console.log(uploadedFileSize);
 		// アップロード済のファイルサイズとファイルサイズの合計が24MBを超える場合
 		if(uploadedFileSize + fileSize > 24 * 1024 * 1024){
 			// 警告表示
