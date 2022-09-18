@@ -1622,6 +1622,8 @@
 		if(selectFiles + existFiles > 5){
 			// 警告表示
 			$("#" + alertAreaId).text("ファイル数は5ファイル以内でアップロードしてください。");
+			// 入力されたファイル情報をリセット
+			elemFile.value = null;
 			// 完了時の処理を呼び出す
 			finishMethod();
 			// 以後処理しない
@@ -1639,6 +1641,8 @@
 			if(extensionList.indexOf(extension) < 0){
 				// 警告表示
 				$("#" + alertAreaId).html("以下のファイル形式のみアップロード可能です。<BR>画像（.jpg/.jpeg/.png/.heic）書類（.xls/.xlsx/.doc/.docx）、またはPDF形式");
+				// 入力されたファイル情報をリセット
+				elemFile.value = null;
 				// 完了時の処理を呼び出す
 				finishMethod();
 				// 以後処理しない
@@ -1651,6 +1655,8 @@
 		if(uploadedFileSize + fileSize > 24 * 1024 * 1024){
 			// 警告表示
 			$("#" + alertAreaId).text("ファイルサイズは合計24MB以内でアップロードしてください。");
+			// 入力されたファイル情報をリセット
+			elemFile.value = null;
 			// 完了時の処理を呼び出す
 			finishMethod();
 			// 以後処理しない
