@@ -870,7 +870,7 @@
 				headers:{"Authorization":accToken, "Content-Type":"application/json"},
 				dataType:"json",
 				data:JSON.stringify(cvJson),
-				timeout: 10000
+				timeout: 15000
 			}).done(function(cv){
 				// 処理結果からContentVersionレコードのIDを取得
 				const cvId = cv.id;
@@ -904,7 +904,7 @@
 						headers:{"Authorization":accToken, "Content-Type":"application/json"},
 						dataType:"json",
 						data:JSON.stringify(linkJson),
-						timeout: 15000
+						timeout: 10000
 					}).done(function(res){
 						// Do Nothing
 					}).fail(function(data, errorThrown, status) {
