@@ -303,6 +303,7 @@
 			// ファイルアップロード共通処理の実行
 			uploadCommon("inqFileName", "inqFileList", "inqFileAlert", function(){
 				$("#inqPrevButton").prop("disabled", false);
+				$("#inqFileName").val("");
 				inqReqCheck();
 			});
 		});
@@ -314,6 +315,7 @@
 			// ファイルアップロード共通処理の実行
 			uploadCommon("cbdFileName", "cbdFileList", "cbdFileAlert", function(){
 				$("#cbdPrevButton").prop("disabled", false);
+				$("#cbdFileName").val("");
 				cbdReqCheck();
 			});
 		});
