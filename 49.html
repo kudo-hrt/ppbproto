@@ -657,6 +657,9 @@
 			accToken = "Bearer " + response.access_token;
 			doneMethod(accToken);
 		}).fail(function (data, errorThrown, status){
+			console.log(data);
+			console.log(errorThrown);
+			console.log(status);
 			faliMethod();
 		});
 	}
