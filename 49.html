@@ -797,6 +797,10 @@
 				uploadFileRegist(cbdId, accToken, inputFiles);
 			}
 		}).fail(function (data, errorThrown, status) {
+			console.log(data);
+			console.log(data.status);
+			console.log(errorThrown);
+			console.log(status);
 			dispRegisComErrModal();
 		});
 	}
