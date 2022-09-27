@@ -1240,8 +1240,8 @@
 			// エラーメッセージの表示
 			$("#inqOutputError").html("文字数が制限を超えています。<BR>全角2000文字以内で、もう一度入力してください。");
 			// 投稿するボタン、及び戻るボタンを活性にする
-			$("#inqConfButton").prop("disabled", true);
-			$("#inqPrevButton").prop("disabled", true);
+			$("#inqConfButton").prop("disabled", false);
+			$("#inqPrevButton").prop("disabled", false);
 			// 処理を中断する
 			return null;
 		}
@@ -1304,6 +1304,9 @@
 		if(checkLength($("#cbdTextInput").val(), 2000)){
 			// エラーメッセージの表示
 			$("#cbdOutputError").html("文字数が制限を超えています。<BR>全角2000文字以内で、もう一度入力してください。");
+			// 投稿するボタン、及び戻るボタンを活性にする
+			$("#cbdConfButton").prop("disabled", false);
+			$("#cbdPrevButton").prop("disabled", false);
 			// 処理を中断する
 			return null;
 		}
