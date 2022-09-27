@@ -1473,7 +1473,7 @@
 		// アップロード済ファイルサイズをリセット
 		uploadedFileSize = 0;
 		// 警告表示のクリア
-		$("#inqFileAlert").html(null);
+		inqClearErrorMessage();
 		// アップロードファイル表示のクリア
 		$("#inqFileList").html(null);
 		// オーバレイをクリア（残すと前画面でオーバレイが残るため）
@@ -1520,7 +1520,7 @@
 		// アップロード済ファイルサイズをリセット
 		uploadedFileSize = 0;
 		// 警告表示のクリア
-		$("#cbdFileAlert").html(null);
+		cbdClearErrorMessage;
 		// アップロードファイル表示のクリア
 		$("#cbdFileList").html(null);
 		// オーバレイをクリア（残すと前画面でオーバレイが残るため）
