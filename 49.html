@@ -657,10 +657,6 @@
 			accToken = "Bearer " + response.access_token;
 			doneMethod(accToken);
 		}).fail(function (data, errorThrown, status){
-			console.log(data);
-			console.log(data.status);
-			console.log(errorThrown);
-			console.log(status);
 			faliMethod();
 		});
 	}
@@ -776,7 +772,13 @@
 			}
 			// 正常終了時
 			if(response.result == "SUCCESS"){
-				if(cbdId){
+				// 添付ファイルがある場合
+				if(inputFiles.length > 0){
+					// 添付ファイルの登録
+					uploadFileRegist(cbdId, accToken, inputFiles);
+				// 添付ファイルが無い場合
+				}else{
+					// 完了画面を表示する
 					changeDisp("compScreen");
 					// スクロールをトップにする
 					dispScrollTop();
@@ -791,16 +793,7 @@
 			}else{
 				dispAbnormalErrModal();
 			}
-			// 添付ファイルがある場合
-			if(inputFiles.length > 0){
-				// 添付ファイルの登録
-				uploadFileRegist(cbdId, accToken, inputFiles);
-			}
 		}).fail(function (data, errorThrown, status) {
-			console.log(data);
-			console.log(data.status);
-			console.log(errorThrown);
-			console.log(status);
 			dispRegisComErrModal();
 		});
 	}
@@ -831,7 +824,13 @@
 			}
 			// 正常終了時
 			if(response.result == "SUCCESS"){
-				if(cbdId){
+				// 添付ファイルがある場合
+				if(inputFiles.length){
+					// 添付ファイルを登録
+					uploadFileRegist(cbdId, accToken, inputFiles);
+				// 添付ファイルが無い場合
+				}else{
+					// 完了画面を表示する
 					changeDisp("compScreen");
 					// スクロールをトップにする
 					dispScrollTop();
@@ -843,11 +842,7 @@
 			}else{
 				dispAbnormalErrModal();
 			}
-			// 添付ファイルがある場合
-			if(inputFiles.length){
-				// 添付ファイルを登録
-				uploadFileRegist(cbdId,accToken, inputFiles);
-			}
+
 		}).fail(function (data, errorThrown, status) {
 			dispRegisComErrModal();
 		});
@@ -913,8 +908,13 @@
 						dataType:"json",
 						data:JSON.stringify(linkJson),
 						timeout: 10000
+					// 正常終了時
 					}).done(function(res){
-						// Do Nothing
+						// ホーム画面を表示する
+						changeDisp("compScreen");
+						// スクロールをトップにする
+						dispScrollTop();
+					// 異常終了時
 					}).fail(function(data, errorThrown, status) {
 						dispRegisComErrModal();
 					});
@@ -1505,6 +1505,8 @@
 	 * @return:なし
 	 */
 	function inqDeleteFile(){
+		// 警告表示のクリア
+		$("#inqFileAlert").html(null);
 		// 選択された画面要素の削除
 		$("#inqFileList").children()[selectFileIndex].remove();
 		// 合計ファイルサイズから減算
@@ -1519,6 +1521,8 @@
 	 * @return:なし
 	 */
 	function cbdDeleteFile(){
+		// 警告表示のクリア
+		$("#cbdFileAlert").html(null);
 		// 選択された画面要素の削除
 		$("#cbdFileList").children()[selectFileIndex].remove();
 		// 合計ファイルサイズから減算
