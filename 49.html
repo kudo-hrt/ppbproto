@@ -192,7 +192,7 @@
 		$("#inqDelBtn").on({
 			"click":function(){
 				// 警告表示のクリア
-				$("#inqFileAlert").html(null);
+				inqClearErrorMessage();
 				$("#inqTextInput").val("");
 				inqReqCheck();
 				if($("#inqTextInput").val() == ""){
@@ -206,7 +206,7 @@
 		$("#cbdDelBtn").on({
 			"click":function(){
 				// 警告表示のクリア
-				$("#cbdFileAlert").html(null);
+				cbdClearErrorMessage();
 				$("#cbdTextInput").val("");
 				cbdReqCheck();
 				if($("#cbdTextInput").val() == ""){
@@ -1239,6 +1239,9 @@
 		if(checkLength($("#inqTextInput").val(), 2000)){
 			// エラーメッセージの表示
 			$("#inqOutputError").html("文字数が制限を超えています。<BR>全角2000文字以内で、もう一度入力してください。");
+			// 投稿するボタン、及び戻るボタンを活性にする
+			$("#inqConfButton").prop("disabled", true);
+			$("#inqPrevButton").prop("disabled", true);
 			// 処理を中断する
 			return null;
 		}
@@ -1396,6 +1399,28 @@
 		return hasValue;
 	}
 	/**
+	 * エラーメッセージを削除する（新規投稿）
+	 * @args:なし
+	 * @return:なし
+	 */	
+	function inqClearErrorMessage(){
+		// お問い合わせ詳細のエラーメッセージ削除
+		$("#inqOutputError").html(null);
+		// ファイルのエラーメッセージ削除
+		$("#inqFileAlert").html(null);
+	}
+	/**
+	 * エラーメッセージを削除する（個別投稿）
+	 * @args:なし
+	 * @return:なし
+	 */	
+	function cbdClearErrorMessage(){
+		// 投稿内容のエラーメッセージ削除
+		$("#cbdOutputError").html(null);
+		// ファイルのエラーメッセージ削除
+		$("#cbdFileAlert").html(null);
+	}
+	/**
 	 * 戻るボタン処理（新規投稿）
 	 * @args:なし
 	 * @return:なし
@@ -1510,7 +1535,7 @@
 	 */
 	function inqDeleteFile(){
 		// 警告表示のクリア
-		$("#inqFileAlert").html(null);
+		inqClearErrorMessage();
 		// 選択された画面要素の削除
 		$("#inqFileList").children()[selectFileIndex].remove();
 		// 合計ファイルサイズから減算
@@ -1526,7 +1551,7 @@
 	 */
 	function cbdDeleteFile(){
 		// 警告表示のクリア
-		$("#cbdFileAlert").html(null);
+		cbdClearErrorMessage();
 		// 選択された画面要素の削除
 		$("#cbdFileList").children()[selectFileIndex].remove();
 		// 合計ファイルサイズから減算
