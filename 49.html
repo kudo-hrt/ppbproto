@@ -1522,7 +1522,7 @@
 		// アップロード済ファイルサイズをリセット
 		uploadedFileSize = 0;
 		// 警告表示のクリア
-		cbdClearErrorMessage;
+		cbdClearErrorMessage();
 		// アップロードファイル表示のクリア
 		$("#cbdFileList").html(null);
 		// オーバレイをクリア（残すと前画面でオーバレイが残るため）
