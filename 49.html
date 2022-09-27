@@ -191,6 +191,8 @@
 		// 削除確認時に削除するボタン押下
 		$("#inqDelBtn").on({
 			"click":function(){
+				// 警告表示のクリア
+				$("#inqFileAlert").html(null);
 				$("#inqTextInput").val("");
 				inqReqCheck();
 				if($("#inqTextInput").val() == ""){
@@ -203,6 +205,8 @@
 		// 削除確認時に削除するボタン押下
 		$("#cbdDelBtn").on({
 			"click":function(){
+				// 警告表示のクリア
+				$("#cbdFileAlert").html(null);
 				$("#cbdTextInput").val("");
 				cbdReqCheck();
 				if($("#cbdTextInput").val() == ""){
