@@ -57,16 +57,16 @@
 <script type="text/javascript">
 <!--
 	// 通信先URL　※環境に併せて変更する必要あり！
-	// 開発環境
+	/* 開発環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt49.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG99S6MzYiT5k.KkcZzmtcXubr_J8l8N8473VR.oFizQeVyWXFV5ARIiXmwhmXqjuNU.K6Pk9mc9M3btLBQ";
 	const REFLESH_TOKEN = "5Aep861hjC52juQoBcsFRsbEALR2k2PEkuCJTzezJjsxYDFcfM3Xu_8fN.OBDlZ6BJFv9GwwXc8hH5doNmlIiVu";
-	
-	/* IT環境
+	*/
+	// IT環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt52.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG9Po2PmyYruunauqSmSe1tO_B3XTZIsmbyWG9BxfOXr_UKDN7GA2xyv1J2b24N7OjXdjgf7wAQ6Fc94AGS";
 	const REFLESH_TOKEN = "5Aep861sY.Bl4bMk9ncKxoBVfALQO4xgWbT1fgtPWYc4OPxUGXMzTGo34qQxOYv9jkYyD4lzx7h0uekBz9LDZ89";
-	*/
+	
 	/* ST環境
 	const REQUEST_DOMAIN = "https://paypay-bank--int1.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG9rnryk9FxFMWYw6B7a3vS76.rmtm9OK7HwR46afmPIHnzp5NBdd9c6Q5wHD0gbY_J6PrHxS_uZY94OZR7";
@@ -154,9 +154,9 @@
 	$(function(){
 		// 連携文字列取得
 		//linkedStr = $("input[name='SFConnectParam']").val();
-		//linkedStr = 'e460124c9a160f6864033b0f95ded4e3659a3f76ff22eb1598bf2ccec0171854'; //
-		linkedStr = 'e460124c9a160f6864033b0f95ded4e3e43dca75b63a4512d60db3dd277718b3'; //個人テスト二重太郎
-		//linkedStr = '98ce205b9f5422d635c9fd35ca80e7e7c121041d386415976ea80a62149b4f7c'; //IT
+		//linkedStr = 'e460124c9a160f6864033b0f95ded4e3659a3f76ff22eb1598bf2ccec0171854'; //DEV
+		//linkedStr = 'e460124c9a160f6864033b0f95ded4e3e43dca75b63a4512d60db3dd277718b3'; //DEV 個人テスト二重太郎
+		linkedStr = '262a838ccef01befe06b6b5033fb3cd82b815a70b226611c62803af67a9b9e96'; //IT ヘッダ 修正太郎に
 		//linkedStr = '3e6adf0afc2cdc325040b50d029a919b60a3dd8379a4db81643bfe0cbad73f63'; //IT
 		//linkedStr = '262a838ccef01befe06b6b5033fb3cd843f315dfb1df20e910ef7979bb0d52b7'; //IT
 		//linkedStr = 'b2ecf814cc0650ccee0117df3494d1a8d6442398bca5ed2c1cbf6e12278102d2'; //ST
