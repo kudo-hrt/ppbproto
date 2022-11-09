@@ -694,6 +694,8 @@
 					console.log("時限チェック");
 					// エラー画面を表示
 					changeDisp("errorScreen");
+					// 処理中表示を隠す
+					hideProgress();
 				// 取引先0件
 				}else if(response.result == "NO_ACCOUNT"){
 					// 処理結果を退避する
