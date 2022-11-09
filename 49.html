@@ -707,6 +707,8 @@
 				// 異常終了
 				}else{
 					console.log("システムエラー");
+					// エラー発生日時を設定
+					$("#errorDateTime").html("発生日時：" + new Date());
 					// エラー画面を表示
 					changeDisp("errorScreen");
 					// 処理中表示を隠す
@@ -2396,6 +2398,7 @@
 <div id="errorScreen" class="contents no-title-h1 no-logout-btn">
 	<div class="blk">
 		<div class="blkCont txtC">
+			<p id="errorDateTime" class="mt-16"></p>
 			<p class="mt-16">予期しないエラーが発生しました。<br>恐れ入りますが、再ログインしてください。</p>
 			<p class="mt-24"><a href="https://login.paypay-bank.co.jp/wctx/LoginAction.do?screen=Contactboard" class="btn btn01 btnL">ログイン</a></p>
 			<p class="mt-24">※回線の混雑状況や通信環境などによりこの画面が表示される場合があります。</p>
