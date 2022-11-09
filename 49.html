@@ -57,11 +57,6 @@
 <script type="text/javascript">
 <!--
 	// 通信先URL　※環境に併せて変更する必要あり！
-	/* 開発環境
-	const REQUEST_DOMAIN = "https://paypay-bank--pt49.sandbox.my.salesforce.com";
-	const CLIENT_ID = "3MVG99S6MzYiT5k.KkcZzmtcXubr_J8l8N8473VR.oFizQeVyWXFV5ARIiXmwhmXqjuNU.K6Pk9mc9M3btLBQ";
-	const REFLESH_TOKEN = "5Aep861hjC52juQoBcsFRsbEALR2k2PEkuCJTzezJjsxYDFcfM3Xu_8fN.OBDlZ6BJFv9GwwXc8hH5doNmlIiVu";
-	*/
 	// IT環境
 	const REQUEST_DOMAIN = "https://paypay-bank--pt52.sandbox.my.salesforce.com";
 	const CLIENT_ID = "3MVG9Po2PmyYruunauqSmSe1tO_B3XTZIsmbyWG9BxfOXr_UKDN7GA2xyv1J2b24N7OjXdjgf7wAQ6Fc94AGS";
@@ -116,7 +111,8 @@
 		"inqConfirmScreen",
 		"replyInputScreen",
 		"replyConfirmScreen",
-		"compScreen"
+		"compScreen",
+		"errorScreen"
 	];
 	// お問い合わせ種別：個人用
 	const dialPriv = [
@@ -154,8 +150,6 @@
 	$(function(){
 		// 連携文字列取得
 		//linkedStr = $("input[name='SFConnectParam']").val();
-		//linkedStr = '864b9ceec1514cb7f8577c6f5b1ecb0bc1e6212dee1eb139f943b6229622f36b'; //DEV PPB太郎
-		//linkedStr = 'e7e5779eca735ce3d7e1723cc3728becee1ffad539b7fb48c7893cf1de9eb3fb'; //DEV 個人テスト二重太郎
 		linkedStr = 'd3361861a4295ed0997620097c360026d2f333c83574002420241904864dc8f5'; //IT ヘッダ 修正太郎に 0069010381
 		//linkedStr = 'e7e5779eca735ce3d7e1723cc3728becee1ffad539b7fb48c7893cf1de9eb3fb'; //IT 個人テスト 二十太郎
 		//linkedStr = '262a838ccef01befe06b6b5033fb3cd843f315dfb1df20e910ef7979bb0d52b7'; //IT
@@ -696,7 +690,8 @@
 					init();
 				// 時限チェック
 				}else if(response.result == "TIMED_CHECK"){
-					dispTimeoutErrModal();
+					// エラー画面を表示
+					changeDisp("errorScreen");
 				// 取引先0件
 				}else if(response.result == "NO_ACCOUNT"){
 					// 処理結果を退避する
@@ -707,14 +702,64 @@
 					hideProgress();
 				// 異常終了
 				}else{
-					// エラーダイアログを表示
-					dispAbnormalErrModal();
+					// エラー画面を表示
+					changeDisp("errorScreen");
 				}
 			}).fail(function(data, errorThrown, status){
-				// エラーダイアログを表示
-				dispComErrModal();
+				// エラー画面を表示
+				changeDisp("errorScreen");
 			});
 		}, dispComErrModal);
+	}
+	
+	/**
+	 * 初期表示時データ取得(再表示用)
+	 * @args:なし
+	 * @return:なし
+	 */
+	function getAllCaseWithoutAuth(){
+		// 処理中表示を出す
+		dispProgress();
+		// 通信によるデータ取得
+		$.ajax({
+			type:"GET",
+			crossOrigin:true,
+			url:REQUEST_DOMAIN + "/services/apexrest/IMF_Case",
+			dataType:"json",
+			cache:false,
+			data:{inquiry:linkedStr},
+			headers: {"Authorization":accToken},
+			timeout: 140000
+		}).done(function(response){
+			if(response.errorMessage){
+				errorMessageText = response.errorMessage.replace(/\n/g, "<br>");
+			}
+			// 成功
+			if(response.result == "SUCCESS"){
+				// 処理結果を退避する
+				res = response;
+				// 画面初期表示処理（SFのケース読み込み）
+				init();
+			// 時限チェック
+			}else if(response.result == "TIMED_CHECK"){
+				dispTimeoutErrModal();
+			// 取引先0件
+			}else if(response.result == "NO_ACCOUNT"){
+				// 処理結果を退避する
+				res = response;
+				// ホーム画面（履歴なし）を表示
+				changeDisp("noInq");
+				// 処理中表示を隠す
+				hideProgress();
+			// 異常終了
+			}else{
+				// エラーダイアログを表示
+				dispAbnormalErrModal();
+			}
+		}).fail(function(data, errorThrown, status){
+			// エラーダイアログを表示
+			dispComErrModal();
+		});
 	}
 	
 	/**
@@ -1407,7 +1452,6 @@
 	 * @return:なし
 	 */	
 	function inqClearErrorMessage(){
-		console.log('inqClearErrorMessage');
 		// お問い合わせ詳細のエラーメッセージ削除
 		$("#inqOutputError").html(null);
 		// ファイルのエラーメッセージ削除
@@ -1419,7 +1463,6 @@
 	 * @return:なし
 	 */	
 	function cbdClearErrorMessage(){
-		console.log('cbdClearErrorMessage');
 		// 投稿内容のエラーメッセージ削除
 		$("#cbdOutputError").html(null);
 		// ファイルのエラーメッセージ削除
@@ -2329,12 +2372,25 @@
 			<p>当社からの回答は原則翌営業日にメールでお知らせします。回答内容はお問い合わせフォームにログインしてご確認ください。</p>
 			<div class="contbrd-btnArea-box">
 				<p>
-					<input type="submit" id="" onclick="getAllCase(); changeDisp('inquiryForm')" class="btn btn02 btnL" value="お問い合わせフォーム">
+					<input type="submit" id="" onclick="getAllCaseWithoutAuth(); changeDisp('inquiryForm')" class="btn btn02 btnL" value="お問い合わせフォーム">
 				</p>
 				<p class="mt-16">
 					<input type="submit" class="btn btn03 btnL" value="Welcome Page" onclick="commonSubmit('ln0001');">
 				</p>
 			</div>
+		</div>
+	</div>
+</div>
+
+<!-- errorScreen -->
+<div id="errorScreen" class="contents no-title-h1 no-logout-btn">
+	<div class="blk">
+		<div class="blkCont txtC">
+			<p class="mt-16">予期しないエラーが発生しました。<br>恐れ入りますが、再ログインしてください。</p>
+			<p class="mt-24"><a href="https://login.paypay-bank.co.jp/wctx/LoginAction.do?screen=Contactboard" class="btn btn01 btnL">ログイン</a></p>
+			<p class="mt-24">※回線の混雑状況や通信環境などによりこの画面が表示される場合があります。</p>
+			<p>※再ログインの際に、上書きログインのエラーが表示される場合があります。</p>
+			<p>※再ログインしてもこの画面が表示される場合は、時間を置いてから、あらためてログインしてください。</p>
 		</div>
 	</div>
 </div>
