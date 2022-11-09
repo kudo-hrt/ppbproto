@@ -818,6 +818,8 @@
 		$("#errorDateTime").html("発生日時：" + year + "/" + month + "/" + date + " " + hour + ":" + minute + ":" + second);
 		// エラー画面を表示
 		changeDisp("errorScreen");
+		// ログアウトボタンを非表示
+		$(".logoutWrap").css("display","none");
 		// 処理中表示を隠す
 		hideProgress();
 	}
