@@ -707,8 +707,19 @@
 				// 異常終了
 				}else{
 					console.log("システムエラー");
+					// 現在日時の取得
+					let today = new Date();
+					
+					// 年月日を取得
+					let year = today.getFullYear();
+					let month = today.getMonth() + 1;
+					let date = today.getDate();
+					// 時分秒を取得
+					let hour = today.getHours();
+					let minute = today.getMinutes();
+					let second = today.getSeconds();
 					// エラー発生日時を設定
-					$("#errorDateTime").html("発生日時：" + new Date());
+					$("#errorDateTime").html("発生日時：" + year + "/" + month + "/" + date + " " + hour + ":" + minute + ":" + second);
 					// エラー画面を表示
 					changeDisp("errorScreen");
 					// 処理中表示を隠す
