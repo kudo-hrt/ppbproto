@@ -417,7 +417,6 @@
 			}
 		// 時限チェックエラー
 		}else if(res.result == "TIMED_CHECK"){
-			console.log("ここにも？");
 			// ホーム画面（履歴なし）を表示
 			changeDisp("noInq");
 			// 処理中表示を隠す
@@ -706,14 +705,14 @@
 					hideProgress();
 				// 異常終了
 				}else{
+					console.log("システムエラー");
 					// エラー画面を表示
 					changeDisp("errorScreen");
-					console.log("システムエラー");
 				}
 			}).fail(function(data, errorThrown, status){
+				console.log("ネットワーク");
 				// エラー画面を表示
 				changeDisp("errorScreen");
-				console.log("ネットワーク");
 			});
 		}, dispComErrModal);
 	}
