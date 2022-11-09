@@ -709,11 +709,15 @@
 					console.log("システムエラー");
 					// エラー画面を表示
 					changeDisp("errorScreen");
+					// 処理中表示を隠す
+					hideProgress();
 				}
 			}).fail(function(data, errorThrown, status){
 				console.log("ネットワーク");
 				// エラー画面を表示
 				changeDisp("errorScreen");
+				// 処理中表示を隠す
+				hideProgress();
 			});
 		}, dispComErrModal);
 	}
