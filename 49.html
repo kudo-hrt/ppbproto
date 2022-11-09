@@ -690,6 +690,7 @@
 					init();
 				// 時限チェック
 				}else if(response.result == "TIMED_CHECK"){
+					console.log("時限チェック");
 					// エラー画面を表示
 					changeDisp("errorScreen");
 				// 取引先0件
@@ -704,10 +705,12 @@
 				}else{
 					// エラー画面を表示
 					changeDisp("errorScreen");
+					console.log("システムエラー");
 				}
 			}).fail(function(data, errorThrown, status){
 				// エラー画面を表示
 				changeDisp("errorScreen");
+				console.log("ネットワーク");
 			});
 		}, dispComErrModal);
 	}
