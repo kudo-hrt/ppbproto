@@ -323,8 +323,9 @@
 		window.onpopstate = function(e){
 			// 現在表示している画面に応じた制御を実施
 			switch(displayId){
-				// ホーム画面（履歴あり）、ホーム画面（履歴なし）
+				// ホーム画面（履歴あり）、ホーム画面（履歴なし）、エラー画面
 				case "inquiryForm":
+				case "errorScreen":
 				case "noInq":
 					// ログイン画面に戻す
 					location.href = "https://" + location.hostname + "/wctx/LoginAction.do?screen=Contactboard"
