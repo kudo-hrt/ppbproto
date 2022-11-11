@@ -809,16 +809,12 @@
 		// 現在日時の取得
 		let today = new Date();
 
-		// 年月日を取得
-		let year = today.getFullYear();
-		let month = ("00" + (today.getMonth() + 1)).slice(-2);
-		let date = ("00" + today.getDate()).slice(-2);
-		// 時分秒を取得
-		let hour = ("00" + today.getHours()).slice(-2);
-		let minute = ("00" + today.getMinutes()).slice(-2);
+		// 年月日時分を取得
+		let formatedDate = changeSlashDate(today);
+		// 秒を取得
 		let second = ("00" + today.getSeconds()).slice(-2);
 		// エラー発生日時を設定
-		$("#errorDateTime").html("発生日時：" + year + "/" + month + "/" + date + " " + hour + ":" + minute + ":" + second);
+		$("#errorDateTime").html("発生日時：" + formatedDate + ":" + second);
 		// エラー画面を表示
 		changeDisp("errorScreen");
 		// ログアウトボタンを非表示
@@ -2420,7 +2416,7 @@
 		<div class="blkCont txtC">
 			<p id="errorDateTime" class="mt-16 h301"></p>
 			<p class="mt-16">予期しないエラーが発生しました。<br>恐れ入りますが、再ログインしてください。</p>
-			<p class="mt-24"><a href="https://login.paypay-bank.co.jp/wctx/LoginAction.do?screen=Contactboard" class="btn btn01 btnL">ログイン</a></p>
+			<p class="mt-24"><a href="/wctx/LoginAction.do?screen=Contactboard" class="btn btn01 btnL">ログイン</a></p>
 			<p class="mt-24">※回線の混雑状況や通信環境などによりこの画面が表示される場合があります。</p>
 			<p>※再ログインの際に、上書きログインのエラーが表示される場合があります。</p>
 			<p>※再ログインしてもこの画面が表示される場合は、時間を置いてから、あらためてログインしてください。</p>
