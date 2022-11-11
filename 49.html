@@ -811,12 +811,12 @@
 
 		// 年月日を取得
 		let year = today.getFullYear();
-		let month = (00 + (today.getMonth() + 1)).slice(-2);
-		let date = (00 + today.getDate()).slice(-2);
+		let month = ("00" + (today.getMonth() + 1)).slice(-2);
+		let date = ("00" + today.getDate()).slice(-2);
 		// 時分秒を取得
-		let hour = (00 + today.getHours()).slice(-2);
-		let minute = (00 + today.getMinutes()).slice(-2);
-		let second = (00 + today.getSeconds()).slice(-2);
+		let hour = ("00" + today.getHours()).slice(-2);
+		let minute = ("00" + today.getMinutes()).slice(-2);
+		let second = ("00" + today.getSeconds()).slice(-2);
 		// エラー発生日時を設定
 		$("#errorDateTime").html("発生日時：" + year + "/" + month + "/" + date + " " + hour + ":" + minute + ":" + second);
 		// エラー画面を表示
