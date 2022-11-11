@@ -815,12 +815,12 @@
 		let second = ("0" + today.getSeconds()).slice(-2);
 		// エラー発生日時を設定
 		$("#errorDateTime").html("発生日時：" + formatedDate + ":" + second);
+		// エラー画面を表示
+		changeDisp("errorScreen");
 		// ログアウトボタンを非表示
 		$(".logoutWrap").css("display","none");
 		// 処理中表示を隠す
 		hideProgress();
-		// エラー画面を表示
-		changeDisp("errorScreen");
 	}
 	
     /**
