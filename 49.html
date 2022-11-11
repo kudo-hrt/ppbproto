@@ -812,7 +812,7 @@
 		// 年月日時分を取得
 		let formatedDate = changeSlashDate(today);
 		// 秒を取得
-		let second = ("00" + today.getSeconds()).slice(-2);
+		let second = ("0" + today.getSeconds()).slice(-2);
 		// エラー発生日時を設定
 		$("#errorDateTime").html("発生日時：" + formatedDate + ":" + second);
 		// エラー画面を表示
