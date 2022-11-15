@@ -1458,7 +1458,7 @@
 	 */
 	function checkInput(val){
 		// 値未入力ならNG
-		if(val == "")return false;
+		if(val.trim() == "")return false;
 		// 登録可能な文字があるか
 		let hasValue = false;
 		// 文字数分ループ
