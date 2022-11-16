@@ -1464,7 +1464,7 @@
 		// 文字数分ループ
 		for(let i = 0; i < val.length; i++){
 			// 該当の文字のUnicode値(10進数)を取得。32(16進数の20)より値の高い文字がある場合
-			if(val.codePointAt(i) > 32 ||){
+			if(val.codePointAt(i) > 32){
 				// 登録可能な文字あり
 				hasValue = true;
 				// 以後処理しない
