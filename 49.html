@@ -1344,7 +1344,8 @@
 		// コンタクトボード種別チェック
 		if(jinkakuCode == "個人" || jinkakuCode == "非居住者"){
 			if(!dialPrivCheckList.includes(selectedItem)){
-				alert("だめ");
+				// エラーメッセージの表示
+				$("#inqOutputError").html("お問い合わせ種別に想定外の値が選択されています。<BR>再度選択の上、確認ボタンを押下してください。<BR>ブラウザの翻訳機能を使用されている場合は、日本語を選択して操作してください。");
 				// 投稿するボタン、及び戻るボタンを活性にする
 				$("#inqConfButton").prop("disabled", false);
 				$("#inqPrevButton").prop("disabled", false);
@@ -1352,7 +1353,8 @@
 			}
 		} else {
 			if(!dialCorpCheckList.includes(selectedItem)){
-				alert("だめ");
+				// エラーメッセージの表示
+				$("#inqOutputError").html("お問い合わせ種別に想定外の値が選択されています。<BR>再度選択の上、確認ボタンを押下してください。<BR>ブラウザの翻訳機能を使用されている場合は、日本語を選択して操作してください。");
 				// 投稿するボタン、及び戻るボタンを活性にする
 				$("#inqConfButton").prop("disabled", false);
 				$("#inqPrevButton").prop("disabled", false);
@@ -2197,6 +2199,7 @@
 						</p>
 					</div>
 				</div>
+				<div id="inqTypeOutputError" style="color:#FF0033;"></div>
 			</div>
 		</div>
 		<div class="blkCont layout-form layout-form-normal">
