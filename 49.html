@@ -848,6 +848,26 @@
 	 * @return:なし
 	 */
 	function registInquery(){
+		// コンタクトボード種別チェック
+		if(jinkakuCode == "個人" || jinkakuCode == "非居住者"){
+			if(!dialPrivCheckList.includes(selectedItem)){
+				// エラーメッセージの表示
+				$("#inqTypeOutputError").html("お問い合わせ種別に想定外の値が選択されています。<BR>再度選択の上、確認ボタンを押下してください。<BR>ブラウザの翻訳機能を使用されている場合は、日本語を選択して操作してください。");
+				// 投稿するボタン、及び戻るボタンを活性にする
+				$("#inqConfButton").prop("disabled", false);
+				$("#inqPrevButton").prop("disabled", false);
+				return null;
+			}
+		} else {
+			if(!dialCorpCheckList.includes(selectedItem)){
+				// エラーメッセージの表示
+				$("#inqTypeOutputError").html("お問い合わせ種別に想定外の値が選択されています。<BR>再度選択の上、確認ボタンを押下してください。<BR>ブラウザの翻訳機能を使用されている場合は、日本語を選択して操作してください。");
+				// 投稿するボタン、及び戻るボタンを活性にする
+				$("#inqConfButton").prop("disabled", false);
+				$("#inqPrevButton").prop("disabled", false);
+				return null;
+			}
+		}
 		$("#inqPost").prop("disabled", true);
 		$("#inqPostPrev").prop("disabled", true);
 		$.ajax({
@@ -1337,31 +1357,6 @@
 			// 処理を中断する
 			return null;
 		}
-		// 選択値を取得
-		//const jinkakuCode = $("input[name='JinkakuCode']").val();
-		const jinkakuCode = '法人';
-		let selectedItem = $("#Modal-inqType").html();
-		/*
-		// コンタクトボード種別チェック
-		if(jinkakuCode == "個人" || jinkakuCode == "非居住者"){
-			if(!dialPrivCheckList.includes(selectedItem)){
-				// エラーメッセージの表示
-				$("#inqTypeOutputError").html("お問い合わせ種別に想定外の値が選択されています。<BR>再度選択の上、確認ボタンを押下してください。<BR>ブラウザの翻訳機能を使用されている場合は、日本語を選択して操作してください。");
-				// 投稿するボタン、及び戻るボタンを活性にする
-				$("#inqConfButton").prop("disabled", false);
-				$("#inqPrevButton").prop("disabled", false);
-				return null;
-			}
-		} else {
-			if(!dialCorpCheckList.includes(selectedItem)){
-				// エラーメッセージの表示
-				$("#inqTypeOutputError").html("お問い合わせ種別に想定外の値が選択されています。<BR>再度選択の上、確認ボタンを押下してください。<BR>ブラウザの翻訳機能を使用されている場合は、日本語を選択して操作してください。");
-				// 投稿するボタン、及び戻るボタンを活性にする
-				$("#inqConfButton").prop("disabled", false);
-				$("#inqPrevButton").prop("disabled", false);
-				return null;
-			}
-		}*/
 		// 登録用データに値を退避
 		inqRegistData.EncryptedData = linkedStr;
 		inqRegistData.Subject = $("#Modal-inqType").text();
@@ -1370,6 +1365,10 @@
 		$("#inqConfMailText").html(eMail);
 		$("#inqConfTypeText").html(inqRegistData.Subject);
 		$("#inqConfDtailsText").html(inqRegistData.Content.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replace(/\n/g, "<br>"));
+		// 選択値を取得
+		//const jinkakuCode = $("input[name='JinkakuCode']").val();
+		const jinkakuCode = '法人';
+		let selectedItem = $("#Modal-inqType").html();
 		// 人格コードが個人、もしくは非居住者の場合
 		if(jinkakuCode == "個人" || jinkakuCode == "非居住者"){
 			// 各種手続きダイヤル設定対象の場合
@@ -2202,7 +2201,6 @@
 						</p>
 					</div>
 				</div>
-				<div id="inqTypeOutputError" style="color:#FF0033;"></div>
 			</div>
 		</div>
 		<div class="blkCont layout-form layout-form-normal">
@@ -2297,6 +2295,7 @@
 		<div class="blkCont bdrT0">
 			<p id="inqConfTypeText"></p>
 		</div>
+		<div id="inqTypeOutputError" style="color:#FF0033;"></div>
 		<div class="blkTitle">
 			<h2 id="inqConfDtails" class="h201">お問い合わせ詳細</h2>
 		</div>
