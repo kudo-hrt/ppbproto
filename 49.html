@@ -848,6 +848,9 @@
 	 * @return:なし
 	 */
 	function registInquery(){
+		// 人格コードの取得
+		//const jinkakuCode = $("input[name='JinkakuCode']").val();
+		const jinkakuCode = '法人';
 		// コンタクトボード種別チェック
 		if(jinkakuCode == "個人" || jinkakuCode == "非居住者"){
 			if(!dialPrivCheckList.includes(selectedItem)){
