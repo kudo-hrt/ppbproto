@@ -272,7 +272,7 @@
 		});
 		// 人格コードの取得
 		//const jinkakuCode = $("input[name='JinkakuCode']").val();
-		const jinkakuCode = '個人';
+		const jinkakuCode = '法人';
 		// 人格コードが取得できた場合
 		if(jinkakuCode){
 			// 人格コードが個人または非居住者の場合
@@ -1328,7 +1328,7 @@
 		$("#inqConfDtailsText").html(inqRegistData.Content.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replace(/\n/g, "<br>"));
 		// 選択値を取得
 		//const jinkakuCode = $("input[name='JinkakuCode']").val();
-		const jinkakuCode = '個人';
+		const jinkakuCode = '法人';
 		let selectedItem = $("#Modal-inqType").html();
 		// 人格コードが個人、もしくは非居住者の場合
 		if(jinkakuCode == "個人" || jinkakuCode == "非居住者"){
