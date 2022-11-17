@@ -133,6 +133,25 @@
 		"dialCorpBA-PLUS",
 		"dialCorpOther"
 	];
+	// お問い合わせ種別：個人用の入力チェック用
+	const dialPrivCheckList = [
+		"①登録情報の変更",
+		"②キャッシュカード・トークン",
+		"③振込",
+		"④口座自動振替",
+		"⑤各種証明書（取引明細・残高証明など）",
+		"⑥その他"
+	];
+	// お問い合わせ種別：法人用の入力チェック用
+	const dialCorpCheckList = [
+		"①登録情報の変更",
+		"②キャッシュカード・トークン",
+		"③振込",
+		"④口座自動振替",
+		"⑤各種証明書（取引明細・残高証明など）",
+		"⑥BA-PLUS",
+		"⑦その他"
+	];
 	// 各種手続きダイヤル設定対象
 	const procedureDialList = [
 		"①登録情報の変更", 
@@ -1318,20 +1337,30 @@
 			// 処理を中断する
 			return null;
 		}
-		console.log($("#Modal-inqType").html());
-		console.log($("#Modal-inqType").text());
+		// 選択値を取得
+		//const jinkakuCode = $("input[name='JinkakuCode']").val();
+		const jinkakuCode = '法人';
+		let selectedItem = $("#Modal-inqType").html();
+		// コンタクトボード種別チェック
+		if(jinkakuCode == "個人" || jinkakuCode == "非居住者"){
+			if(dialPrivCheckList.includes(selectedItem)){
+				alert("だめ");
+				return null;
+			}
+		} else {
+			if(dialCorpCheckList.includes(selectedItem)){
+				alert("だめ");
+				return null;
+			}
+		}
 		// 登録用データに値を退避
 		inqRegistData.EncryptedData = linkedStr;
-		inqRegistData.Subject = $("#Modal-inqType").html();
+		inqRegistData.Subject = $("#Modal-inqType").text();
 		inqRegistData.Content = $("#inqTextInput").val();
         // 画面表示用に値を反映
 		$("#inqConfMailText").html(eMail);
 		$("#inqConfTypeText").html(inqRegistData.Subject);
 		$("#inqConfDtailsText").html(inqRegistData.Content.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replace(/\n/g, "<br>"));
-		// 選択値を取得
-		//const jinkakuCode = $("input[name='JinkakuCode']").val();
-		const jinkakuCode = '法人';
-		let selectedItem = $("#Modal-inqType").html();
 		// 人格コードが個人、もしくは非居住者の場合
 		if(jinkakuCode == "個人" || jinkakuCode == "非居住者"){
 			// 各種手続きダイヤル設定対象の場合
@@ -1465,7 +1494,6 @@
 		let hasValue = false;
 		// 文字数分ループ
 		for(let i = 0; i < val.length; i++){
-			console.log(val.codePointAt(i));
 			// 該当の文字のUnicode値(10進数)を取得。32(16進数の20)より値の高い文字が　かつ　全角スペース（12288）以外の文字がある場合
 			if(val.codePointAt(i) > 32 && val.codePointAt(i) != 12288){
 				// 登録可能な文字あり
