@@ -1343,12 +1343,12 @@
 		let selectedItem = $("#Modal-inqType").html();
 		// コンタクトボード種別チェック
 		if(jinkakuCode == "個人" || jinkakuCode == "非居住者"){
-			if(dialPrivCheckList.includes(selectedItem)){
+			if(!dialPrivCheckList.includes(selectedItem)){
 				alert("だめ");
 				return null;
 			}
 		} else {
-			if(dialCorpCheckList.includes(selectedItem)){
+			if(!dialCorpCheckList.includes(selectedItem)){
 				alert("だめ");
 				return null;
 			}
