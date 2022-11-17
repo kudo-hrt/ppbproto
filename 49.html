@@ -1347,6 +1347,8 @@
 	 * @return:なし
 	 */
 	function outputValueInqConf(){
+		// お問い合わせ種別のエラーメッセージ削除
+		$("#inqTypeOutputError").html(null);
 		// 投稿するボタン、及び戻るボタンを非活性にする
 		$("#inqConfButton").prop("disabled", true);
 		$("#inqPrevButton").prop("disabled", true);
