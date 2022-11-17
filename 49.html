@@ -1345,11 +1345,17 @@
 		if(jinkakuCode == "個人" || jinkakuCode == "非居住者"){
 			if(!dialPrivCheckList.includes(selectedItem)){
 				alert("だめ");
+				// 投稿するボタン、及び戻るボタンを活性にする
+				$("#inqConfButton").prop("disabled", false);
+				$("#inqPrevButton").prop("disabled", false);
 				return null;
 			}
 		} else {
 			if(!dialCorpCheckList.includes(selectedItem)){
 				alert("だめ");
+				// 投稿するボタン、及び戻るボタンを活性にする
+				$("#inqConfButton").prop("disabled", false);
+				$("#inqPrevButton").prop("disabled", false);
 				return null;
 			}
 		}
