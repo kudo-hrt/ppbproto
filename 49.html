@@ -1318,6 +1318,8 @@
 			// 処理を中断する
 			return null;
 		}
+		console.log($("#Modal-inqType").html());
+		console.log($("#Modal-inqType").text());
 		// 登録用データに値を退避
 		inqRegistData.EncryptedData = linkedStr;
 		inqRegistData.Subject = $("#Modal-inqType").html();
