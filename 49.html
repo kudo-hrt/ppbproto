@@ -851,26 +851,21 @@
 		// 人格コードの取得
 		//const jinkakuCode = $("input[name='JinkakuCode']").val();
 		const jinkakuCode = '法人';
+		// お問い合わせ種類チェックフラグ
+		let inqTypeCheckFlg = false;
 		// コンタクトボード種別チェック
-		if(jinkakuCode == "個人" || jinkakuCode == "非居住者"){
-			if(!dialPrivCheckList.includes(inqRegistData.Subject)){
-				// エラーメッセージの表示
-				$("#inqTypeOutputError").html("お問い合わせ種別に想定外の値が選択されています。<BR>再度選択の上、確認ボタンを押下してください。<BR>ブラウザの翻訳機能を使用されている場合は、日本語を選択して操作してください。");
-				// 投稿するボタン、及び戻るボタンを活性にする
-				$("#inqConfButton").prop("disabled", false);
-				$("#inqPrevButton").prop("disabled", false);
-				return null;
-			}
-		} else {
-			if(!dialCorpCheckList.includes(inqRegistData.Subject)){
-				// エラーメッセージの表示
-				$("#inqTypeOutputError").html("お問い合わせ種別に想定外の値が選択されています。<BR>再度選択の上、確認ボタンを押下してください。<BR>ブラウザの翻訳機能を使用されている場合は、日本語を選択して操作してください。");
-				// 投稿するボタン、及び戻るボタンを活性にする
-				$("#inqConfButton").prop("disabled", false);
-				$("#inqPrevButton").prop("disabled", false);
-				return null;
-			}
+		if((jinkakuCode == "個人" || jinkakuCode == "非居住者") && !dialPrivCheckList.includes(inqRegistData.Subject)){
+			inqTypeCheckFlg = true;
+		} else if(!dialCorpCheckList.includes(inqRegistData.Subject)){
+			inqTypeCheckFlg = true;
 		}
+		if(inqTypeCheckFlg){
+			// エラーメッセージの表示
+			$("#inqTypeOutputError").html("お問い合わせ種類に想定外の値が選択されています。<BR>入力画面に戻り、再度選択の上確認するボタンを押下してください。<BR>ブラウザの翻訳機能は使用しないでください。");
+			// 処理終了
+			return null;
+		}
+		
 		$("#inqPost").prop("disabled", true);
 		$("#inqPostPrev").prop("disabled", true);
 		$.ajax({
