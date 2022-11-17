@@ -1341,6 +1341,7 @@
 		//const jinkakuCode = $("input[name='JinkakuCode']").val();
 		const jinkakuCode = '法人';
 		let selectedItem = $("#Modal-inqType").html();
+		/*
 		// コンタクトボード種別チェック
 		if(jinkakuCode == "個人" || jinkakuCode == "非居住者"){
 			if(!dialPrivCheckList.includes(selectedItem)){
@@ -1360,7 +1361,7 @@
 				$("#inqPrevButton").prop("disabled", false);
 				return null;
 			}
-		}
+		}*/
 		// 登録用データに値を退避
 		inqRegistData.EncryptedData = linkedStr;
 		inqRegistData.Subject = $("#Modal-inqType").text();
