@@ -1361,7 +1361,8 @@
 		}
 		// 登録用データに値を退避
 		inqRegistData.EncryptedData = linkedStr;
-		inqRegistData.Subject = $("#Modal-inqType").text();
+		inqRegistData.Subject = $("#Modal-inqType").html();
+		//inqRegistData.Subject = $("#Modal-inqType").text();
 		inqRegistData.Content = $("#inqTextInput").val();
         // 画面表示用に値を反映
 		$("#inqConfMailText").html(eMail);
