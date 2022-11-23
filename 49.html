@@ -855,8 +855,10 @@
 		let inqTypeCheckFlg = false;
 		// コンタクトボード種類チェック
 		if((jinkakuCode == "個人" || jinkakuCode == "非居住者") && !dialPrivCheckList.includes(inqRegistData.Subject)){
+			console.log('個人');
 			inqTypeCheckFlg = true;
 		} else if(!dialCorpCheckList.includes(inqRegistData.Subject)){
+			console.log('法人');
 			inqTypeCheckFlg = true;
 		}
 		if(inqTypeCheckFlg){
