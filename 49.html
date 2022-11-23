@@ -861,7 +861,7 @@
 		}
 		if(inqTypeCheckFlg){
 			// エラーメッセージの表示
-			$("#inqTypeOutputError").html("ブラウザの翻訳機能を使用したため、投稿できない文字が表示されています。翻訳機能をオフにして、［戻る］からもう一度やり直してください。");
+			$("#inqTypeOutputError").show();
 			// 処理終了
 			return null;
 		}
@@ -1343,7 +1343,7 @@
 	 */
 	function outputValueInqConf(){
 		// お問い合わせ種類のエラーメッセージ削除
-		$("#inqTypeOutputError").html(null);
+		$("#inqTypeOutputError").hide();
 		// 投稿するボタン、及び戻るボタンを非活性にする
 		$("#inqConfButton").prop("disabled", true);
 		$("#inqPrevButton").prop("disabled", true);
@@ -1523,7 +1523,7 @@
 		// お問い合わせ詳細のエラーメッセージ削除
 		$("#inqOutputError").html(null);
 		// お問い合わせ種類のエラーメッセージ削除
-		$("#inqTypeOutputError").html(null);
+		$("#inqTypeOutputError").hide();
 		// ファイルのエラーメッセージ削除
 		$("#inqFileAlert").html(null);
 	}
@@ -2295,7 +2295,7 @@
 		</div>
 		<div class="blkCont bdrT0">
 			<p id="inqConfTypeText"></p>
-			<div id="inqTypeOutputError" style="border:solid red;font-weight:bold;color:red;" class="mt-16"></div>
+			<div id="inqTypeOutputError" style="border:solid red;font-weight:bold;color:red;display:none;" class="mt-16">ブラウザの翻訳機能を使用したため、投稿できない文字が表示されています。翻訳機能をオフにして、［戻る］からもう一度やり直してください。</div>
 		</div>
 		<div class="blkTitle">
 			<h2 id="inqConfDtails" class="h201">お問い合わせ詳細</h2>
