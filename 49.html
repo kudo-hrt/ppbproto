@@ -853,7 +853,7 @@
 		const jinkakuCode = '法人';
 		// お問い合わせ種類チェックフラグ
 		let inqTypeCheckFlg = false;
-		// コンタクトボード種別チェック
+		// コンタクトボード種類チェック
 		if((jinkakuCode == "個人" || jinkakuCode == "非居住者") && !dialPrivCheckList.includes(inqRegistData.Subject)){
 			inqTypeCheckFlg = true;
 		} else if(!dialCorpCheckList.includes(inqRegistData.Subject)){
@@ -1342,7 +1342,7 @@
 	 * @return:なし
 	 */
 	function outputValueInqConf(){
-		// お問い合わせ種別のエラーメッセージ削除
+		// お問い合わせ種類のエラーメッセージ削除
 		$("#inqTypeOutputError").html(null);
 		// 投稿するボタン、及び戻るボタンを非活性にする
 		$("#inqConfButton").prop("disabled", true);
@@ -1522,7 +1522,7 @@
 	function inqClearErrorMessage(){
 		// お問い合わせ詳細のエラーメッセージ削除
 		$("#inqOutputError").html(null);
-		// お問い合わせ種別のエラーメッセージ削除
+		// お問い合わせ種類のエラーメッセージ削除
 		$("#inqTypeOutputError").html(null);
 		// ファイルのエラーメッセージ削除
 		$("#inqFileAlert").html(null);
@@ -2295,9 +2295,7 @@
 		</div>
 		<div class="blkCont bdrT0">
 			<p id="inqConfTypeText"></p>
-		</div>
-		<div class="blkCont bdrT0">
-			<div id="inqTypeOutputError" style="font-weight:bold;color:red;"></div>
+			<div id="inqTypeOutputError" style="border:solid red;font-weight:bold;color:red;" class="mt-16"></div>
 		</div>
 		<div class="blkTitle">
 			<h2 id="inqConfDtails" class="h201">お問い合わせ詳細</h2>
