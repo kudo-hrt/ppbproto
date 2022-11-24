@@ -1364,8 +1364,7 @@
 		}
 		// 登録用データに値を退避
 		inqRegistData.EncryptedData = linkedStr;
-		inqRegistData.Subject = $("#Modal-inqType").html();
-		//inqRegistData.Subject = $("#Modal-inqType").text();
+		inqRegistData.Subject = $("#Modal-inqType").text();
 		inqRegistData.Content = $("#inqTextInput").val();
         // 画面表示用に値を反映
 		$("#inqConfMailText").html(eMail);
@@ -1508,7 +1507,7 @@
 		let hasValue = false;
 		// 文字数分ループ
 		for(let i = 0; i < val.length; i++){
-			// 該当の文字のUnicode値(10進数)を取得。32(16進数の20)より値の高い文字が　かつ　全角スペース（12288）以外の文字がある場合
+			// 該当の文字のUnicode値(10進数)を取得。32(16進数の20)より値の高い文字がある　かつ　全角スペース（12288）以外の文字がある場合
 			if(val.codePointAt(i) > 32 && val.codePointAt(i) != 12288){
 				// 登録可能な文字あり
 				hasValue = true;
